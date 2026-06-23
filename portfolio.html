@@ -23,31 +23,6 @@ body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-w
 a,a:link,a:visited,a:hover,a:active{color:inherit;}
 a[href]{-webkit-tap-highlight-color:transparent;}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:rgba(8,8,8,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
-.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:15px;letter-spacing:4px;color:var(--accent);text-decoration:none;}
-.nav-logo span{color:var(--text3);font-size:12px;display:block;letter-spacing:4px;margin-top:2px;}
-.nav-links{display:flex;gap:36px;align-items:center;}
-.nav-link{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .3s;position:relative;}
-.nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
-.nav-link:hover{color:var(--accent);}
-.nav-link:hover::after{width:100%;}
-.nav-link.active{color:var(--accent);}
-.nav-link.active::after{width:100%;}
-.nav-cta{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--bg)!important;background:var(--accent);padding:10px 20px;text-decoration:none;transition:background .3s;font-weight:500;}
-.nav-cta:hover{background:var(--accent2);}
-.nav-dropdown{position:relative;display:flex;align-items:center;}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--surface);border:1px solid var(--border2);min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;}
-.nav-dropdown-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
-.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);text-decoration:none;transition:color .2s,background .2s;}
-.nav-dropdown-menu a:last-child{border-bottom:none;}
-.nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
-.nav-dropdown{position:relative;display:flex;align-items:center;}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 20px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--surface);border:1px solid var(--border2);min-width:260px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:10;}
-.nav-dropdown:hover .nav-dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
-.nav-dropdown-menu a{display:block;padding:12px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);text-decoration:none;transition:color .2s,background .2s;}
-.nav-dropdown-menu a:last-child{border-bottom:none;}
-.nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
-
 .hero{padding:160px 48px 80px;border-bottom:1px solid var(--border);}
 .hero-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
 .eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
@@ -101,9 +76,6 @@ footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2
 .reveal.in{opacity:1;transform:none;}
 
 @media(max-width:768px){
-  nav{padding:0 20px;height:60px;}
-  .nav-links{gap:12px;}
-  .nav-link{display:none;}
   .hero{padding:100px 24px 56px;}
   .hero-top{flex-direction:column;gap:24px;align-items:flex-start;}
   .filters{padding:0 8px;overflow-x:auto;gap:0;}
@@ -120,24 +92,24 @@ footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2
 </style>
 </head>
 <body>
+<div id="nav-root"></div>
+<script>
+fetch('nav.html?v=' + Date.now())
+  .then(function(r){ return r.text(); })
+  .then(function(html){
+    document.getElementById('nav-root').innerHTML = html;
+    // Выполняем скрипты из nav.html
+    var scripts = document.getElementById('nav-root').querySelectorAll('script');
+    scripts.forEach(function(s){
+      var newS = document.createElement('script');
+      newS.textContent = s.textContent;
+      document.body.appendChild(newS);
+    });
+  });
+</script>
+<script src="nav.js"></script>
 
-<nav>
-  <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
-  <div class="nav-links">
-    <div class="nav-dropdown">
-      <a href="#" class="nav-link">Направления</a>
-      <div class="nav-dropdown-menu">
-        <a href="index.html">ARCH 3.14 — Частная архитектура</a>
-        <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
-        <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
-      </div>
-    </div>
-    <a href="portfolio.html" class="nav-link active">Портфолио</a>
-    <a href="prices.html" class="nav-link">Стоимость</a>
-    <a href="#" class="nav-link">О бюро</a>
-    <a href="start.html" class="nav-cta">Начать проект →</a>
-  </div>
-</nav>
+
 
 <section class="hero">
   <div class="hero-top reveal">
@@ -242,13 +214,14 @@ fetch('models.json?v=' + Date.now())
 const ro = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), {threshold:.1});
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-// Dropdown
-var dropBtn = document.querySelector('.nav-dropdown > a');
-var dropMenu = document.querySelector('.nav-dropdown-menu');
-if(dropBtn && dropMenu) {
-  dropBtn.addEventListener('click', function(e) { e.preventDefault(); dropMenu.classList.toggle('open'); });
-  document.addEventListener('click', function(e) { if(!e.target.closest('.nav-dropdown')) dropMenu.classList.remove('open'); });
-}
+// Dropdown на click
+document.querySelectorAll(');
+});
+document.addEventListener('click', function(e) {
+  if(!e.target.closest(');
+  }
+});
+
 </script>
 </body>
 </html>
