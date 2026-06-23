@@ -35,12 +35,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .nav-link.active::after{width:100%;}
 .nav-cta{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--bg)!important;background:var(--accent);padding:10px 20px;text-decoration:none;transition:background .3s;font-weight:500;}
 .nav-cta:hover{background:var(--accent2);}
-.nav-dropdown{position:relative;display:flex;align-items:center;}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 20px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--surface);border:1px solid var(--border2);min-width:260px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:10;}
-.nav-dropdown:hover .nav-dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
-.nav-dropdown-menu a{display:block;padding:12px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);text-decoration:none;transition:color .2s,background .2s;}
-.nav-dropdown-menu a:last-child{border-bottom:none;}
-.nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
+
 .nav-dropdown-menu::before {
   content: '';
   position: absolute;
@@ -120,6 +115,12 @@ footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2
   .stat-item{padding:24px;}
   footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 }
+.nav-dropdown{position:relative;display:flex;align-items:center;}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:var(--surface, #131313);border:1px solid var(--border2, #272727);min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;transform:translateX(-50%) translateY(-6px);}
+.nav-dropdown-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
+.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border, #1a1a1a);color:var(--text2, #9a8e80);text-decoration:none;transition:color .2s,background .2s;}
+.nav-dropdown-menu a:last-child{border-bottom:none;}
+.nav-dropdown-menu a:hover{background:var(--border, #1a1a1a);color:var(--accent, #c9a96e);}
 </style>
 </head>
 <body>
@@ -244,6 +245,25 @@ fetch('models.json?v=' + Date.now())
 
 const ro = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), {threshold:.1});
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// Dropdown на click
+document.querySelectorAll('.nav-dropdown').forEach(function(drop) {
+  var btn = drop.querySelector('.nav-link, a');
+  var menu = drop.querySelector('.nav-dropdown-menu');
+  if(!btn || !menu) return;
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    var isOpen = menu.classList.contains('open');
+    document.querySelectorAll('.nav-dropdown-menu').forEach(function(m){ m.classList.remove('open'); });
+    if(!isOpen) menu.classList.add('open');
+  });
+});
+document.addEventListener('click', function(e) {
+  if(!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown-menu').forEach(function(m){ m.classList.remove('open'); });
+  }
+});
+
 </script>
 </body>
 </html>
