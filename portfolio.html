@@ -98,15 +98,34 @@ fetch('nav.html?v=' + Date.now())
   .then(function(r){ return r.text(); })
   .then(function(html){
     document.getElementById('nav-root').innerHTML = html;
-    // Выполняем скрипты из nav.html
-    var scripts = document.getElementById('nav-root').querySelectorAll('script');
-    scripts.forEach(function(s){
-      var newS = document.createElement('script');
-      newS.textContent = s.textContent;
-      document.body.appendChild(newS);
+
+    // Активная страница
+    var page = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('#site-nav .sn-links a[data-page]').forEach(function(a){
+      if(a.dataset.page === page) a.classList.add('sn-active');
     });
+
+    // Scroll
+    var nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', function(){
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Dropdown — click
+    var btn = document.getElementById('sn-dir-btn');
+    var menu = document.getElementById('sn-dir-menu');
+    if(btn && menu) {
+      btn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        menu.classList.toggle('open');
+      });
+      document.addEventListener('click', function(e){
+        if(!e.target.closest('.sn-dropdown')) menu.classList.remove('open');
+      });
+    }
   });
 </script>
+
 <script src="nav.js"></script>
 
 
