@@ -23,6 +23,20 @@ body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-w
 a,a:link,a:visited,a:hover,a:active{color:inherit;}
 a[href]{-webkit-tap-highlight-color:transparent;}
 
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(8,8,8,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:5px;color:var(--accent);text-decoration:none;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .3s;}
+.nav-link:hover,.nav-link.active{color:var(--accent);}
+.nav-cta{background:var(--accent);color:var(--bg)!important;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;text-decoration:none;transition:background .3s;font-weight:500;}
+.nav-cta:hover{background:var(--accent2);}
+.nav-dropdown{position:relative;}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--surface);border:1px solid var(--border2);min-width:260px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:10;}
+.nav-dropdown:hover .nav-dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
+.nav-dropdown-menu a{display:block;padding:12px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);text-decoration:none;transition:color .2s,background .2s;}
+.nav-dropdown-menu a:last-child{border-bottom:none;}
+.nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
+
 .hero{padding:160px 48px 80px;border-bottom:1px solid var(--border);}
 .hero-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
 .eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
@@ -76,6 +90,9 @@ footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2
 .reveal.in{opacity:1;transform:none;}
 
 @media(max-width:768px){
+  nav{padding:0 20px;height:60px;}
+  .nav-links{gap:12px;}
+  .nav-link{display:none;}
   .hero{padding:100px 24px 56px;}
   .hero-top{flex-direction:column;gap:24px;align-items:flex-start;}
   .filters{padding:0 8px;overflow-x:auto;gap:0;}
@@ -92,43 +109,24 @@ footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2
 </style>
 </head>
 <body>
-<div id="nav-root"></div>
-<script>
-fetch('nav.html?v=' + Date.now())
-  .then(function(r){ return r.text(); })
-  .then(function(html){
-    document.getElementById('nav-root').innerHTML = html;
 
-    // Активная страница
-    var page = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('#site-nav .sn-links a[data-page]').forEach(function(a){
-      if(a.dataset.page === page) a.classList.add('sn-active');
-    });
-
-    // Scroll
-    var nav = document.getElementById('site-nav');
-    window.addEventListener('scroll', function(){
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    // Dropdown — click
-    var btn = document.getElementById('sn-dir-btn');
-    var menu = document.getElementById('sn-dir-menu');
-    if(btn && menu) {
-      btn.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation();
-        menu.classList.toggle('open');
-      });
-      document.addEventListener('click', function(e){
-        if(!e.target.closest('.sn-dropdown')) menu.classList.remove('open');
-      });
-    }
-  });
-</script>
-
-<script src="nav.js"></script>
-
-
+<nav>
+  <a href="index.html" class="nav-logo">ARCH 3.14</a>
+  <div class="nav-links">
+    <div class="nav-dropdown">
+      <a href="#" class="nav-link">Направления</a>
+      <div class="nav-dropdown-menu">
+        <a href="index.html">ARCH 3.14 — Частная архитектура</a>
+        <a href="#">LAB 3.14 — Бизнес архитектура</a>
+        <a href="#">CONSTRUCT 3.14 — Бионические конструкции</a>
+      </div>
+    </div>
+    <a href="portfolio.html" class="nav-link active">Портфолио</a>
+    <a href="prices.html" class="nav-link">Стоимость</a>
+    <a href="#" class="nav-link">О бюро</a>
+    <a href="start.html" class="nav-cta">Начать проект →</a>
+  </div>
+</nav>
 
 <section class="hero">
   <div class="hero-top reveal">
@@ -232,15 +230,6 @@ fetch('models.json?v=' + Date.now())
 
 const ro = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), {threshold:.1});
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
-
-// Dropdown на click
-document.querySelectorAll(');
-});
-document.addEventListener('click', function(e) {
-  if(!e.target.closest(');
-  }
-});
-
 </script>
 </body>
 </html>
