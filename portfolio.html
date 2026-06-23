@@ -2,399 +2,251 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Каталог домов — ARCH 3.14</title>
+<title>Портфолио — ARCH 3.14</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Unbounded:wght@200;300;400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200;300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #080808; --bg2: #0f0f0f; --surface: #151515;
-  --border: #1e1e1e; --border2: #2a2a2a;
-  --accent: #c9a96e; --accent2: #e8c880; --accent-dim: #9c7d4a;
-  --text: #ede8df; --text2: #c4b8a4; --text3: #8a8072; --white: #f5f0e8;
+  --bg:#080808; --bg2:#0e0e0e; --surface:#131313;
+  --border:#1a1a1a; --border2:#272727;
+  --accent:#c9a96e; --accent2:#e8c880; --accent-dim:#6b4f28;
+  --text:#ede8df; --text2:#9a8e80; --text3:#3e3830; --white:#f5f0e8;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
 
-.cursor { position: fixed; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s; }
-.cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(201,169,110,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease-out; }
-
-body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.6; }
-
-/* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; background: rgba(8,8,8,0.97); border-bottom: 1px solid var(--border); }
-.nav-logo { font-family: 'Unbounded', sans-serif; font-weight: 200; font-size: 15px; letter-spacing: 4px; color: var(--accent); text-decoration: none; }
-.nav-logo span { color: var(--text3); font-size: 12px; display: block; letter-spacing: 4px; margin-top: 2px; }
-.nav-links { display: flex; gap: 36px; align-items: center; }
-.nav-links a { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); text-decoration: none; transition: color 0.3s; position: relative; }
-.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s; }
-.nav-links a:hover { color: var(--accent); }
-.nav-links a:hover::after { width: 100%; }
-.nav-links a.active { color: var(--accent); }
-.nav-links a.active::after { width: 100%; }
-.nav-cta { font-size: 11px !important; letter-spacing: 2px; text-transform: uppercase; color: var(--bg) !important; background: var(--accent); padding: 10px 20px; text-decoration: none; transition: background 0.3s !important; }
-.nav-cta::after { display: none !important; }
-.nav-cta:hover { background: var(--accent2) !important; }
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(8,8,8,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:5px;color:var(--accent);text-decoration:none;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .3s;}
+.nav-link:hover,.nav-link.active{color:var(--accent);}
+.nav-cta{background:var(--accent);color:var(--bg);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;text-decoration:none;transition:background .3s;font-weight:500;}
+.nav-cta:hover{background:var(--accent2);}
 
 /* HERO */
-.page-hero { padding: 160px 48px 80px; border-bottom: 1px solid var(--border); }
-.page-hero-inner { display: flex; justify-content: space-between; align-items: flex-end; }
-.page-tag { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-.page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 6vw, 90px); font-weight: 300; line-height: 0.95; color: var(--white); }
-.page-title em { font-style: italic; color: var(--accent); }
-.page-desc { max-width: 360px; font-size: 14px; line-height: 1.8; color: var(--text2); text-align: right; }
+.hero{padding:160px 48px 80px;border-bottom:1px solid var(--border);}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
+.eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,84px);font-weight:300;color:var(--white);line-height:1.0;}
+.h1 em{font-style:italic;color:var(--accent);}
+.hero-desc{max-width:400px;font-size:14px;line-height:1.85;color:var(--text2);}
 
 /* FILTERS */
-.filters { padding: 32px 48px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.filter-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-right: 8px; }
-.filter-btn { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); background: none; border: 1px solid var(--border2); padding: 8px 16px; cursor: none; transition: all 0.3s; }
-.filter-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
-.filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(201,169,110,0.06); }
-.filter-count { margin-left: auto; font-size: 11px; letter-spacing: 2px; color: var(--text3); }
+.filters{display:flex;gap:2px;padding:0 48px;border-bottom:1px solid var(--border);background:var(--bg2);}
+.filter-btn{padding:16px 24px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);background:none;border:none;cursor:pointer;transition:color .3s;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.filter-btn:hover{color:var(--text2);}
+.filter-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
 
 /* GRID */
-.catalog { padding: 48px; }
-.catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;}
 
-/* CARD */
-.model-card { position: relative; overflow: hidden; background: var(--surface); cursor: pointer; aspect-ratio: 4/3; }
-.model-card:hover .card-img { transform: scale(1.06); }
-.model-card:hover .card-overlay { opacity: 1; }
-.model-card:hover .card-info { transform: translateY(0); opacity: 1; }
-.model-card:hover .card-name { transform: translateY(0); }
+.card{position:relative;overflow:hidden;background:var(--surface);cursor:pointer;aspect-ratio:4/3;}
+.card.wide{grid-column:span 2;aspect-ratio:auto;height:520px;}
 
-.card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; }
+.card-img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.75);transition:transform .7s ease,filter .5s;}
+.card:hover .card-img{transform:scale(1.04);filter:brightness(.75) saturate(.95);}
 
 /* Заглушка */
-.card-placeholder {
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, #111 0%, #1a1a1a 50%, #111 100%);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 16px;
+.card-placeholder{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#0f0f0f 0%,#181818 50%,#0f0f0f 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
 }
-.placeholder-icon { font-size: 32px; opacity: 0.3; }
-.placeholder-text { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); text-align: center; line-height: 1.8; }
-.placeholder-pulse { width: 32px; height: 1px; background: var(--accent); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100% { opacity: 0.3; transform: scaleX(0.5); } 50% { opacity: 1; transform: scaleX(1); } }
+.ph-icon{font-size:28px;opacity:0.2;color:var(--accent);}
+.ph-text{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);text-align:center;line-height:1.9;}
+.ph-line{width:28px;height:1px;background:var(--accent);animation:ph-pulse 2s infinite;}
+@keyframes ph-pulse{0%,100%{opacity:.2;transform:scaleX(.4);}50%{opacity:.8;transform:scaleX(1);}}
 
-.card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.4) 50%, transparent 100%); opacity: 0.6; transition: opacity 0.4s; }
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,rgba(8,8,8,.1) 50%,transparent 100%);opacity:0;transition:opacity .4s;}
+.card:hover .card-overlay{opacity:1;}
 
-.card-name {
-  position: absolute; top: 24px; left: 24px; z-index: 2;
-  font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300;
-  color: var(--white); transition: transform 0.4s;
-}
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(8px);opacity:0;transition:transform .4s,opacity .4s;}
+.card:hover .card-info{transform:translateY(0);opacity:1;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--white);margin-bottom:6px;}
+.card-meta{display:flex;gap:12px;align-items:center;}
+.card-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);}
+.card-area{font-size:11px;color:var(--text2);}
 
-.card-info {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-  padding: 24px; transform: translateY(8px); opacity: 0.85;
-  transition: transform 0.4s, opacity 0.4s;
-}
-.card-slogan { font-size: 13px; font-style: italic; color: var(--text2); margin-bottom: 12px; line-height: 1.5; }
-.card-meta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.card-type { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
-.card-area { font-size: 10px; letter-spacing: 1px; color: var(--text3); }
-.card-badge {
-  position: absolute; top: 24px; right: 24px; z-index: 3;
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  background: rgba(8,8,8,0.8); border: 1px solid var(--border2);
-  color: var(--text3); padding: 6px 12px;
-}
+.card-num{position:absolute;top:20px;left:20px;font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(255,255,255,.06);line-height:1;transition:color .4s;}
+.card:hover .card-num{color:rgba(201,169,110,.12);}
 
-/* LARGE CARDS — первая и четвёртая занимают 2 колонки */
-.model-card.wide { grid-column: span 2; }
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);}
+.stat-item{padding:32px 48px;border-right:1px solid var(--border);}
+.stat-item:last-child{border-right:none;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--accent);line-height:1;}
+.stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:6px;}
 
-/* STATS BAR */
-.stats-bar { padding: 48px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); display: flex; gap: 0; }
-.stat-item { flex: 1; padding: 0 48px; border-right: 1px solid var(--border); text-align: center; }
-.stat-item:first-child { padding-left: 0; }
-.stat-item:last-child { border-right: none; }
-.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--accent); line-height: 1; }
-.stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-top: 8px; }
+footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:4px;color:var(--accent);}
+.footer-copy{font-size:11px;letter-spacing:1px;color:var(--text3);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .3s;}
+.footer-links a:hover{color:var(--accent);}
 
-/* CTA */
-.portfolio-cta { padding: 120px 48px; text-align: center; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
-.portfolio-cta::before { content: '3.14'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Cormorant Garamond', serif; font-size: 300px; font-weight: 300; color: rgba(201,169,110,0.03); pointer-events: none; }
-.section-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); display: inline-block; margin-bottom: 16px; }
-.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 60px); font-weight: 300; line-height: 1.1; color: var(--white); margin-bottom: 40px; }
-.section-title em { font-style: italic; color: var(--accent); }
-.cta-buttons { display: flex; gap: 16px; justify-content: center; }
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:none;}
 
-.btn-primary { display: inline-flex; align-items: center; gap: 12px; background: var(--accent); color: var(--bg); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 16px 28px; text-decoration: none; min-height: 56px; transition: background 0.3s, transform 0.2s; }
-.btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-.btn-ghost { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--border2); color: var(--text2); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; padding: 16px 28px; text-decoration: none; min-height: 56px; transition: border-color 0.3s, color 0.3s; }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+a,a:link,a:visited,a:hover,a:active{color:inherit;}
+a[href]{-webkit-tap-highlight-color:transparent;}
 
-/* FOOTER */
-footer { padding: 64px 48px 40px; border-top: 1px solid var(--border); background: var(--bg2); display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; }
-.footer-logo { font-family: 'Unbounded', sans-serif; font-weight: 200; font-size: 14px; letter-spacing: 4px; color: var(--accent); margin-bottom: 16px; }
-.footer-about { font-size: 12px; line-height: 1.8; color: var(--text3); max-width: 280px; margin-bottom: 24px; }
-.footer-contact { font-size: 13px; color: var(--text2); line-height: 2; }
-.footer-contact a { color: var(--accent); text-decoration: none; }
-.footer-col h4 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 20px; }
-.footer-col a { display: block; font-size: 13px; color: var(--text2); text-decoration: none; padding: 5px 0; transition: color 0.3s; border-bottom: 1px solid var(--border); }
-.footer-col a:hover { color: var(--accent); }
-.footer-bottom { padding: 24px 48px; border-top: 1px solid var(--border); background: var(--bg2); display: flex; justify-content: space-between; }
-.footer-copy { font-size: 12px; letter-spacing: 1px; color: var(--text3); }
-
-/* ANIMATIONS */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* MOBILE */
-@media (max-width: 900px) {
-  nav { padding: 20px 24px; }
-  .nav-links { display: none; }
-  .page-hero { padding: 120px 24px 60px; }
-  .page-hero-inner { flex-direction: column; gap: 32px; }
-  .page-desc { text-align: left; }
-  .filters { padding: 24px; }
-  .catalog { padding: 24px; }
-  .catalog-grid { grid-template-columns: 1fr; }
-  .model-card.wide { grid-column: span 1; }
-  .stats-bar { flex-direction: column; gap: 32px; padding: 48px 24px; }
-  .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 32px; text-align: left; }
-  .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .portfolio-cta { padding: 80px 24px; }
-  .cta-buttons { flex-direction: column; }
-  footer { grid-template-columns: 1fr; padding: 48px 24px; }
-  .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; }
-  .cursor, .cursor-ring { display: none !important; }
-  * { cursor: auto !important; }
+@media(max-width:768px){
+  nav{padding:0 20px;height:60px;}
+  .nav-links{gap:12px;}
+  .nav-link{display:none;}
+  .hero{padding:100px 24px 56px;}
+  .hero-top{flex-direction:column;gap:24px;align-items:flex-start;}
+  .filters{padding:0 8px;overflow-x:auto;gap:0;}
+  .filter-btn{padding:14px 14px;white-space:nowrap;}
+  .grid{grid-template-columns:1fr;}
+  .card.wide{grid-column:span 1;height:280px;}
+  .card{aspect-ratio:4/3;}
+  .card-info{opacity:1;transform:none;}
+  .card-overlay{opacity:1;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat-item{padding:24px;}
+  footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <nav>
-  <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
+  <a href="index.html" class="nav-logo">ARCH 3.14</a>
   <div class="nav-links">
-    <a href="#">Услуги</a>
-    <a href="portfolio.html" class="active">Каталог домов</a>
-    <a href="prices.html">Стоимость</a>
-    <a href="#">О бюро</a>
-    <a href="start.html" class="nav-cta">Начать проект →</a>
+    <a href="index.html" class="nav-link">Главная</a>
+    <a href="portfolio.html" class="nav-link active">Портфолио</a>
+    <a href="start.html" class="nav-link">Как мы работаем</a>
+    <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="page-hero reveal">
-  <div class="page-hero-inner">
+<section class="hero">
+  <div class="hero-top reveal">
     <div>
-      <div class="page-tag">Каталог · 9 моделей</div>
-      <h1 class="page-title">Готовые<br>модели<br><em>домов.</em></h1>
+      <div class="eyebrow">ARCH 3.14 · Портфолио</div>
+      <h1 class="h1">500+ объектов.<br>Каждый — <em>единственный.</em></h1>
     </div>
-    <p class="page-desc">Каждая модель — это завершённая архитектурная концепция с проработанной планировкой, конструктивом и возможностью адаптации под ваш участок.</p>
+    <p class="hero-desc">Параметрика, бионика, криволинейные формы. Частные дома, общественные пространства, интерьеры. 15 лет — и ни одного повторения.</p>
   </div>
+</section>
+
+<div class="filters reveal">
+  <button class="filter-btn active" data-filter="all">Все проекты</button>
+  <button class="filter-btn" data-filter="house">Частные дома</button>
+  <button class="filter-btn" data-filter="parametric">Параметрика</button>
+  <button class="filter-btn" data-filter="interior">Интерьеры</button>
+  <button class="filter-btn" data-filter="commercial">Коммерция</button>
 </div>
 
-<!-- FILTERS -->
-<div class="filters">
-  <span class="filter-label">Фильтр:</span>
-  <button class="filter-btn active" data-filter="all">Все модели</button>
-  <button class="filter-btn" data-filter="small">до 200 м²</button>
-  <button class="filter-btn" data-filter="medium">200–300 м²</button>
-  <button class="filter-btn" data-filter="large">от 300 м²</button>
-  <span class="filter-count" id="filterCount">9 моделей</span>
+<div class="grid" id="grid"></div>
+
+<div class="stats reveal">
+  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">реализованных объектов</div></div>
+  <div class="stat-item"><div class="stat-num">15</div><div class="stat-label">лет экспертизы</div></div>
+  <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">параметрических форм</div></div>
+  <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">направления бюро</div></div>
 </div>
 
-<!-- CATALOG GRID -->
-<div class="catalog">
-  <div class="catalog-grid" id="catalogGrid">
-    <!-- заполняется JS -->
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num">9</div>
-    <div class="stat-label">Готовых моделей<br>в каталоге</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">165–380</div>
-    <div class="stat-label">Диапазон площадей,<br>м²</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">100%</div>
-    <div class="stat-label">Адаптируются<br>под ваш участок</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">6–8</div>
-    <div class="stat-label">Недель на концепцию<br>под вашу модель</div>
-  </div>
-</div>
-
-<!-- CTA -->
-<div class="portfolio-cta">
-  <div class="section-label">НЕ НАШЛИ СВОЁ?</div>
-  <h2 class="section-title">Спроектируем<br><em>с нуля.</em></h2>
-  <div class="cta-buttons">
-    <a href="start.html" class="btn-primary">Обсудить проект →</a>
-    <a href="concept.html" class="btn-ghost">Что такое концепция</a>
-  </div>
-</div>
-
-<!-- FOOTER -->
 <footer>
-  <div>
-    <div class="footer-logo">ARCH 3.14</div>
-    <div class="footer-about">Архитектурное бюро полного цикла. Специализация — параметрическая и бионическая архитектура.</div>
-    <div class="footer-contact">
-      <a href="tel:+74996477680">+7 499 647 76 80</a><br>
-      mail@arch314.ru<br>Москва, Artplay
-    </div>
-  </div>
-  <div class="footer-col">
-    <h4>Каталог</h4>
-    <a href="#" data-scroll="slope">Slope · 218 м²</a>
-    <a href="#" data-scroll="skyframe">Skyframe · 380 м²</a>
-    <a href="#" data-scroll="stream">Stream · 310 м²</a>
-    <a href="#" data-scroll="riba">Riba House · 330 м²</a>
-    <a href="#" data-scroll="high">High house · 295 м²</a>
-  </div>
-  <div class="footer-col">
-    <h4>Услуги</h4>
-    <a href="concept.html">Концепция и эскизы</a>
-    <a href="#">Полный проект</a>
-    <a href="contractor.html">Технический заказчик</a>
-    <a href="interior.html">Интерьер</a>
-  </div>
-  <div class="footer-col">
-    <h4>О бюро</h4>
+  <div class="footer-logo">ARCH 3.14</div>
+  <div class="footer-links">
     <a href="index.html">Главная</a>
-    <a href="#">Команда</a>
-    <a href="prices.html">Стоимость</a>
-    <a href="start.html">Начать проект</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="concept.html">Начать проект</a>
   </div>
-</footer>
-<div class="footer-bottom">
   <div class="footer-copy">© 2024–2026 ARCH 3.14</div>
-  <div class="footer-copy">Политика конфиденциальности</div>
-</div>
+</footer>
 
 <script>
-// Cursor
-const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx=0,my=0,rx=0,ry=0;
-if(isTouch&&cursor){cursor.style.display='none';if(ring)ring.style.display='none';}
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-function animCursor(){
-  cursor.style.left=mx+'px';cursor.style.top=my+'px';
-  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(animCursor);
-}
-if(!isTouch)animCursor();
-
-// Reveal
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-// Определяем площадь в числе для фильтра
-function parseArea(str) {
-  if(!str) return 0;
-  const m = String(str).match(/\d+/);
-  return m ? parseInt(m[0]) : 0;
-}
-
-// Рендер карточки
-function renderCard(m, index) {
-  const isWide = index === 0 || index === 4; // первая и пятая — широкие
-  const area = parseArea(m.area);
-  const imgSrc = `assets/images/models/${m.folder}/cover.jpeg`;
-
-  return `
-    <div class="model-card${isWide?' wide':''}" 
-         data-id="${m.id}" 
-         data-area="${area}"
-         onclick="location.href='project.html?id=${m.id}'">
-      <img class="card-img" src="${imgSrc}" alt="${m.name}" loading="lazy"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="card-placeholder" style="display:none">
-        <div class="placeholder-icon">◎</div>
-        <div class="placeholder-text">Загружаем<br>скоро покажем</div>
-        <div class="placeholder-pulse"></div>
-      </div>
-      <div class="card-overlay"></div>
-      <div class="card-name">${m.name}</div>
-      <div class="card-badge">${m.area || '—'}</div>
-      <div class="card-info">
-        <div class="card-slogan">${m.slogan}</div>
-        <div class="card-meta">
-          <span class="card-type">${m.type}</span>
-          <span class="card-area">${m.bedrooms ? m.bedrooms + ' спальни' : ''}</span>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// Загружаем модели
+// Данные моделей — будут заменены из models.json
 let allModels = [];
 
-function renderGrid(models) {
-  const grid = document.getElementById('catalogGrid');
-  grid.innerHTML = models.map((m,i) => renderCard(m,i)).join('');
-  document.getElementById('filterCount').textContent = models.length + ' моделей';
+// Маппинг тегов (все модели — частные дома / параметрика)
+function getTag(m) {
+  const t = (m.type || '').toLowerCase();
+  if(t.includes('интерьер')) return {tag:'interior', label:'Интерьер'};
+  if(t.includes('коммерц')) return {tag:'commercial', label:'Коммерция'};
+  if(t.includes('органическ') || t.includes('биоформ') || t.includes('изгиб')) return {tag:'parametric', label:'Параметрика'};
+  // Riba, Stream, Skyframe — параметрика по форме
+  const param = ['riba','stream','skyframe','zigzag','wing'];
+  if(param.includes(m.id)) return {tag:'parametric', label:'Параметрика'};
+  return {tag:'house', label:'Частный дом'};
+}
 
-  // Курсор на карточки
-  if(!isTouch) document.querySelectorAll('.model-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.transform='translate(-50%,-50%) scale(1.5)';});
-    el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';});
-  });
+function renderGrid(models) {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = models.map((m, i) => {
+    const isWide = i === 0 || i === 5;
+    const {tag, label} = getTag(m);
+    const imgSrc = `assets/images/models/${m.folder}/cover.jpeg`;
+    const num = String(i+1).padStart(2,'0');
+
+    return `
+      <div class="card${isWide?' wide':''}" data-tag="${tag}" onclick="location.href='project.html?id=${m.id}'">
+        <img class="card-img" src="${imgSrc}" alt="${m.name}" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="card-placeholder" style="display:none">
+          <div class="ph-icon">◎</div>
+          <div class="ph-text">Загружаем<br>скоро покажем</div>
+          <div class="ph-line"></div>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-num">${num}</div>
+        <div class="card-info">
+          <div class="card-title">${m.name}</div>
+          <div class="card-meta">
+            <span class="card-tag">${label}</span>
+            <span class="card-area">${m.area}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 // Фильтры
-document.querySelectorAll('.filter-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const f = btn.dataset.filter;
-    let filtered = allModels;
-    if(f==='small') filtered = allModels.filter(m=>parseArea(m.area)<200);
-    if(f==='medium') filtered = allModels.filter(m=>parseArea(m.area)>=200&&parseArea(m.area)<300);
-    if(f==='large') filtered = allModels.filter(m=>parseArea(m.area)>=300);
+    const filtered = f === 'all' ? allModels : allModels.filter(m => getTag(m).tag === f);
     renderGrid(filtered);
   });
 });
 
-// Fetch моделей
+// Загрузка из models.json
 fetch('models.json')
-  .then(r=>r.json())
-  .then(models=>{
+  .then(r => r.json())
+  .then(models => {
     allModels = models;
     renderGrid(models);
   })
-  .catch(()=>{
+  .catch(() => {
     // Fallback если file://
     allModels = [
-      {id:'slope',folder:'Slope',name:'Slope',type:'Частный дом · 2 этажа',slogan:'Дом, который следует рельефу',area:'218 м²',bedrooms:'3'},
-      {id:'skyframe',folder:'Skyframe',name:'Skyframe',type:'Частный дом · 3 этажа',slogan:'Три уровня. Один взгляд в небо.',area:'380 м²',bedrooms:'4'},
-      {id:'square',folder:'Square',name:'Square',type:'Частный дом · 2 этажа',slogan:'Стекло, лес и ничего лишнего.',area:'165 м²',bedrooms:'3'},
-      {id:'stream',folder:'Stream',name:'Stream',type:'Частный дом · 1 этаж',slogan:'Форма, которая течёт по земле.',area:'310 м²',bedrooms:'4'},
-      {id:'zigzag',folder:'Zigzag',name:'Zigzag',type:'Частный дом · вписан в рельеф',slogan:'Дом, которого не видно с дороги.',area:'190 м²',bedrooms:'3'},
-      {id:'wing',folder:'Wing',name:'Wing',type:'Частный дом · 2 этажа',slogan:'Дом, который обнимает свой двор.',area:'285 м²',bedrooms:'4'},
-      {id:'riba',folder:'Riba',name:'Riba House',type:'Частный дом · 2 этажа',slogan:'Металл, изгиб, свет.',area:'330 м²',bedrooms:'4'},
-      {id:'villag',folder:'VillaG',name:'Villa G',type:'Частный дом · 2 этажа',slogan:'Честный дом на честном месте.',area:'240 м²',bedrooms:'3'},
-      {id:'high',folder:'High',name:'High house',type:'Частный дом · 3 уровня',slogan:'Три платформы над камнями.',area:'295 м²',bedrooms:'4'},
+      {id:'slope',   folder:'Slope',    name:'Slope',      type:'Частный дом · 2 этажа',             area:'218 м²'},
+      {id:'skyframe', folder:'Skyframe', name:'Skyframe',   type:'Частный дом · 3 этажа',             area:'380 м²'},
+      {id:'square',  folder:'Square',   name:'Square',     type:'Частный дом · 2 этажа',             area:'165 м²'},
+      {id:'stream',  folder:'Stream',   name:'Stream',     type:'Частный дом · 1 этаж',              area:'310 м²'},
+      {id:'zigzag',  folder:'Zigzag',   name:'Zigzag',     type:'Частный дом · вписан в рельеф',     area:'190 м²'},
+      {id:'wing',    folder:'Wing',     name:'Wing',       type:'Частный дом · 2 этажа',             area:'285 м²'},
+      {id:'riba',    folder:'Riba',     name:'Riba House', type:'Частный дом · органическая форма',  area:'330 м²'},
+      {id:'villag',  folder:'VillaG',   name:'Villa G',    type:'Частный дом · 2 этажа',             area:'240 м²'},
+      {id:'high',    folder:'High',     name:'High house', type:'Частный дом · 3 уровня',            area:'295 м²'},
     ];
     renderGrid(allModels);
   });
 
-// Курсор на ссылки
-if(!isTouch) document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.transform='translate(-50%,-50%) scale(1.5)';});
-  el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';});
-});
+// Reveal
+const ro = new IntersectionObserver(e => e.forEach(x => {
+  if(x.isIntersecting) x.target.classList.add('in');
+}), {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 </script>
 </body>
 </html>
