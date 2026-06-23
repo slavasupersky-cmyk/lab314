@@ -1,0 +1,98 @@
+<style>
+#site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px;
+  background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+  transition: background 0.4s;
+  font-family: 'Jost', sans-serif;
+}
+#site-nav.scrolled {
+  background: rgba(8,8,8,0.97);
+  border-bottom: 1px solid #1e1e1e;
+}
+.sn-logo {
+  font-family: 'Unbounded', sans-serif; font-weight: 200;
+  font-size: 15px; letter-spacing: 4px; color: #c9a96e;
+  text-decoration: none; line-height: 1;
+}
+.sn-logo span {
+  display: block; font-family: 'Jost', sans-serif; font-weight: 300;
+  font-size: 11px; letter-spacing: 4px; color: #8a8072;
+  text-transform: uppercase; margin-top: 3px;
+}
+.sn-links {
+  display: flex; gap: 36px; align-items: center;
+}
+.sn-links a {
+  font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+  color: #c4b8a4; text-decoration: none; transition: color 0.3s;
+  position: relative; white-space: nowrap;
+}
+.sn-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: #c9a96e; transition: width 0.3s;
+}
+.sn-links a:hover { color: #c9a96e; }
+.sn-links a:hover::after { width: 100%; }
+.sn-links a.sn-active { color: #c9a96e; }
+.sn-links a.sn-active::after { width: 100%; }
+.sn-dropdown { position: relative; display: flex; align-items: center; }
+.sn-dropdown > a::after { display: none; }
+.sn-dropdown-menu {
+  position: absolute; top: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: #151515; border: 1px solid #2a2a2a;
+  min-width: 280px; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s; z-index: 200;
+}
+.sn-dropdown-menu.open {
+  opacity: 1; pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.sn-dropdown-menu a {
+  display: block; padding: 14px 20px;
+  font-size: 11px; letter-spacing: 1px;
+  border-bottom: 1px solid #1e1e1e;
+  color: #c4b8a4; text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.sn-dropdown-menu a::after { display: none !important; }
+.sn-dropdown-menu a:last-child { border-bottom: none; }
+.sn-dropdown-menu a:hover { background: #1e1e1e; color: #c9a96e; }
+.sn-cta {
+  font-size: 11px !important; letter-spacing: 2px;
+  text-transform: uppercase; color: #080808 !important;
+  background: #c9a96e; padding: 10px 20px;
+  text-decoration: none; font-weight: 500;
+  transition: background 0.3s !important;
+}
+.sn-cta::after { display: none !important; }
+.sn-cta:hover { background: #e8c880 !important; color: #080808 !important; }
+@media (max-width: 900px) {
+  #site-nav { padding: 20px 24px; }
+  .sn-links a:not(.sn-cta) { display: none; }
+}
+</style>
+
+<nav id="site-nav">
+  <a href="index.html" class="sn-logo">
+    ARCH 3.14
+    <span>Архитектурное бюро</span>
+  </a>
+  <div class="sn-links">
+    <div class="sn-dropdown">
+      <a href="#" id="sn-dir-btn">Направления</a>
+      <div class="sn-dropdown-menu" id="sn-dir-menu">
+        <a href="index.html">ARCH 3.14 — Частная архитектура</a>
+        <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
+        <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
+      </div>
+    </div>
+    <a href="portfolio.html" data-page="portfolio.html">Портфолио</a>
+    <a href="prices.html" data-page="prices.html">Стоимость</a>
+    <a href="#" data-page="">О бюро</a>
+    <a href="start.html" class="sn-cta">Начать проект →</a>
+  </div>
+</nav>

@@ -116,21 +116,21 @@ nav.scrolled { background: rgba(8,8,8,0.97); border-bottom: 1px solid var(--bord
 .nav-links a:hover { color: var(--accent); }
 .nav-links a:hover::after { width: 100%; }
 
-.nav-dropdown { position: relative; }
+.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
 .nav-dropdown-menu {
   position: absolute;
-  top: calc(100% + 16px);
+  top: calc(100% + 12px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-6px);
   background: var(--surface);
   border: 1px solid var(--border2);
-  min-width: 180px;
+  min-width: 280px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
-  transform: translateX(-50%) translateY(-8px);
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 200;
 }
-.nav-dropdown:hover .nav-dropdown-menu {
+.nav-dropdown-menu.open {
   opacity: 1;
   pointer-events: all;
   transform: translateX(-50%) translateY(0);
@@ -770,13 +770,13 @@ a[href] { -webkit-tap-highlight-color: transparent; }
     ARCH 3.14
     <span>Архитектурное бюро</span>
   </a>
-  <div class="nav-links">
+    <div class="nav-links">
     <div class="nav-dropdown">
       <a href="#">Направления</a>
       <div class="nav-dropdown-menu">
         <a href="index.html">ARCH 3.14 — Частная архитектура</a>
-        <a href="#">LAB 3.14 — Бизнес архитектура</a>
-        <a href="#">CONSTRUCT 3.14 — Бионические конструкции</a>
+        <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
+        <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
       </div>
     </div>
     <a href="portfolio.html">Портфолио</a>
@@ -841,7 +841,7 @@ a[href] { -webkit-tap-highlight-color: transparent; }
     <p>
       Мы не добавляем параметрику как тренд — это наша специализация с 2009 года.
       Пока другие бюро открывают для себя бионические формы, мы реализовали
-      более 200 объектов со сложной криволинейной архитектурой.
+      более 500 объектов со сложной криволинейной архитектурой.
     </p>
   </div>
   <div class="dna-facts reveal reveal-delay-2">
@@ -922,8 +922,7 @@ a[href] { -webkit-tap-highlight-color: transparent; }
     </div>
     <a href="portfolio.html" class="btn-ghost">Смотреть все →</a>
   </div>
-  <div class="portfolio-grid reveal" id="indexPortfolioGrid">
-  </div>
+  <div class="portfolio-grid reveal" id="indexPortfolioGrid"></div>
 </section>
 
 <!-- WHY -->
@@ -1053,10 +1052,20 @@ function animCursor() {
   requestAnimationFrame(animCursor);
 }
 if (!isTouch) { animCursor(); }
-if (!isTouch) document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; ring.style.transform = 'translate(-50%,-50%) scale(1.5)'; });
-  el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.transform = 'translate(-50%,-50%) scale(1)'; });
-});
+if (!isTouch) {
+  document.addEventListener('mouseover', function(e) {
+    if(e.target.closest('a, button, .card, .portfolio-item')) {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    }
+  });
+  document.addEventListener('mouseout', function(e) {
+    if(e.target.closest('a, button, .card, .portfolio-item')) {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    }
+  });
+}
 
 // Navbar scroll
 const navbar = document.getElementById('navbar');
@@ -1073,49 +1082,34 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Портфолио на главной из models.json
+// Dropdown на click
+var dropBtn = document.querySelector('.nav-dropdown > a');
+var dropMenu = document.querySelector('.nav-dropdown-menu');
+if(dropBtn && dropMenu) {
+  dropBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    dropMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', function(e) {
+    if(!e.target.closest('.nav-dropdown')) dropMenu.classList.remove('open');
+  });
+}
+
+// Портфолио на главной
 fetch('models.json?v=' + Date.now())
   .then(r => r.json())
-  .then(models => {
-    const grid = document.getElementById('indexPortfolioGrid');
+  .then(function(models) {
+    var grid = document.getElementById('indexPortfolioGrid');
     if(!grid) return;
-    const preview = models.slice(0, 6);
-    grid.innerHTML = preview.map(m => `
-      <div class="portfolio-item" onclick="location.href='project.html?id=${m.id}'" style="cursor:pointer">
-        <img class="portfolio-img" src="assets/images/models/${m.folder}/cover.jpeg" alt="${m.name}" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="portfolio-item-placeholder" style="display:none">${m.name}</div>
-        <div class="portfolio-overlay"></div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">${m.name}</div>
-          <div class="portfolio-tag">${m.type}</div>
-        </div>
-      </div>
-    `).join('');
-  })
-  .catch(() => {
-    const grid = document.getElementById('indexPortfolioGrid');
-    if(!grid) return;
-    const fallback = [
-      {id:'riba',folder:'Riba',name:'Riba House',type:'Органическая форма'},
-      {id:'high',folder:'High',name:'High house',type:'3 уровня · скала'},
-      {id:'slope',folder:'Slope',name:'Slope',type:'Частный дом · склон'},
-      {id:'skyframe',folder:'Skyframe',name:'Skyframe',type:'3 этажа · панорама'},
-      {id:'stream',folder:'Stream',name:'Stream',type:'1 этаж · органика'},
-      {id:'zigzag',folder:'Zigzag',name:'Zigzag',type:'Вписан в рельеф'},
-    ];
-    grid.innerHTML = fallback.map(m => `
-      <div class="portfolio-item" onclick="location.href='project.html?id=${m.id}'" style="cursor:pointer">
-        <img class="portfolio-img" src="assets/images/models/${m.folder}/cover.jpeg" alt="${m.name}" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="portfolio-item-placeholder" style="display:none">${m.name}</div>
-        <div class="portfolio-overlay"></div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">${m.name}</div>
-          <div class="portfolio-tag">${m.type}</div>
-        </div>
-      </div>
-    `).join('');
+    grid.innerHTML = models.slice(0,6).map(function(m) {
+      return '<div class="portfolio-item" onclick="location.href=\'project.html?id=' + m.id + '\'" style="cursor:pointer">' +
+        '<img class="portfolio-img" src="assets/images/models/' + m.folder + '/cover.jpeg" alt="' + m.name + '" loading="lazy"' +
+        ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+        '<div class="portfolio-item-placeholder" style="display:none">' + m.name + '</div>' +
+        '<div class="portfolio-overlay"></div>' +
+        '<div class="portfolio-info"><div class="portfolio-name">' + m.name + '</div>' +
+        '<div class="portfolio-tag">' + m.type + '</div></div></div>';
+    }).join('');
   });
 </script>
 </body>
