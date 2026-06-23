@@ -252,7 +252,7 @@ let currentModel = null;
 let currentIdx = 0;
 let galleryUrls = [];
 
-fetch('models.json')
+fetch('models.json?v=' + Date.now())
   .then(r => r.json())
   .then(models => {
     allModels = models;
