@@ -96,30 +96,3 @@
     <a href="start.html" class="sn-cta">Начать проект →</a>
   </div>
 </nav>
-
-<script>
-(function(){
-  // Активная страница
-  var page = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('#site-nav .sn-links a[data-page]').forEach(function(a){
-    if(a.dataset.page === page) a.classList.add('sn-active');
-  });
-
-  // Scroll
-  var nav = document.getElementById('site-nav');
-  window.addEventListener('scroll', function(){
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Dropdown
-  var btn = document.getElementById('sn-dir-btn');
-  var menu = document.getElementById('sn-dir-menu');
-  btn.addEventListener('click', function(e){
-    e.preventDefault(); e.stopPropagation();
-    menu.classList.toggle('open');
-  });
-  document.addEventListener('click', function(e){
-    if(!e.target.closest('.sn-dropdown')) menu.classList.remove('open');
-  });
-})();
-</script>
