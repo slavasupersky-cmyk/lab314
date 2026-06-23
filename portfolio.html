@@ -17,6 +17,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5;}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(8,8,8,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
 .nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:5px;color:var(--accent);text-decoration:none;}
@@ -45,25 +46,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 
 .card{position:relative;overflow:hidden;background:var(--surface);cursor:pointer;aspect-ratio:4/3;}
 .card.wide{grid-column:span 2;aspect-ratio:auto;height:520px;}
+.card.tall{grid-row:span 2;}
 
-.card-img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) saturate(.95);transition:transform .7s ease,filter .5s;}
-.card:hover .card-img{transform:scale(1.04);filter:brightness(1) saturate(1);}
-
-/* Заглушка */
-.card-placeholder{
-  width:100%;height:100%;
-  background:linear-gradient(135deg,#0f0f0f 0%,#181818 50%,#0f0f0f 100%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-}
-.ph-icon{font-size:28px;opacity:0.2;color:var(--accent);}
-.ph-text{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);text-align:center;line-height:1.9;}
-.ph-line{width:28px;height:1px;background:var(--accent);animation:ph-pulse 2s infinite;}
-@keyframes ph-pulse{0%,100%{opacity:.2;transform:scaleX(.4);}50%{opacity:.8;transform:scaleX(1);}}
+.card-img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.75);transition:transform .7s ease,filter .5s;}
+.card:hover .card-img{transform:scale(1.04);filter:brightness(.75) saturate(.95);}
 
 .card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,rgba(8,8,8,.1) 50%,transparent 100%);opacity:0;transition:opacity .4s;}
 .card:hover .card-overlay{opacity:1;}
 
-.card-info{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(8px);opacity:0;transition:transform .4s,opacity .4s;}
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:28px 28px;transform:translateY(8px);opacity:0;transition:transform .4s,opacity .4s;}
 .card:hover .card-info{transform:translateY(0);opacity:1;}
 .card-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--white);margin-bottom:6px;}
 .card-meta{display:flex;gap:12px;align-items:center;}
@@ -73,7 +64,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .card-num{position:absolute;top:20px;left:20px;font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(255,255,255,.06);line-height:1;transition:color .4s;}
 .card:hover .card-num{color:rgba(201,169,110,.12);}
 
-/* STATS */
+/* STATS BAR */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);}
 .stat-item{padding:32px 48px;border-right:1px solid var(--border);}
 .stat-item:last-child{border-right:none;}
@@ -89,9 +80,7 @@ footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2
 
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;}
 .reveal.in{opacity:1;transform:none;}
-
-a,a:link,a:visited,a:hover,a:active{color:inherit;}
-a[href]{-webkit-tap-highlight-color:transparent;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
 
 @media(max-width:768px){
   nav{padding:0 20px;height:60px;}
@@ -111,9 +100,74 @@ a[href]{-webkit-tap-highlight-color:transparent;}
   footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 }
 </style>
+
+<style id="ux-fixes">
+/* === UX FIXES === */
+/* 1. Кнопки одного размера */
+.btn-primary, .btn-ghost {
+  min-height: 56px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+/* 3. Убрать синий цвет подчёркнутых/посещённых ссылок */
+a, a:link, a:visited, a:hover, a:active { color: inherit; }
+u, .underline { text-decoration-color: var(--accent); }
+/* Подчёркивания в тексте — золотым, не синим */
+a[href] { -webkit-tap-highlight-color: transparent; }
+
+@media (max-width: 768px) {
+  /* 2. Прячем кастомный курсор на мобильных */
+  .cursor, .cursor-ring { display: none !important; }
+  * { cursor: auto !important; }
+  /* Кнопки на всю ширину и по центру */
+  .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
+  .hero-btns, .cta-btns, .hero-buttons, .cta-buttons,
+  .hero-cta, .concept-cta, .price-cta, [class*="-buttons"], [class*="-btns"] {
+    flex-direction: column !important; gap: 12px !important; width: 100%;
+  }
+  /* Заголовки не вылезают за экран */
+  h1, h2, .hero-title, .section-title { word-break: break-word; overflow-wrap: break-word; }
+  /* Меньше горизонтального скролла */
+  body { overflow-x: hidden; }
+}
+a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+
+/* === ЧИТАЕМОСТЬ МЕЛКИХ ПОДПИСЕЙ (мягко) === */
+/* Золотые эйбрау/лейблы — ярче и чуть плотнее */
+.section-label, .eyebrow, .hero-eyebrow, .desc-eyebrow, .h-eyebrow,
+.hero-tag, .stage-badge, .flp-label, .pvc-label, .sb-label,
+.price-pill-label, .entry-price-label, .dna-fact-label {
+  color: var(--accent) !important;
+  font-weight: 500 !important;
+  letter-spacing: 3px;
+}
+/* Серые подписи под цифрами и в карточках — заметно светлее */
+.stat-label, .spec-label, .spec-row-label, .row-label, .row-sub,
+.card-meta, .card-tag, .portfolio-tag, .pni-tag, .s-tag, .ex-label,
+.ex-render-tag, .ex-img-caption, .price-pill-sub, .step-meta,
+.process-visual-caption, .dot-label, .hero-badge-label, .f-sub,
+.subtitle, .stage-timer, .path-hint-text {
+  color: #c9bca8 !important;
+  font-weight: 400 !important;
+}
+/* Чипы/теги-кнопки (2-3 встречи, АР·КР и т.п.) — рамка и текст ярче */
+.s-tag, .chip, [class*="-tag"]:not(.card-tag):not(.hero-tag) {
+  color: #d8ccb8 !important;
+  border-color: var(--accent-dim) !important;
+}
+/* Подписи-юниты под крупными цифрами (м², год) — светлее */
+.spec-label, .pni-tag { opacity: 1 !important; }
+/* Метки в карточках портфолио крупнее на 1px для читаемости */
+.card-meta { font-size: 11px !important; }
+.card-tag { font-size: 10px !important; letter-spacing: 2px; }
+/* Табы планировок (1 этаж / 2 этаж / разрез) — активный ярче, неактивные читаемее */
+.flp-tab, .plan-tab { color: #b0a48f !important; }
+.flp-tab.active, .plan-tab.active { color: var(--accent) !important; border-color: var(--accent) !important; }
+/* "Следующий проект" блок */
+.next-proj-label, .pni-dir { color: #b0a48f !important; }
+</style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-logo">ARCH 3.14</a>
   <div class="nav-links">
@@ -135,11 +189,9 @@ a[href]{-webkit-tap-highlight-color:transparent;}
 </section>
 
 <div class="filters reveal">
-  <button class="filter-btn active" data-filter="all">Все проекты</button>
-  <button class="filter-btn" data-filter="house">Частные дома</button>
-  <button class="filter-btn" data-filter="parametric">Параметрика</button>
-  <button class="filter-btn" data-filter="interior">Интерьеры</button>
-  <button class="filter-btn" data-filter="commercial">Коммерция</button>
+  <button class="filter-btn active" onclick="filter('all',this)">Все проекты</button>
+  <button class="filter-btn" onclick="filter('house',this)">Частные дома</button>
+  <button class="filter-btn" onclick="filter('parametric',this)">Параметрика</button>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -162,91 +214,73 @@ a[href]{-webkit-tap-highlight-color:transparent;}
 </footer>
 
 <script>
-// Данные моделей — будут заменены из models.json
-let allModels = [];
+const projects = [
+  { id:1,  title:'Дом на холме',       tag:'house',      tagLabel:'Частный дом',   area:'340 м²', year:'2024', wide:true },
+  { id:2,  title:'Curve House',        tag:'parametric', tagLabel:'Параметрика',   area:'280 м²', year:'2024', wide:false },
+  { id:3,  title:'Arc Residence',      tag:'house',      tagLabel:'Частный дом',   area:'420 м²', year:'2023', wide:false },
+  { id:4,  title:'Flow Villa',         tag:'parametric', tagLabel:'Параметрика',   area:'510 м²', year:'2023', wide:false },
+  { id:5,  title:'Silver Ring',        tag:'house',      tagLabel:'Частный дом',   area:'380 м²', year:'2023', wide:false },
+  { id:6,  title:'Лесной дом',         tag:'house',      tagLabel:'Частный дом',   area:'290 м²', year:'2022', wide:true },
+  { id:7,  title:'Wave Pavilion',      tag:'commercial', tagLabel:'Коммерция',     area:'180 м²', year:'2022', wide:false },
+  { id:8,  title:'Organic Loft',       tag:'interior',   tagLabel:'Интерьер',      area:'220 м²', year:'2022', wide:false },
+  { id:9,  title:'Bionic House',       tag:'parametric', tagLabel:'Параметрика',   area:'460 м²', year:'2021', wide:false },
+  { id:10, title:'Панорамный дом',     tag:'house',      tagLabel:'Частный дом',   area:'350 м²', year:'2021', wide:false },
+];
 
-// Маппинг тегов (все модели — частные дома / параметрика)
-function getTag(m) {
-  const t = (m.type || '').toLowerCase();
-  if(t.includes('интерьер')) return {tag:'interior', label:'Интерьер'};
-  if(t.includes('коммерц')) return {tag:'commercial', label:'Коммерция'};
-  if(t.includes('органическ') || t.includes('биоформ') || t.includes('изгиб')) return {tag:'parametric', label:'Параметрика'};
-  // Riba, Stream, Skyframe — параметрика по форме
-  const param = ['riba','stream','skyframe','zigzag','wing'];
-  if(param.includes(m.id)) return {tag:'parametric', label:'Параметрика'};
-  return {tag:'house', label:'Частный дом'};
-}
+// Images rotation for cards
+const extImgs = ['EXT1','EXT2','EXT3','EXT4','EXT5'];
 
-function renderGrid(models) {
+function renderGrid(items) {
   const grid = document.getElementById('grid');
-  grid.innerHTML = models.map((m, i) => {
-    const isWide = i === 0 || i === 5;
-    const {tag, label} = getTag(m);
-    const imgSrc = `assets/images/models/${m.folder}/cover.jpeg`;
-    const num = String(i+1).padStart(2,'0');
-
-    return `
-      <div class="card${isWide?' wide':''}" data-tag="${tag}" onclick="location.href='project.html?id=${m.id}'">
-        <img class="card-img" src="${imgSrc}" alt="${m.name}" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="card-placeholder" style="display:none">
-          <div class="ph-icon">◎</div>
-          <div class="ph-text">Загружаем<br>скоро покажем</div>
-          <div class="ph-line"></div>
-        </div>
-        <div class="card-overlay"></div>
-        <div class="card-num">${num}</div>
-        <div class="card-info">
-          <div class="card-title">${m.name}</div>
-          <div class="card-meta">
-            <span class="card-tag">${label}</span>
-            <span class="card-area">${m.area}</span>
-          </div>
+  grid.innerHTML = items.map((p,i) => `
+    <div class="card${p.wide?' wide':''}" data-tag="${p.tag}" onclick="window.location='project.html?id=${p.id}'">
+      <img class="card-img" src="${getImg(i)}" alt="${p.title}" loading="lazy">
+      <div class="card-overlay"></div>
+      <div class="card-num">${String(p.id).padStart(2,'0')}</div>
+      <div class="card-info">
+        <div class="card-title">${p.title}</div>
+        <div class="card-meta">
+          <span class="card-tag">${p.tagLabel}</span>
+          <span class="card-area">${p.area} · ${p.year}</span>
         </div>
       </div>
-    `;
-  }).join('');
+    </div>
+  `).join('');
 }
 
-// Фильтры
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const f = btn.dataset.filter;
-    const filtered = f === 'all' ? allModels : allModels.filter(m => getTag(m).tag === f);
-    renderGrid(filtered);
-  });
-});
+function getImg(i) {
+  // rotate through ext images
+  const keys = ['EXT1','EXT2','EXT3','EXT4','EXT5'];
+  return window.IMGS ? window.IMGS['ext'+(i%5+1)] : '';
+}
 
-// Загрузка из models.json
-fetch('models.json')
-  .then(r => r.json())
-  .then(models => {
-    allModels = models;
-    renderGrid(models);
-  })
-  .catch(() => {
-    // Fallback если file://
-    allModels = [
-      {id:'riba',    folder:'Riba',     name:'Riba House', type:'Частный дом · органическая форма',  area:'330 м²'},
-      {id:'high',    folder:'High',     name:'High house', type:'Частный дом · 3 уровня',            area:'295 м²'},
-      {id:'slope',   folder:'Slope',    name:'Slope',      type:'Частный дом · 2 этажа',             area:'218 м²'},
-      {id:'skyframe', folder:'Skyframe', name:'Skyframe',  type:'Частный дом · 3 этажа',             area:'380 м²'},
-      {id:'square',  folder:'Square',   name:'Square',     type:'Частный дом · 2 этажа',             area:'165 м²'},
-      {id:'stream',  folder:'Stream',   name:'Stream',     type:'Частный дом · 1 этаж',              area:'310 м²'},
-      {id:'zigzag',  folder:'Zigzag',   name:'Zigzag',     type:'Частный дом · вписан в рельеф',     area:'190 м²'},
-      {id:'wing',    folder:'Wing',     name:'Wing',       type:'Частный дом · 2 этажа',             area:'285 м²'},
-      {id:'villag',  folder:'VillaG',   name:'Villa G',    type:'Частный дом · 2 этажа',             area:'240 м²'},
-    ];
-    renderGrid(allModels);
+function filter(tag, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = tag==='all' ? projects : projects.filter(p=>p.tag===tag);
+  renderGrid(filtered);
+  loadImgs();
+}
+
+function loadImgs() {
+  // load images after render
+  if(!window.IMGS) return;
+  document.querySelectorAll('.card-img').forEach((img,i) => {
+    const keys = ['ext1','ext2','ext3','ext4','ext5'];
+    img.src = window.IMGS[keys[i%5]];
   });
+}
+
+// Inline images from separate script
+const script = document.createElement('script');
+script.onload = () => { renderGrid(projects); loadImgs(); };
+script.onerror = () => { renderGrid(projects); };
+script.src = 'arch314-imgs.js';
+document.head.appendChild(script);
 
 // Reveal
-const ro = new IntersectionObserver(e => e.forEach(x => {
-  if(x.isIntersecting) x.target.classList.add('in');
-}), {threshold:.1});
-document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+const ro = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 </script>
 </body>
 </html>
