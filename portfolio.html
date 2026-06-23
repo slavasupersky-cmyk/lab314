@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфолио — ARCH 3.14</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200;300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080808; --bg2:#0e0e0e; --surface:#131313;
+  --border:#1a1a1a; --border2:#272727;
+  --accent:#c9a96e; --accent2:#e8c880; --accent-dim:#6b4f28;
+  --text:#ede8df; --text2:#9a8e80; --text3:#3e3830; --white:#f5f0e8;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(8,8,8,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:5px;color:var(--accent);text-decoration:none;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .3s;}
+.nav-link:hover,.nav-link.active{color:var(--accent);}
+.nav-cta{background:var(--accent);color:var(--bg);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;text-decoration:none;transition:background .3s;font-weight:500;}
+.nav-cta:hover{background:var(--accent2);}
+
+/* HERO */
+.hero{padding:160px 48px 80px;border-bottom:1px solid var(--border);}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
+.eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,84px);font-weight:300;color:var(--white);line-height:1.0;}
+.h1 em{font-style:italic;color:var(--accent);}
+.hero-desc{max-width:400px;font-size:14px;line-height:1.85;color:var(--text2);}
+
+/* FILTERS */
+.filters{display:flex;gap:2px;padding:0 48px;border-bottom:1px solid var(--border);background:var(--bg2);}
+.filter-btn{padding:16px 24px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);background:none;border:none;cursor:pointer;transition:color .3s;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.filter-btn:hover{color:var(--text2);}
+.filter-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;}
+
+.card{position:relative;overflow:hidden;background:var(--surface);cursor:pointer;aspect-ratio:4/3;}
+.card.wide{grid-column:span 2;aspect-ratio:auto;height:520px;}
+.card.tall{grid-row:span 2;}
+
+.card-img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.75);transition:transform .7s ease,filter .5s;}
+.card:hover .card-img{transform:scale(1.04);filter:brightness(.75) saturate(.95);}
+
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,rgba(8,8,8,.1) 50%,transparent 100%);opacity:0;transition:opacity .4s;}
+.card:hover .card-overlay{opacity:1;}
+
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:28px 28px;transform:translateY(8px);opacity:0;transition:transform .4s,opacity .4s;}
+.card:hover .card-info{transform:translateY(0);opacity:1;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--white);margin-bottom:6px;}
+.card-meta{display:flex;gap:12px;align-items:center;}
+.card-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);}
+.card-area{font-size:11px;color:var(--text2);}
+
+.card-num{position:absolute;top:20px;left:20px;font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(255,255,255,.06);line-height:1;transition:color .4s;}
+.card:hover .card-num{color:rgba(201,169,110,.12);}
+
+/* STATS BAR */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);}
+.stat-item{padding:32px 48px;border-right:1px solid var(--border);}
+.stat-item:last-child{border-right:none;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--accent);line-height:1;}
+.stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:6px;}
+
+footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:4px;color:var(--accent);}
+.footer-copy{font-size:11px;letter-spacing:1px;color:var(--text3);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .3s;}
+.footer-links a:hover{color:var(--accent);}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+
+@media(max-width:768px){
+  nav{padding:0 20px;height:60px;}
+  .nav-links{gap:12px;}
+  .nav-link{display:none;}
+  .hero{padding:100px 24px 56px;}
+  .hero-top{flex-direction:column;gap:24px;align-items:flex-start;}
+  .filters{padding:0 8px;overflow-x:auto;gap:0;}
+  .filter-btn{padding:14px 14px;white-space:nowrap;}
+  .grid{grid-template-columns:1fr;}
+  .card.wide{grid-column:span 1;height:280px;}
+  .card{aspect-ratio:4/3;}
+  .card-info{opacity:1;transform:none;}
+  .card-overlay{opacity:1;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat-item{padding:24px;}
+  footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
+}
+</style>
+
+<style id="ux-fixes">
+/* === UX FIXES === */
+/* 1. Кнопки одного размера */
+.btn-primary, .btn-ghost {
+  min-height: 56px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+/* 3. Убрать синий цвет подчёркнутых/посещённых ссылок */
+a, a:link, a:visited, a:hover, a:active { color: inherit; }
+u, .underline { text-decoration-color: var(--accent); }
+/* Подчёркивания в тексте — золотым, не синим */
+a[href] { -webkit-tap-highlight-color: transparent; }
+
+@media (max-width: 768px) {
+  /* 2. Прячем кастомный курсор на мобильных */
+  .cursor, .cursor-ring { display: none !important; }
+  * { cursor: auto !important; }
+  /* Кнопки на всю ширину и по центру */
+  .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
+  .hero-btns, .cta-btns, .hero-buttons, .cta-buttons,
+  .hero-cta, .concept-cta, .price-cta, [class*="-buttons"], [class*="-btns"] {
+    flex-direction: column !important; gap: 12px !important; width: 100%;
+  }
+  /* Заголовки не вылезают за экран */
+  h1, h2, .hero-title, .section-title { word-break: break-word; overflow-wrap: break-word; }
+  /* Меньше горизонтального скролла */
+  body { overflow-x: hidden; }
+}
+a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+
+/* === ЧИТАЕМОСТЬ МЕЛКИХ ПОДПИСЕЙ (мягко) === */
+/* Золотые эйбрау/лейблы — ярче и чуть плотнее */
+.section-label, .eyebrow, .hero-eyebrow, .desc-eyebrow, .h-eyebrow,
+.hero-tag, .stage-badge, .flp-label, .pvc-label, .sb-label,
+.price-pill-label, .entry-price-label, .dna-fact-label {
+  color: var(--accent) !important;
+  font-weight: 500 !important;
+  letter-spacing: 3px;
+}
+/* Серые подписи под цифрами и в карточках — заметно светлее */
+.stat-label, .spec-label, .spec-row-label, .row-label, .row-sub,
+.card-meta, .card-tag, .portfolio-tag, .pni-tag, .s-tag, .ex-label,
+.ex-render-tag, .ex-img-caption, .price-pill-sub, .step-meta,
+.process-visual-caption, .dot-label, .hero-badge-label, .f-sub,
+.subtitle, .stage-timer, .path-hint-text {
+  color: #c9bca8 !important;
+  font-weight: 400 !important;
+}
+/* Чипы/теги-кнопки (2-3 встречи, АР·КР и т.п.) — рамка и текст ярче */
+.s-tag, .chip, [class*="-tag"]:not(.card-tag):not(.hero-tag) {
+  color: #d8ccb8 !important;
+  border-color: var(--accent-dim) !important;
+}
+/* Подписи-юниты под крупными цифрами (м², год) — светлее */
+.spec-label, .pni-tag { opacity: 1 !important; }
+/* Метки в карточках портфолио крупнее на 1px для читаемости */
+.card-meta { font-size: 11px !important; }
+.card-tag { font-size: 10px !important; letter-spacing: 2px; }
+/* Табы планировок (1 этаж / 2 этаж / разрез) — активный ярче, неактивные читаемее */
+.flp-tab, .plan-tab { color: #b0a48f !important; }
+.flp-tab.active, .plan-tab.active { color: var(--accent) !important; border-color: var(--accent) !important; }
+/* "Следующий проект" блок */
+.next-proj-label, .pni-dir { color: #b0a48f !important; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">ARCH 3.14</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Главная</a>
+    <a href="portfolio.html" class="nav-link active">Портфолио</a>
+    <a href="start.html" class="nav-link">Как мы работаем</a>
+    <a href="concept.html" class="nav-cta">Начать проект →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-top reveal">
+    <div>
+      <div class="eyebrow">ARCH 3.14 · Портфолио</div>
+      <h1 class="h1">500+ объектов.<br>Каждый — <em>единственный.</em></h1>
+    </div>
+    <p class="hero-desc">Параметрика, бионика, криволинейные формы. Частные дома, общественные пространства, интерьеры. 15 лет — и ни одного повторения.</p>
+  </div>
+</section>
+
+<div class="filters reveal">
+  <button class="filter-btn active" onclick="filter('all',this)">Все проекты</button>
+  <button class="filter-btn" onclick="filter('house',this)">Частные дома</button>
+  <button class="filter-btn" onclick="filter('parametric',this)">Параметрика</button>
+  <button class="filter-btn" onclick="filter('interior',this)">Интерьеры</button>
+  <button class="filter-btn" onclick="filter('commercial',this)">Коммерция</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="stats reveal">
+  <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">реализованных объектов</div></div>
+  <div class="stat-item"><div class="stat-num">15</div><div class="stat-label">лет экспертизы</div></div>
+  <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">параметрических форм</div></div>
+  <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">направления бюро</div></div>
+</div>
+
+<footer>
+  <div class="footer-logo">ARCH 3.14</div>
+  <div class="footer-links">
+    <a href="index.html">Главная</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="concept.html">Начать проект</a>
+  </div>
+  <div class="footer-copy">© 2024–2026 ARCH 3.14</div>
+</footer>
+
+<script>
+const projects = [
+  { id:1,  title:'Дом на холме',       tag:'house',      tagLabel:'Частный дом',   area:'340 м²', year:'2024', wide:true },
+  { id:2,  title:'Curve House',        tag:'parametric', tagLabel:'Параметрика',   area:'280 м²', year:'2024', wide:false },
+  { id:3,  title:'Arc Residence',      tag:'house',      tagLabel:'Частный дом',   area:'420 м²', year:'2023', wide:false },
+  { id:4,  title:'Flow Villa',         tag:'parametric', tagLabel:'Параметрика',   area:'510 м²', year:'2023', wide:false },
+  { id:5,  title:'Silver Ring',        tag:'house',      tagLabel:'Частный дом',   area:'380 м²', year:'2023', wide:false },
+  { id:6,  title:'Лесной дом',         tag:'house',      tagLabel:'Частный дом',   area:'290 м²', year:'2022', wide:true },
+  { id:7,  title:'Wave Pavilion',      tag:'commercial', tagLabel:'Коммерция',     area:'180 м²', year:'2022', wide:false },
+  { id:8,  title:'Organic Loft',       tag:'interior',   tagLabel:'Интерьер',      area:'220 м²', year:'2022', wide:false },
+  { id:9,  title:'Bionic House',       tag:'parametric', tagLabel:'Параметрика',   area:'460 м²', year:'2021', wide:false },
+  { id:10, title:'Панорамный дом',     tag:'house',      tagLabel:'Частный дом',   area:'350 м²', year:'2021', wide:false },
+];
+
+// Images rotation for cards
+const extImgs = ['EXT1','EXT2','EXT3','EXT4','EXT5'];
+
+function renderGrid(items) {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = items.map((p,i) => `
+    <div class="card${p.wide?' wide':''}" data-tag="${p.tag}" onclick="window.location='project.html?id=${p.id}'">
+      <img class="card-img" src="${getImg(i)}" alt="${p.title}" loading="lazy">
+      <div class="card-overlay"></div>
+      <div class="card-num">${String(p.id).padStart(2,'0')}</div>
+      <div class="card-info">
+        <div class="card-title">${p.title}</div>
+        <div class="card-meta">
+          <span class="card-tag">${p.tagLabel}</span>
+          <span class="card-area">${p.area} · ${p.year}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getImg(i) {
+  // rotate through ext images
+  const keys = ['EXT1','EXT2','EXT3','EXT4','EXT5'];
+  return window.IMGS ? window.IMGS['ext'+(i%5+1)] : '';
+}
+
+function filter(tag, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = tag==='all' ? projects : projects.filter(p=>p.tag===tag);
+  renderGrid(filtered);
+  loadImgs();
+}
+
+function loadImgs() {
+  // load images after render
+  if(!window.IMGS) return;
+  document.querySelectorAll('.card-img').forEach((img,i) => {
+    const keys = ['ext1','ext2','ext3','ext4','ext5'];
+    img.src = window.IMGS[keys[i%5]];
+  });
+}
+
+// Inline images from separate script
+const script = document.createElement('script');
+script.onload = () => { renderGrid(projects); loadImgs(); };
+script.onerror = () => { renderGrid(projects); };
+script.src = 'arch314-imgs.js';
+document.head.appendChild(script);
+
+// Reveal
+const ro = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

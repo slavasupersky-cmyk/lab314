@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCH 3.14 — Прайс-лист</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --border: #2a2a2a;
+    --accent: #c9a96e;
+    --accent-dim: #7a6140;
+    --text: #e8e4dc;
+    --text-muted: #888;
+    --highlight: #1e1a14;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .header {
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+    margin-bottom: 48px;
+  }
+
+  .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent-dim);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 36px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+  }
+
+  thead tr {
+    border-bottom: 1px solid var(--accent-dim);
+  }
+
+  th {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 400;
+  }
+
+  th:last-child { text-align: right; }
+
+  td {
+    padding: 14px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  td:last-child {
+    text-align: right;
+    white-space: nowrap;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .row-label {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .row-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  .unit {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
+
+  tr.our {
+    background: var(--highlight);
+  }
+
+  tr.our td:last-child {
+    color: #e8c880;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #0e0e0e;
+    padding: 2px 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .fixed-row td:last-child {
+    font-size: 14px;
+  }
+
+  .separator {
+    height: 1px;
+    background: var(--accent-dim);
+    margin: 4px 0;
+    opacity: 0.3;
+  }
+
+  .footer-note {
+    margin-top: 40px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .footer-note strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 28px; }
+    td { padding: 12px 8px; font-size: 12px; }
+    td:last-child { font-size: 14px; }
+  }
+</style>
+
+<style id="ux-fixes">
+/* === UX FIXES === */
+/* 1. Кнопки одного размера */
+.btn-primary, .btn-ghost {
+  min-height: 56px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+/* 3. Убрать синий цвет подчёркнутых/посещённых ссылок */
+a, a:link, a:visited, a:hover, a:active { color: inherit; }
+u, .underline { text-decoration-color: var(--accent); }
+/* Подчёркивания в тексте — золотым, не синим */
+a[href] { -webkit-tap-highlight-color: transparent; }
+
+@media (max-width: 768px) {
+  /* 2. Прячем кастомный курсор на мобильных */
+  .cursor, .cursor-ring { display: none !important; }
+  * { cursor: auto !important; }
+  /* Кнопки на всю ширину и по центру */
+  .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
+  .hero-btns, .cta-btns, .hero-buttons, .cta-buttons,
+  .hero-cta, .concept-cta, .price-cta, [class*="-buttons"], [class*="-btns"] {
+    flex-direction: column !important; gap: 12px !important; width: 100%;
+  }
+  /* Заголовки не вылезают за экран */
+  h1, h2, .hero-title, .section-title { word-break: break-word; overflow-wrap: break-word; }
+  /* Меньше горизонтального скролла */
+  body { overflow-x: hidden; }
+}
+a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+
+/* === ЧИТАЕМОСТЬ МЕЛКИХ ПОДПИСЕЙ (мягко) === */
+/* Золотые эйбрау/лейблы — ярче и чуть плотнее */
+.section-label, .eyebrow, .hero-eyebrow, .desc-eyebrow, .h-eyebrow,
+.hero-tag, .stage-badge, .flp-label, .pvc-label, .sb-label,
+.price-pill-label, .entry-price-label, .dna-fact-label {
+  color: var(--accent) !important;
+  font-weight: 500 !important;
+  letter-spacing: 3px;
+}
+/* Серые подписи под цифрами и в карточках — заметно светлее */
+.stat-label, .spec-label, .spec-row-label, .row-label, .row-sub,
+.card-meta, .card-tag, .portfolio-tag, .pni-tag, .s-tag, .ex-label,
+.ex-render-tag, .ex-img-caption, .price-pill-sub, .step-meta,
+.process-visual-caption, .dot-label, .hero-badge-label, .f-sub,
+.subtitle, .stage-timer, .path-hint-text {
+  color: #c9bca8 !important;
+  font-weight: 400 !important;
+}
+/* Чипы/теги-кнопки (2-3 встречи, АР·КР и т.п.) — рамка и текст ярче */
+.s-tag, .chip, [class*="-tag"]:not(.card-tag):not(.hero-tag) {
+  color: #d8ccb8 !important;
+  border-color: var(--accent-dim) !important;
+}
+/* Подписи-юниты под крупными цифрами (м², год) — светлее */
+.spec-label, .pni-tag { opacity: 1 !important; }
+/* Метки в карточках портфолио крупнее на 1px для читаемости */
+.card-meta { font-size: 11px !important; }
+.card-tag { font-size: 10px !important; letter-spacing: 2px; }
+/* Табы планировок (1 этаж / 2 этаж / разрез) — активный ярче, неактивные читаемее */
+.flp-tab, .plan-tab { color: #b0a48f !important; }
+.flp-tab.active, .plan-tab.active { color: var(--accent) !important; border-color: var(--accent) !important; }
+/* "Следующий проект" блок */
+.next-proj-label, .pni-dir { color: #b0a48f !important; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="brand">ARCH 3.14</div>
+    <h1>Прайс-лист<br>на проектирование</h1>
+    <div class="subtitle">Полный цикл — все разделы внутри бюро</div>
+  </div>
+
+  <div class="note">
+    Базовые ставки указаны за 1 м² площади объекта. Итоговая стоимость зависит от сложности архитектурных форм, площади и состава разделов. Цены на параметрические и бионические формы — по отдельному расчёту.
+  </div>
+
+  <!-- КОНЦЕПЦИЯ -->
+  <div class="section-title">Концепция</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Услуга</th>
+        <th>Состав</th>
+        <th>Стоимость</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="our fixed-row">
+        <td>
+          <div class="row-label">Концептуальный проект <span class="badge">Вход</span></div>
+          <div class="row-sub">Несколько встреч + скетчи + варианты планировок</div>
+        </td>
+        <td>
+          <div class="row-sub">3–4 варианта концепции<br>Скетчи, планировки, идея<br>2–3 встречи с клиентом</div>
+        </td>
+        <td>200 000 – 300 000 ₽ <span class="unit">фикс</span></td>
+      </tr>
+      <tr class="fixed-row">
+        <td>
+          <div class="row-label">Фотореалистичная визуализация</div>
+          <div class="row-sub">Доработка выбранного варианта</div>
+        </td>
+        <td>
+          <div class="row-sub">3–5 видовых точек<br>Экстерьер + ключевые интерьеры</div>
+        </td>
+        <td>от 150 000 ₽ <span class="unit">фикс</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- АРХИТЕКТУРА -->
+  <div class="section-title">Архитектура и конструктив</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Раздел</th>
+        <th>Описание</th>
+        <th>₽ / м²</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="our">
+        <td>
+          <div class="row-label">АР — Архитектурные решения <span class="badge">Наша цена</span></div>
+          <div class="row-sub">Планы, фасады, разрезы, узлы, спецификации</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 3 000–5 000 ₽/м²</div></td>
+        <td>7 000 ₽</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">КР — Конструктивные решения</div>
+          <div class="row-sub">Фундамент, стены, перекрытия, кровля</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 1 500–3 000 ₽/м²</div></td>
+        <td>3 600 ₽</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ИНЖЕНЕРНЫЕ СЕТИ -->
+  <div class="section-title">Инженерные сети</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Раздел</th>
+        <th>Описание</th>
+        <th>₽ / м²</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="row-label">ОВ — Отопление и вентиляция</div>
+          <div class="row-sub">Теплоснабжение, радиаторы, тёплые полы, вентиляция</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 500–800 ₽/м²</div></td>
+        <td>960 ₽</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">ВК — Водоснабжение и канализация</div>
+          <div class="row-sub">Холодная, горячая вода, канализация</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 500–800 ₽/м²</div></td>
+        <td>960 ₽</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">ЭО — Электроснабжение</div>
+          <div class="row-sub">Силовые цепи, освещение, щитовые</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 500–800 ₽/м²</div></td>
+        <td>960 ₽</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">СС — Слаботочные системы</div>
+          <div class="row-sub">Умный дом, безопасность, сети</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 300–600 ₽/м²</div></td>
+        <td>720 ₽</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">ГСН — Газоснабжение</div>
+          <div class="row-sub">При необходимости</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 300–500 ₽/м²</div></td>
+        <td>600 ₽</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ДИЗАЙН -->
+  <div class="section-title">Дизайн</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Раздел</th>
+        <th>Описание</th>
+        <th>₽ / м²</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="row-label">Дизайн интерьера</div>
+          <div class="row-sub">Планы полов, потолков, развёртки, спецификации, визуализации</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: от 3 500 ₽/м²</div></td>
+        <td>4 200 ₽</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">Световой дизайн</div>
+          <div class="row-sub">Концепция освещения, план расстановки, спецификация</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 500–1 500 ₽/м²</div></td>
+        <td>1 800 ₽</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- УЧАСТОК -->
+  <div class="section-title">Территория</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Раздел</th>
+        <th>Описание</th>
+        <th>Стоимость</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="row-label">ПЗУ — Планировка участка</div>
+          <div class="row-sub">Схема организации, дорожки, зонирование</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 15 000–25 000 ₽/сотка</div></td>
+        <td>30 000 ₽ <span class="unit">/ сотка</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">Ландшафтный дизайн</div>
+          <div class="row-sub">Полный проект озеленения, схемы посадок, ведомости</div>
+        </td>
+        <td><div class="row-sub">Рынок бюро: 25 000–50 000 ₽/сотка</div></td>
+        <td>60 000 ₽ <span class="unit">/ сотка</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- НАДЗОР -->
+  <div class="section-title">Реализация и надзор</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Услуга</th>
+        <th>Описание</th>
+        <th>Стоимость</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="our">
+        <td>
+          <div class="row-label">Технический заказчик <span class="badge">УТП</span></div>
+          <div class="row-sub">Контроль смет, выбор подрядчиков, защита интересов заказчика</div>
+        </td>
+        <td><div class="row-sub">Прозрачные сметы, скидки — клиенту. Работаем на стороне заказчика юридически.</div></td>
+        <td>15–20% <span class="unit">от строй. бюджета</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">Авторский надзор</div>
+          <div class="row-sub">Контроль соответствия проекту, выезды на объект</div>
+        </td>
+        <td><div class="row-sub">По договорённости, зависит от удалённости и кол-ва выездов</div></td>
+        <td>по запросу</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row-label">Технический надзор</div>
+          <div class="row-sub">Контроль качества работ и материалов</div>
+        </td>
+        <td><div class="row-sub">По договорённости</div></td>
+        <td>по запросу</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    <strong>Важно:</strong> Все разделы проектирования выполняются внутри бюро — единая ответственность, единые сроки, единое качество.<br>
+    <strong>Параметрика и бионика:</strong> 15 лет экспертизы, 500+ реализованных объектов со сложными криволинейными формами — стоимость рассчитывается индивидуально.<br>
+    <strong>Цены подлежат уточнению</strong> — ставки не финальные, требуют согласования.
+  </div>
+
+</div>
+</body>
+</html>
