@@ -41,6 +41,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .nav-dropdown-menu a{display:block;padding:12px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);text-decoration:none;transition:color .2s,background .2s;}
 .nav-dropdown-menu a:last-child{border-bottom:none;}
 .nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
+.nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+}
+
 
 .hero{padding:160px 48px 80px;border-bottom:1px solid var(--border);}
 .hero-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
