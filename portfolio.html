@@ -229,15 +229,15 @@ fetch('models.json')
   .catch(() => {
     // Fallback если file://
     allModels = [
+      {id:'riba',    folder:'Riba',     name:'Riba House', type:'Частный дом · органическая форма',  area:'330 м²'},
+      {id:'high',    folder:'High',     name:'High house', type:'Частный дом · 3 уровня',            area:'295 м²'},
       {id:'slope',   folder:'Slope',    name:'Slope',      type:'Частный дом · 2 этажа',             area:'218 м²'},
-      {id:'skyframe', folder:'Skyframe', name:'Skyframe',   type:'Частный дом · 3 этажа',             area:'380 м²'},
+      {id:'skyframe', folder:'Skyframe', name:'Skyframe',  type:'Частный дом · 3 этажа',             area:'380 м²'},
       {id:'square',  folder:'Square',   name:'Square',     type:'Частный дом · 2 этажа',             area:'165 м²'},
       {id:'stream',  folder:'Stream',   name:'Stream',     type:'Частный дом · 1 этаж',              area:'310 м²'},
       {id:'zigzag',  folder:'Zigzag',   name:'Zigzag',     type:'Частный дом · вписан в рельеф',     area:'190 м²'},
       {id:'wing',    folder:'Wing',     name:'Wing',       type:'Частный дом · 2 этажа',             area:'285 м²'},
-      {id:'riba',    folder:'Riba',     name:'Riba House', type:'Частный дом · органическая форма',  area:'330 м²'},
       {id:'villag',  folder:'VillaG',   name:'Villa G',    type:'Частный дом · 2 этажа',             area:'240 м²'},
-      {id:'high',    folder:'High',     name:'High house', type:'Частный дом · 3 уровня',            area:'295 м²'},
     ];
     renderGrid(allModels);
   });
