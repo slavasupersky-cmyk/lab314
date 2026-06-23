@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Дом на холме — ARCH 3.14</title>
+<title>Проект — ARCH 3.14</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200;300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -17,27 +17,25 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5;}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(8,8,8,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
 .nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:5px;color:var(--accent);text-decoration:none;}
 .nav-links{display:flex;gap:24px;align-items:center;}
 .nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .3s;}
 .nav-link:hover{color:var(--accent);}
+.nav-cta{background:var(--accent);color:var(--bg);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;text-decoration:none;transition:background .3s;font-weight:500;}
+.nav-cta:hover{background:var(--accent2);}
 
 /* HERO */
 .hero{height:100vh;position:relative;overflow:hidden;}
-.hero-img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.75);}
+.hero-img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.85);}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.9) 0%,rgba(8,8,8,.2) 60%,transparent 100%);}
 .hero-content{position:absolute;bottom:64px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:flex-end;}
-.hero-title-block{}
 .hero-eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;opacity:0;animation:up .7s .3s forwards;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,96px);font-weight:300;color:var(--white);line-height:1.0;opacity:0;animation:up .8s .5s forwards;}
 .hero-title em{font-style:italic;color:var(--accent);}
 .hero-tags{display:flex;gap:8px;margin-top:16px;opacity:0;animation:up .7s .7s forwards;}
 .hero-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--border2);color:var(--text2);padding:6px 14px;}
-
 .hero-specs{display:flex;flex-direction:column;gap:12px;text-align:right;opacity:0;animation:up .7s .6s forwards;}
 .spec{border-right:2px solid var(--accent);padding-right:16px;}
 .spec-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--accent);line-height:1;}
@@ -52,7 +50,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 
 /* DESCRIPTION */
 .desc-section{padding:80px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;border-bottom:1px solid var(--border);}
-.desc-left{}
 .desc-eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
 .desc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,52px);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:28px;}
 .desc-title em{font-style:italic;color:var(--accent);}
@@ -63,15 +60,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .spec-row-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
 .spec-row-val{font-size:14px;color:var(--text);font-weight:400;}
 
+/* CONCEPT */
+.concept-section{padding:80px 48px;border-bottom:1px solid var(--border);background:var(--bg2);}
+.concept-inner{max-width:760px;}
+.concept-text{font-size:16px;line-height:2;color:var(--text2);margin-top:24px;}
+
 /* GALLERY */
-.gallery{padding:3px;border-top:1px solid var(--border);}
+.gallery{border-top:1px solid var(--border);}
 .gallery-header{padding:40px 48px 32px;display:flex;justify-content:space-between;align-items:center;}
 .section-label{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);}
-.gallery-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;}
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;padding:0 3px 3px;}
 .gimg{position:relative;overflow:hidden;background:var(--surface);aspect-ratio:4/3;cursor:pointer;}
 .gimg.wide{grid-column:span 2;aspect-ratio:auto;height:480px;}
-.gimg img{width:100%;height:100%;object-fit:cover;filter:brightness(.6) saturate(.75);transition:transform .7s,filter .5s;display:block;}
-.gimg:hover img{transform:scale(1.04);filter:brightness(.8) saturate(.95);}
+.gimg img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) saturate(.9);transition:transform .7s,filter .5s;display:block;}
+.gimg:hover img{transform:scale(1.04);filter:brightness(1) saturate(1);}
+.gimg-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#0f0f0f,#1a1a1a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+.gimg-ph-text{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
 
 /* PLANS */
 .plans{padding:80px 48px;border-top:1px solid var(--border);background:var(--bg2);}
@@ -80,24 +84,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .plan-tab{padding:10px 20px;font-size:10px;letter-spacing:3px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .3s;}
 .plan-tab.active{background:rgba(201,169,110,.08);border-color:var(--accent-dim);color:var(--accent);}
 .plan-tab:hover{color:var(--text2);}
-
-.plan-display{position:relative;background:var(--surface);border:1px solid var(--border);overflow:hidden;}
-.plan-img{width:100%;display:none;transition:opacity .4s;}
+.plan-display{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
+.plan-img{width:100%;display:none;}
 .plan-img.active{display:block;}
+.plan-placeholder{padding:120px 48px;text-align:center;}
+.plan-ph-text{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
 
-.plan-legend{margin-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.legend-item{padding:12px 16px;background:var(--surface);border:1px solid var(--border);font-size:11px;color:var(--text2);display:flex;align-items:center;gap:10px;}
-.legend-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+/* SUITABILITY */
+.suitable-section{padding:60px 48px;border-top:1px solid var(--border);}
+.suitable-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
+.suitable-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--border2);color:var(--text2);padding:10px 18px;}
 
-/* LIGHTBOX */
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;align-items:center;justify-content:center;flex-direction:column;}
-.lightbox.open{display:flex;}
-.lightbox-img{max-width:90vw;max-height:85vh;object-fit:contain;}
-.lightbox-close{position:absolute;top:24px;right:32px;font-size:28px;color:var(--text2);cursor:pointer;line-height:1;transition:color .3s;}
-.lightbox-close:hover{color:var(--accent);}
-.lightbox-nav{display:flex;gap:16px;margin-top:20px;}
-.lightbox-btn{padding:10px 20px;font-size:10px;letter-spacing:3px;text-transform:uppercase;border:1px solid var(--border2);color:var(--text2);background:none;cursor:pointer;transition:all .3s;}
-.lightbox-btn:hover{border-color:var(--accent);color:var(--accent);}
+/* OPTIONS */
+.options-section{padding:60px 48px;border-top:1px solid var(--border);background:var(--bg2);}
+.options-text{font-size:14px;line-height:1.9;color:var(--text2);margin-top:16px;max-width:640px;}
 
 /* PROJECT NAV */
 .proj-nav{display:grid;grid-template-columns:1fr 1fr;gap:3px;border-top:1px solid var(--border);}
@@ -110,9 +110,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .pni-arrow{font-size:28px;color:var(--accent-dim);transition:color .3s,transform .3s;}
 .proj-nav-item:hover .pni-arrow{color:var(--accent);transform:translateX(4px);}
 .proj-nav-item.next:hover .pni-arrow{transform:translateX(-4px);}
+.pni-thumb{width:80px;height:60px;object-fit:cover;filter:brightness(.6) saturate(.7);transition:filter .3s;flex-shrink:0;}
+.proj-nav-item:hover .pni-thumb{filter:brightness(.85) saturate(.9);}
 
-.pni-thumb{width:80px;height:60px;object-fit:cover;filter:brightness(.5) saturate(.7);transition:filter .3s;flex-shrink:0;}
-.proj-nav-item:hover .pni-thumb{filter:brightness(.7) saturate(.9);}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:1000;display:none;align-items:center;justify-content:center;flex-direction:column;}
+.lightbox.open{display:flex;}
+.lightbox-img{max-width:90vw;max-height:85vh;object-fit:contain;}
+.lightbox-close{position:absolute;top:24px;right:32px;font-size:28px;color:var(--text2);cursor:pointer;transition:color .3s;}
+.lightbox-close:hover{color:var(--accent);}
+.lightbox-nav{display:flex;gap:16px;margin-top:20px;}
+.lightbox-btn{padding:10px 20px;font-size:10px;letter-spacing:3px;text-transform:uppercase;border:1px solid var(--border2);color:var(--text2);background:none;cursor:pointer;transition:all .3s;}
+.lightbox-btn:hover{border-color:var(--accent);color:var(--accent);}
 
 footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center;}
 .footer-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:13px;letter-spacing:4px;color:var(--accent);}
@@ -123,92 +132,28 @@ footer{padding:40px 48px;border-top:1px solid var(--border);background:var(--bg2
 .reveal.in{opacity:1;transform:none;}
 .d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
 
+a,a:link,a:visited,a:hover,a:active{color:inherit;}
+a[href]{-webkit-tap-highlight-color:transparent;}
+
 @media(max-width:768px){
   nav{padding:0 20px;height:60px;}
   .nav-links{gap:12px;}
-  .nav-link{display:none;}
+  .nav-link:not(.nav-cta){display:none;}
   .hero-content{flex-direction:column;gap:24px;align-items:flex-start;bottom:40px;left:24px;right:24px;}
   .hero-specs{text-align:left;flex-direction:row;flex-wrap:wrap;}
   .spec{border-right:none;border-left:2px solid var(--accent);padding-right:0;padding-left:12px;}
   .breadcrumb{padding:16px 24px;}
   .desc-section{grid-template-columns:1fr;padding:56px 24px;gap:40px;}
+  .concept-section,.suitable-section,.options-section{padding:56px 24px;}
   .gallery-header{padding:28px 24px 20px;}
   .gallery-grid{grid-template-columns:1fr;}
   .gimg.wide{grid-column:span 1;height:240px;}
   .plans{padding:56px 24px;}
   .plans-header{flex-direction:column;gap:16px;align-items:flex-start;}
-  .plan-tabs{flex-wrap:wrap;}
-  .plan-legend{grid-template-columns:1fr 1fr;}
   .proj-nav{grid-template-columns:1fr;}
   .proj-nav-item{padding:28px 24px;}
   footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 }
-</style>
-
-<style id="ux-fixes">
-/* === UX FIXES === */
-/* 1. Кнопки одного размера */
-.btn-primary, .btn-ghost {
-  min-height: 56px;
-  justify-content: center;
-  box-sizing: border-box;
-}
-/* 3. Убрать синий цвет подчёркнутых/посещённых ссылок */
-a, a:link, a:visited, a:hover, a:active { color: inherit; }
-u, .underline { text-decoration-color: var(--accent); }
-/* Подчёркивания в тексте — золотым, не синим */
-a[href] { -webkit-tap-highlight-color: transparent; }
-
-@media (max-width: 768px) {
-  /* 2. Прячем кастомный курсор на мобильных */
-  .cursor, .cursor-ring { display: none !important; }
-  * { cursor: auto !important; }
-  /* Кнопки на всю ширину и по центру */
-  .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
-  .hero-btns, .cta-btns, .hero-buttons, .cta-buttons,
-  .hero-cta, .concept-cta, .price-cta, [class*="-buttons"], [class*="-btns"] {
-    flex-direction: column !important; gap: 12px !important; width: 100%;
-  }
-  /* Заголовки не вылезают за экран */
-  h1, h2, .hero-title, .section-title { word-break: break-word; overflow-wrap: break-word; }
-  /* Меньше горизонтального скролла */
-  body { overflow-x: hidden; }
-}
-a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
-
-/* === ЧИТАЕМОСТЬ МЕЛКИХ ПОДПИСЕЙ (мягко) === */
-/* Золотые эйбрау/лейблы — ярче и чуть плотнее */
-.section-label, .eyebrow, .hero-eyebrow, .desc-eyebrow, .h-eyebrow,
-.hero-tag, .stage-badge, .flp-label, .pvc-label, .sb-label,
-.price-pill-label, .entry-price-label, .dna-fact-label {
-  color: var(--accent) !important;
-  font-weight: 500 !important;
-  letter-spacing: 3px;
-}
-/* Серые подписи под цифрами и в карточках — заметно светлее */
-.stat-label, .spec-label, .spec-row-label, .row-label, .row-sub,
-.card-meta, .card-tag, .portfolio-tag, .pni-tag, .s-tag, .ex-label,
-.ex-render-tag, .ex-img-caption, .price-pill-sub, .step-meta,
-.process-visual-caption, .dot-label, .hero-badge-label, .f-sub,
-.subtitle, .stage-timer, .path-hint-text {
-  color: #c9bca8 !important;
-  font-weight: 400 !important;
-}
-/* Чипы/теги-кнопки (2-3 встречи, АР·КР и т.п.) — рамка и текст ярче */
-.s-tag, .chip, [class*="-tag"]:not(.card-tag):not(.hero-tag) {
-  color: #d8ccb8 !important;
-  border-color: var(--accent-dim) !important;
-}
-/* Подписи-юниты под крупными цифрами (м², год) — светлее */
-.spec-label, .pni-tag { opacity: 1 !important; }
-/* Метки в карточках портфолио крупнее на 1px для читаемости */
-.card-meta { font-size: 11px !important; }
-.card-tag { font-size: 10px !important; letter-spacing: 2px; }
-/* Табы планировок (1 этаж / 2 этаж / разрез) — активный ярче, неактивные читаемее */
-.flp-tab, .plan-tab { color: #b0a48f !important; }
-.flp-tab.active, .plan-tab.active { color: var(--accent) !important; border-color: var(--accent) !important; }
-/* "Следующий проект" блок */
-.next-proj-label, .pni-dir { color: #b0a48f !important; }
 </style>
 </head>
 <body>
@@ -217,95 +162,71 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
   <a href="index.html" class="nav-logo">ARCH 3.14</a>
   <div class="nav-links">
     <a href="portfolio.html" class="nav-link">← Все проекты</a>
-    <a href="concept.html" class="nav-link" style="background:var(--accent);color:var(--bg);padding:10px 20px;font-weight:500;">Начать проект →</a>
+    <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <img class="hero-img" id="heroImg" src="" alt="Дом на холме">
+  <img class="hero-img" id="heroImg" src="" alt="">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-title-block">
-      <div class="hero-eyebrow">ARCH 3.14 · Частный дом · 2024</div>
-      <h1 class="hero-title">Дом<br>на <em>холме</em></h1>
-      <div class="hero-tags">
-        <span class="hero-tag">Параметрика</span>
-        <span class="hero-tag">Частный дом</span>
-        <span class="hero-tag">Полный цикл</span>
-      </div>
+    <div>
+      <div class="hero-eyebrow" id="heroEyebrow">ARCH 3.14</div>
+      <h1 class="hero-title" id="heroTitle">—</h1>
+      <div class="hero-tags" id="heroTags"></div>
     </div>
-    <div class="hero-specs">
-      <div class="spec"><div class="spec-val">340 м²</div><div class="spec-label">площадь</div></div>
-      <div class="spec"><div class="spec-val">2024</div><div class="spec-label">год</div></div>
-      <div class="spec"><div class="spec-val">18 мес</div><div class="spec-label">реализация</div></div>
-    </div>
+    <div class="hero-specs" id="heroSpecs"></div>
   </div>
 </section>
 
-<!-- BREADCRUMB -->
 <div class="breadcrumb">
   <a href="portfolio.html" class="bc-link">Портфолио</a>
   <span class="bc-sep">→</span>
-  <span class="bc-current">Дом на холме</span>
+  <span class="bc-current" id="bcCurrent">—</span>
 </div>
 
-<!-- DESCRIPTION -->
 <section class="desc-section">
-  <div class="desc-left reveal">
+  <div class="reveal">
     <div class="desc-eyebrow">О ПРОЕКТЕ</div>
-    <h2 class="desc-title">Криволинейный объём<br>в <em>природном контексте</em></h2>
-    <div class="desc-text">
-      <p>Задача была сформулирована ёмко: дом должен быть частью холма, а не стоять на нём. Отсюда — плавные переходы между объёмами, металлический фасад который меняет цвет в зависимости от угла света, и планировка, раскрывающаяся к панораме.</p>
-      <p>Параметрическое проектирование позволило просчитать каждый изгиб фасадной панели до миллиметра — и реализовать их без потери точности. 15 лет работы с криволинейными поверхностями дают именно это: не приблизительные формы, а точные.</p>
-      <p>Полный цикл от концепции до ключей занял 24 месяца. В проекте участвовала команда из 8 специалистов внутри бюро — архитекторы, конструкторы, дизайнеры интерьера, ландшафтный архитектор.</p>
-    </div>
+    <h2 class="desc-title" id="descTitle">—</h2>
+    <div class="desc-text" id="descText"></div>
   </div>
-  <div class="desc-right reveal d2">
-    <div class="spec-row"><span class="spec-row-label">Площадь</span><span class="spec-row-val">340 м²</span></div>
-    <div class="spec-row"><span class="spec-row-label">Участок</span><span class="spec-row-val">18 соток</span></div>
-    <div class="spec-row"><span class="spec-row-label">Год</span><span class="spec-row-val">2024</span></div>
-    <div class="spec-row"><span class="spec-row-label">Локация</span><span class="spec-row-val">Московская область</span></div>
-    <div class="spec-row"><span class="spec-row-label">Стиль</span><span class="spec-row-val">Параметрика · Бионика</span></div>
-    <div class="spec-row"><span class="spec-row-label">Состав работ</span><span class="spec-row-val">Полный цикл</span></div>
-    <div class="spec-row"><span class="spec-row-label">Срок реализации</span><span class="spec-row-val">18 месяцев</span></div>
-    <div class="spec-row"><span class="spec-row-label">Фасад</span><span class="spec-row-val">Алюминиевые панели</span></div>
+  <div class="desc-right reveal d2" id="specRows"></div>
+</section>
+
+<section class="concept-section reveal">
+  <div class="concept-inner">
+    <div class="section-label">КОНЦЕПЦИЯ</div>
+    <div class="concept-text" id="conceptText"></div>
   </div>
 </section>
 
-<!-- GALLERY -->
 <section class="gallery">
   <div class="gallery-header reveal">
     <div class="section-label">ЭКСТЕРЬЕР</div>
-    <span style="font-size:11px;color:var(--text3);letter-spacing:1px;">Нажмите на фото для увеличения</span>
+    <span style="font-size:11px;color:var(--text3);letter-spacing:1px;">Нажмите для увеличения</span>
   </div>
   <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
-<!-- PLANS -->
 <section class="plans">
   <div class="plans-header reveal">
     <div class="section-label">ПЛАНИРОВКИ И РАЗРЕЗЫ</div>
-    <div class="plan-tabs">
-      <button class="plan-tab active" onclick="switchPlan('floor1',this)">1 Этаж</button>
-      <button class="plan-tab" onclick="switchPlan('floor2',this)">2 Этаж</button>
-      <button class="plan-tab" onclick="switchPlan('razrez',this)">Разрез</button>
-    </div>
+    <div class="plan-tabs" id="planTabs"></div>
   </div>
-  <div class="plan-display reveal d1">
-    <img class="plan-img active" id="plan-floor1" src="" alt="1 этаж">
-    <img class="plan-img" id="plan-floor2" src="" alt="2 этаж">
-    <img class="plan-img" id="plan-razrez" src="" alt="Разрез">
-  </div>
-  <div class="plan-legend reveal d2">
-    <div class="legend-item"><div class="legend-dot"></div>Гостиная — 61.2 м²</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#888"></div>Кухня-столовая — 57 м²</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#5a4020"></div>Мастер-спальня — 25.9 м²</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#2a2a2a"></div>Сауна и СПА — 15.4 м²</div>
-  </div>
+  <div class="plan-display reveal d1" id="planDisplay"></div>
 </section>
 
-<!-- PROJECT NAV -->
+<section class="suitable-section reveal">
+  <div class="section-label">ПОДХОДИТ ДЛЯ</div>
+  <div class="suitable-tags" id="suitableTags"></div>
+</section>
+
+<section class="options-section reveal">
+  <div class="section-label">ВАРИАНТЫ И ОПЦИИ</div>
+  <div class="options-text" id="optionsText"></div>
+</section>
+
 <div class="proj-nav" id="projNav"></div>
 
 <footer>
@@ -314,7 +235,6 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
   <div class="footer-copy">© 2024–2026 ARCH 3.14</div>
 </footer>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <span class="lightbox-close" onclick="closeLightbox()">✕</span>
   <img class="lightbox-img" id="lightboxImg" src="" alt="">
@@ -325,131 +245,182 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
 </div>
 
 <script>
-const projects = [
-  {id:1,title:'Дом на холме',       tag:'Частный дом',  area:'340 м²',year:'2024'},
-  {id:2,title:'Curve House',        tag:'Параметрика',  area:'280 м²',year:'2024'},
-  {id:3,title:'Arc Residence',      tag:'Частный дом',  area:'420 м²',year:'2023'},
-  {id:4,title:'Flow Villa',         tag:'Параметрика',  area:'510 м²',year:'2023'},
-  {id:5,title:'Silver Ring',        tag:'Частный дом',  area:'380 м²',year:'2023'},
-  {id:6,title:'Лесной дом',         tag:'Частный дом',  area:'290 м²',year:'2022'},
-  {id:7,title:'Wave Pavilion',      tag:'Коммерция',    area:'180 м²',year:'2022'},
-  {id:8,title:'Organic Loft',       tag:'Интерьер',     area:'220 м²',year:'2022'},
-  {id:9,title:'Bionic House',       tag:'Параметрика',  area:'460 м²',year:'2021'},
-  {id:10,title:'Панорамный дом',    tag:'Частный дом',  area:'350 м²',year:'2021'},
-];
-
 const params = new URLSearchParams(window.location.search);
-const currentId = parseInt(params.get('id')) || 1;
-const currentIdx = projects.findIndex(p=>p.id===currentId);
+const currentId = params.get('id') || '';
+let allModels = [];
+let currentModel = null;
+let currentIdx = 0;
+let galleryUrls = [];
 
-// Load images
-const script = document.createElement('script');
-script.src = 'arch314-imgs.js';
-script.onload = initImages;
-script.onerror = initImages;
-document.head.appendChild(script);
+fetch('models.json')
+  .then(r => r.json())
+  .then(models => {
+    allModels = models;
+    currentIdx = models.findIndex(m => m.id === currentId);
+    if(currentIdx < 0) currentIdx = 0;
+    currentModel = models[currentIdx];
+    render(currentModel);
+  });
 
-function initImages() {
-  const imgs = window.IMGS || {};
-  const extKeys = ['ext1','ext2','ext3','ext4','ext5'];
+function render(m) {
+  const folder = `assets/images/models/${m.folder}`;
+  document.title = `${m.name} — ARCH 3.14`;
 
   // Hero
-  document.getElementById('heroImg').src = imgs['ext1'] || '';
+  document.getElementById('heroImg').src = `${folder}/cover.jpeg`;
+  document.getElementById('heroEyebrow').textContent = `ARCH 3.14 · ${m.type}`;
+  document.getElementById('heroTitle').innerHTML = m.slogan
+    ? m.slogan.replace(/([—.!?])(\s|$)/, '<em>$1</em>$2')
+    : m.name;
+  document.getElementById('bcCurrent').textContent = m.name;
 
-  // Gallery — 5 exterior photos
-  const grid = document.getElementById('galleryGrid');
-  const galleryImgs = [
-    {key:'ext1',wide:true}, {key:'ext2',wide:false}, {key:'ext3',wide:false},
-    {key:'ext4',wide:false}, {key:'ext5',wide:false},
-  ];
-  grid.innerHTML = galleryImgs.map((g,i)=>`
-    <div class="gimg${g.wide?' wide':''}" onclick="openLightbox(${i})">
-      <img src="${imgs[g.key]||''}" alt="Экстерьер ${i+1}" loading="lazy">
+  // Hero tags
+  document.getElementById('heroTags').innerHTML = [
+    m.type.split('·')[0].trim(),
+    'Параметрика',
+    'Полный цикл'
+  ].map(t => `<span class="hero-tag">${t}</span>`).join('');
+
+  // Hero specs
+  document.getElementById('heroSpecs').innerHTML = [
+    {val: m.area, label: 'площадь'},
+    {val: m.floors + ' эт.', label: 'этажей'},
+    {val: m.bedrooms, label: 'спальни'},
+  ].filter(s => s.val && s.val !== 'None' && s.val !== 'undefined').map(s => `
+    <div class="spec">
+      <div class="spec-val">${s.val}</div>
+      <div class="spec-label">${s.label}</div>
     </div>
   `).join('');
-  window._galleryImgs = galleryImgs.map(g=>imgs[g.key]||'');
 
-  // Plans — use dark versions on dark bg
-  document.getElementById('plan-floor1').src = imgs['floor1_w'] || imgs['floor1_b'] || '';
-  document.getElementById('plan-floor2').src = imgs['floor2_w'] || imgs['floor2_b'] || '';
-  document.getElementById('plan-razrez').src = imgs['razrez_w'] || imgs['razrez_b'] || '';
+  // Description
+  document.getElementById('descTitle').innerHTML = `${m.name} —<br><em>${m.slogan}</em>`;
+  document.getElementById('descText').innerHTML = `<p>${m.description}</p>`;
+
+  // Spec rows
+  const specData = [
+    {label:'Площадь', val: m.area},
+    {label:'Этажей', val: m.floors},
+    {label:'Спален', val: m.bedrooms},
+    {label:'Санузлов', val: m.bathrooms},
+    {label:'Высота потолков', val: m.ceilingHeight},
+    {label:'Участок (мин.)', val: m.minPlot},
+    {label:'Гараж', val: m.garage},
+    {label:'Особенности', val: m.features},
+    {label:'Конструктив', val: m.construction},
+  ].filter(s => s.val && s.val !== 'None' && s.val !== 'undefined' && s.val !== 'null');
+
+  document.getElementById('specRows').innerHTML = specData.map(s => `
+    <div class="spec-row">
+      <span class="spec-row-label">${s.label}</span>
+      <span class="spec-row-val">${s.val}</span>
+    </div>
+  `).join('');
+
+  // Concept
+  document.getElementById('conceptText').textContent = m.concept || '';
+
+  // Gallery — exterior images
+  const extImgs = ['exterior-01','exterior-02','exterior-03','exterior-04'].map(n =>
+    `${folder}/${n}.jpeg`
+  );
+  galleryUrls = [`${folder}/cover.jpeg`, ...extImgs];
+
+  document.getElementById('galleryGrid').innerHTML = galleryUrls.map((src, i) => `
+    <div class="gimg${i===0?' wide':''}" onclick="openLightbox(${i})">
+      <img src="${src}" alt="${m.name} ${i+1}" loading="${i===0?'eager':'lazy'}"
+           onerror="this.parentElement.innerHTML='<div class=gimg-placeholder><div class=gimg-ph-text>Загружаем</div></div>'">
+    </div>
+  `).join('');
+
+  // Plans
+  const plans = [
+    {key:'floor1', label:'1 Этаж', src:`${folder}/plan-floor-1.png`},
+    {key:'floor2', label:'2 Этаж', src:`${folder}/plan-floor-2.png`},
+    {key:'section', label:'Разрез', src:`${folder}/section.png`},
+  ];
+
+  const tabs = document.getElementById('planTabs');
+  const display = document.getElementById('planDisplay');
+  tabs.innerHTML = plans.map((p,i) => `
+    <button class="plan-tab${i===0?' active':''}" onclick="switchPlan('${p.key}',this)">${p.label}</button>
+  `).join('');
+
+  display.innerHTML = plans.map((p,i) => `
+    <img class="plan-img${i===0?' active':''}" id="plan-${p.key}" src="${p.src}" alt="${p.label}"
+         onerror="this.style.display='none'">
+  `).join('');
+
+  // Suitable for
+  if(m.suitableFor) {
+    const tags = m.suitableFor.split('·').map(t => t.trim()).filter(Boolean);
+    document.getElementById('suitableTags').innerHTML = tags.map(t =>
+      `<span class="suitable-tag">${t}</span>`
+    ).join('');
+  }
+
+  // Options
+  document.getElementById('optionsText').textContent = m.options || '';
 
   // Project nav
-  const prev = currentIdx > 0 ? projects[currentIdx-1] : null;
-  const next = currentIdx < projects.length-1 ? projects[currentIdx+1] : null;
-  const nav = document.getElementById('projNav');
-  nav.innerHTML = `
+  const prev = currentIdx > 0 ? allModels[currentIdx-1] : null;
+  const next = currentIdx < allModels.length-1 ? allModels[currentIdx+1] : null;
+  document.getElementById('projNav').innerHTML = `
     ${prev ? `
     <a href="project.html?id=${prev.id}" class="proj-nav-item">
       <span class="pni-arrow">←</span>
-      <img class="pni-thumb" src="${imgs[extKeys[(currentIdx-1)%5]]||''}" alt="${prev.title}">
+      <img class="pni-thumb" src="assets/images/models/${prev.folder}/cover.jpeg" alt="${prev.name}"
+           onerror="this.style.display='none'">
       <div>
         <div class="pni-dir">Предыдущий проект</div>
-        <div class="pni-title">${prev.title}</div>
-        <div class="pni-tag">${prev.tag} · ${prev.area}</div>
+        <div class="pni-title">${prev.name}</div>
+        <div class="pni-tag">${prev.area}</div>
       </div>
     </a>` : '<div></div>'}
     ${next ? `
     <a href="project.html?id=${next.id}" class="proj-nav-item next">
       <div>
         <div class="pni-dir">Следующий проект</div>
-        <div class="pni-title">${next.title}</div>
-        <div class="pni-tag">${next.tag} · ${next.area}</div>
+        <div class="pni-title">${next.name}</div>
+        <div class="pni-tag">${next.area}</div>
       </div>
-      <img class="pni-thumb" src="${imgs[extKeys[(currentIdx+1)%5]]||''}" alt="${next.title}">
+      <img class="pni-thumb" src="assets/images/models/${next.folder}/cover.jpeg" alt="${next.name}"
+           onerror="this.style.display='none'">
       <span class="pni-arrow">→</span>
     </a>` : '<div></div>'}
   `;
-
-  // Update title
-  const proj = projects[currentIdx];
-  if(proj) {
-    document.title = `${proj.title} — ARCH 3.14`;
-    document.querySelector('.hero-title').innerHTML = proj.title.includes(' ') 
-      ? proj.title.replace(' ','<br>на <em>').replace(/$/,'</em>') 
-      : proj.title;
-  }
 }
 
-// Plan switcher
 function switchPlan(key, btn) {
-  document.querySelectorAll('.plan-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.plan-img').forEach(img=>{
-    img.classList.toggle('active', img.id==='plan-'+key);
+  document.querySelectorAll('.plan-img').forEach(img => {
+    img.classList.toggle('active', img.id === 'plan-' + key);
   });
 }
 
-// Lightbox
 let lbIdx = 0;
 function openLightbox(i) {
   lbIdx = i;
-  document.getElementById('lightboxImg').src = window._galleryImgs[i]||'';
+  document.getElementById('lightboxImg').src = galleryUrls[i] || '';
   document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
-function closeLightbox(){
+function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow='';
+  document.body.style.overflow = '';
 }
-function lightboxNext(){
-  lbIdx=(lbIdx+1)%window._galleryImgs.length;
-  document.getElementById('lightboxImg').src=window._galleryImgs[lbIdx]||'';
-}
-function lightboxPrev(){
-  lbIdx=(lbIdx-1+window._galleryImgs.length)%window._galleryImgs.length;
-  document.getElementById('lightboxImg').src=window._galleryImgs[lbIdx]||'';
-}
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('lightbox').classList.contains('open'))return;
-  if(e.key==='ArrowRight')lightboxNext();
-  if(e.key==='ArrowLeft')lightboxPrev();
-  if(e.key==='Escape')closeLightbox();
+function lightboxNext() { lbIdx=(lbIdx+1)%galleryUrls.length; document.getElementById('lightboxImg').src=galleryUrls[lbIdx]; }
+function lightboxPrev() { lbIdx=(lbIdx-1+galleryUrls.length)%galleryUrls.length; document.getElementById('lightboxImg').src=galleryUrls[lbIdx]; }
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='ArrowRight') lightboxNext();
+  if(e.key==='ArrowLeft') lightboxPrev();
+  if(e.key==='Escape') closeLightbox();
 });
 
-// Reveal
-const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+const ro = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 </script>
 </body>
 </html>
