@@ -19,7 +19,6 @@ html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
 a,a:link,a:visited,a:hover,a:active{color:inherit;text-decoration:none;}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);transition:background .4s;}
 nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid var(--border);}
 .nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:15px;letter-spacing:4px;color:var(--accent);text-decoration:none;}
@@ -33,7 +32,7 @@ nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid var(--border);}
 .nav-dropdown>a::after{display:none;}
 .nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--surface);border:1px solid var(--border2);min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;}
 .nav-dropdown-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
-.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);white-space:nowrap;}
+.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);white-space:nowrap;transition:color .2s,background .2s;}
 .nav-dropdown-menu a::after{display:none!important;}
 .nav-dropdown-menu a:last-child{border-bottom:none;}
 .nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
@@ -42,61 +41,58 @@ nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid var(--border);}
 .nav-cta:hover{background:var(--accent2)!important;}
 @media(max-width:900px){nav{padding:20px 24px;}.nav-links a:not(.nav-cta){display:none;}}
 
-/* HERO */
-.page-hero{padding:160px 48px 80px;border-bottom:1px solid var(--border);}
-.page-hero-inner{display:flex;justify-content:space-between;align-items:flex-end;}
-.eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
-.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,84px);font-weight:300;color:var(--white);line-height:1;}
+/* HERO — компактный */
+.page-hero{padding:140px 48px 60px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;}
+.eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,5vw,72px);font-weight:300;color:var(--white);line-height:1;}
 .h1 em{font-style:italic;color:var(--accent);}
-.hero-desc{max-width:400px;font-size:14px;line-height:1.85;color:var(--text2);}
-
-/* SECTIONS */
-.services{padding:0 48px 120px;}
-.svc-block{padding-top:80px;border-top:1px solid var(--border);margin-top:80px;}
-.svc-block:first-child{margin-top:0;}
-.svc-label{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:32px;}
-.svc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.5vw,52px);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:48px;}
-.svc-title em{font-style:italic;color:var(--accent);}
-
-/* СТРОКИ */
-.svc-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:0;border-bottom:1px solid var(--border);transition:background .2s;}
-.svc-row:first-child{border-top:1px solid var(--border);}
-.svc-row:hover{background:var(--surface);}
-.svc-row.header-row{background:var(--bg2);}
-.svc-row.header-row:hover{background:var(--bg2);}
-.svc-cell{padding:24px 32px;}
-.svc-row.header-row .svc-cell{padding:16px 32px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
-.row-name{font-size:14px;color:var(--white);font-weight:400;margin-bottom:6px;}
-.row-name .badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;background:rgba(201,169,110,.12);color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;margin-left:10px;vertical-align:middle;}
-.row-sub{font-size:12px;color:var(--text2);line-height:1.6;margin-top:4px;}
-.row-market{font-size:12px;color:var(--text3);}
-.row-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--accent);}
-.row-unit{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:4px;}
+.hero-desc{max-width:360px;font-size:13px;line-height:1.8;color:var(--text2);}
 
 /* NOTE */
-.svc-note{background:var(--bg2);border:1px solid var(--border);padding:32px;margin-bottom:80px;font-size:13px;line-height:1.8;color:var(--text2);}
+.svc-note{padding:20px 48px;border-bottom:1px solid var(--border);background:var(--bg2);font-size:12px;line-height:1.7;color:var(--text3);}
 .svc-note strong{color:var(--accent);font-weight:400;}
 
-/* TOTAL */
-.svc-total{margin-top:80px;padding:48px;background:var(--surface);border:1px solid var(--border2);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
-.total-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
-.total-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,44px);font-weight:300;color:var(--white);line-height:1.2;}
-.total-desc{font-size:13px;line-height:1.9;color:var(--text2);margin-top:16px;}
-.total-sum{text-align:right;}
-.total-from{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
-.total-num{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,60px);font-weight:300;color:var(--accent);}
-.total-sub{font-size:12px;color:var(--text3);margin-top:8px;line-height:1.6;}
+/* ГЛАВНАЯ ТАБЛИЦА */
+.services{padding:0 48px 100px;}
+
+/* Блок секции — компактный */
+.svc-block{padding-top:56px;border-top:1px solid var(--border);margin-top:56px;}
+.svc-block:first-child{margin-top:0;}
+.svc-block-header{display:flex;align-items:baseline;gap:24px;margin-bottom:24px;}
+.svc-num{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);}
+.svc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,2.5vw,36px);font-weight:300;color:var(--white);}
+.svc-title em{font-style:italic;color:var(--accent);}
+
+/* Строки таблицы — 2 колонки: название + цена */
+.svc-row{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;padding:18px 0;border-bottom:1px solid var(--border);transition:background .2s;}
+.svc-row:first-child{border-top:1px solid var(--border);}
+.svc-row:hover{background:var(--surface);padding-left:16px;padding-right:16px;margin:0 -16px;}
+.row-name{font-size:14px;color:var(--white);font-weight:400;display:flex;align-items:center;gap:10px;}
+.row-name .badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;background:rgba(201,169,110,.1);color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;flex-shrink:0;}
+.row-sub{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5;}
+.row-price{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--accent);white-space:nowrap;text-align:right;}
+.row-unit{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);text-align:right;margin-top:3px;}
+
+/* ИТОГ */
+.svc-total{margin-top:56px;padding:40px 48px;background:var(--surface);border:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;gap:48px;}
+.total-left .total-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.total-left .total-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,2.5vw,36px);font-weight:300;color:var(--white);}
+.total-left .total-desc{font-size:13px;line-height:1.8;color:var(--text2);margin-top:10px;max-width:560px;}
+.total-right{text-align:right;flex-shrink:0;}
+.total-from{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.total-num{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.5vw,52px);font-weight:300;color:var(--accent);}
+.total-sub{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6;}
 
 /* CTA */
-.svc-cta{padding:120px 48px;border-top:1px solid var(--border);text-align:center;}
+.svc-cta{padding:100px 48px;border-top:1px solid var(--border);text-align:center;}
 .svc-cta .section-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);display:inline-block;margin-bottom:16px;}
-.svc-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,60px);font-weight:300;color:var(--white);margin-bottom:40px;line-height:1.1;}
+.svc-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,56px);font-weight:300;color:var(--white);margin-bottom:36px;line-height:1.1;}
 .svc-cta h2 em{font-style:italic;color:var(--accent);}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
 .btn-primary{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:var(--bg)!important;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:16px 32px;transition:background .3s;}
 .btn-primary:hover{background:var(--accent2);}
 .btn-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border2);color:var(--text2)!important;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 32px;transition:border-color .3s,color .3s;}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent)!important;}
-.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
 
 /* FOOTER */
 footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(--bg2);display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;}
@@ -110,16 +106,14 @@ footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(
 .footer-bottom{padding:24px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;}
 .footer-copy{font-size:12px;letter-spacing:1px;color:var(--text3);}
 
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s;}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
 .reveal.in{opacity:1;transform:none;}
 
 @media(max-width:900px){
-  .page-hero{padding:120px 24px 60px;}
-  .page-hero-inner{flex-direction:column;gap:24px;}
+  .page-hero{flex-direction:column;gap:24px;padding:120px 24px 48px;}
   .services{padding:0 24px 80px;}
-  .svc-row{grid-template-columns:1fr;}
-  .svc-total{grid-template-columns:1fr;}
-  .total-sum{text-align:left;}
+  .svc-total{flex-direction:column;padding:32px 24px;}
+  .total-right{text-align:left;}
   .svc-cta{padding:80px 24px;}
   footer{grid-template-columns:1fr;padding:48px 24px;}
   .footer-bottom{padding:20px 24px;flex-direction:column;gap:8px;}
@@ -146,185 +140,157 @@ footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="page-hero">
-  <div class="page-hero-inner reveal">
-    <div>
-      <div class="eyebrow">ARCH 3.14 · Услуги</div>
-      <h1 class="h1">Полный цикл.<br><em>Все разделы внутри.</em></h1>
-    </div>
-    <p class="hero-desc">Все разделы проектирования — внутри бюро. Никаких субподрядчиков, единая ответственность, прозрачные цены.</p>
+<div class="page-hero reveal">
+  <div>
+    <div class="eyebrow">ARCH 3.14 · Услуги</div>
+    <h1 class="h1">Полный цикл.<br><em>Все разделы внутри.</em></h1>
   </div>
+  <p class="hero-desc">Все разделы проектирования — внутри бюро. Никаких субподрядчиков, единая ответственность, прозрачные цены.</p>
 </div>
 
-<!-- CONTENT -->
+<div class="svc-note">
+  Цены указаны за 1 м² площади объекта. Итоговая стоимость зависит от сложности форм и состава разделов. <strong>Параметрические и бионические формы — по отдельному расчёту.</strong>
+</div>
+
 <div class="services">
 
-  <div class="svc-note reveal" style="margin-top:80px;">
-    Базовые ставки указаны за 1 м² площади объекта. Итоговая стоимость зависит от сложности архитектурных форм и состава разделов. <strong>Параметрические и бионические формы — по отдельному расчёту.</strong>
-  </div>
-
-  <!-- КОНЦЕПЦИЯ -->
+  <!-- 01 КОНЦЕПЦИЯ -->
   <div class="svc-block reveal">
-    <div class="svc-label">01 — Концепция</div>
-    <h2 class="svc-title">Концепция<br>и <em>эскизы</em></h2>
-    <div class="svc-row header-row">
-      <div class="svc-cell">Услуга</div>
-      <div class="svc-cell">Рынок</div>
-      <div class="svc-cell">Наша цена</div>
+    <div class="svc-block-header">
+      <span class="svc-num">01</span>
+      <h2 class="svc-title">Концепция и <em>эскизы</em></h2>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">Концептуальный проект <span class="badge">Вход</span></div>
         <div class="row-sub">3–4 варианта концепции · Скетчи и планировки · 2–3 встречи</div>
       </div>
-      <div class="svc-cell"><div class="row-market">—</div></div>
-      <div class="svc-cell">
+      <div>
         <div class="row-price">200 000 – 300 000 ₽</div>
-        <div class="row-unit">фиксированная стоимость</div>
+        <div class="row-unit">фикс</div>
       </div>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">Фотореалистичная визуализация</div>
         <div class="row-sub">3–5 видовых точек · Экстерьер + ключевые интерьеры</div>
       </div>
-      <div class="svc-cell"><div class="row-market">—</div></div>
-      <div class="svc-cell">
+      <div>
         <div class="row-price">от 150 000 ₽</div>
-        <div class="row-unit">фиксированная стоимость</div>
+        <div class="row-unit">фикс</div>
       </div>
     </div>
   </div>
 
-  <!-- АРХИТЕКТУРА -->
+  <!-- 02 АРХИТЕКТУРА -->
   <div class="svc-block reveal">
-    <div class="svc-label">02 — Проектирование</div>
-    <h2 class="svc-title">Архитектура<br>и <em>конструктив</em></h2>
-    <div class="svc-row header-row">
-      <div class="svc-cell">Раздел</div>
-      <div class="svc-cell">Рынок бюро</div>
-      <div class="svc-cell">Наша цена</div>
+    <div class="svc-block-header">
+      <span class="svc-num">02</span>
+      <h2 class="svc-title">Архитектура и <em>конструктив</em></h2>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
-        <div class="row-name">АР — Архитектурные решения <span class="badge">Наша цена</span></div>
+      <div>
+        <div class="row-name">АР — Архитектурные решения</div>
         <div class="row-sub">Планы, фасады, разрезы, узлы, спецификации</div>
       </div>
-      <div class="svc-cell"><div class="row-market">3 000 – 5 000 ₽/м²</div></div>
-      <div class="svc-cell">
+      <div>
         <div class="row-price">7 000 ₽</div>
         <div class="row-unit">за м²</div>
       </div>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">КР — Конструктивные решения</div>
         <div class="row-sub">Фундамент, стены, перекрытия, кровля</div>
       </div>
-      <div class="svc-cell"><div class="row-market">1 500 – 3 000 ₽/м²</div></div>
-      <div class="svc-cell">
+      <div>
         <div class="row-price">3 600 ₽</div>
         <div class="row-unit">за м²</div>
       </div>
     </div>
   </div>
 
-  <!-- ИНЖЕНЕРИЯ -->
+  <!-- 03 ИНЖЕНЕРИЯ -->
   <div class="svc-block reveal">
-    <div class="svc-label">03 — Инженерные сети</div>
-    <h2 class="svc-title">Инженерные<br><em>разделы</em></h2>
-    <div class="svc-row header-row">
-      <div class="svc-cell">Раздел</div>
-      <div class="svc-cell">Рынок бюро</div>
-      <div class="svc-cell">Наша цена</div>
+    <div class="svc-block-header">
+      <span class="svc-num">03</span>
+      <h2 class="svc-title">Инженерные <em>разделы</em></h2>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">ОВ — Отопление и вентиляция</div>
         <div class="row-sub">Теплоснабжение, радиаторы, тёплые полы, вентиляция</div>
       </div>
-      <div class="svc-cell"><div class="row-market">500 – 800 ₽/м²</div></div>
-      <div class="svc-cell"><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
+      <div><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">ВК — Водоснабжение и канализация</div>
         <div class="row-sub">Холодная, горячая вода, канализация</div>
       </div>
-      <div class="svc-cell"><div class="row-market">500 – 800 ₽/м²</div></div>
-      <div class="svc-cell"><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
+      <div><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">ЭО — Электроснабжение</div>
         <div class="row-sub">Силовые цепи, освещение, щитовые</div>
       </div>
-      <div class="svc-cell"><div class="row-market">500 – 800 ₽/м²</div></div>
-      <div class="svc-cell"><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
+      <div><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">СС — Слаботочные системы</div>
         <div class="row-sub">Умный дом, безопасность, сети</div>
       </div>
-      <div class="svc-cell"><div class="row-market">300 – 600 ₽/м²</div></div>
-      <div class="svc-cell"><div class="row-price">720 ₽</div><div class="row-unit">за м²</div></div>
+      <div><div class="row-price">720 ₽</div><div class="row-unit">за м²</div></div>
     </div>
   </div>
 
-  <!-- ДИЗАЙН -->
+  <!-- 04 ДИЗАЙН -->
   <div class="svc-block reveal">
-    <div class="svc-label">04 — Дизайн</div>
-    <h2 class="svc-title">Дизайн<br><em>интерьера</em></h2>
-    <div class="svc-row header-row">
-      <div class="svc-cell">Раздел</div>
-      <div class="svc-cell">Рынок бюро</div>
-      <div class="svc-cell">Наша цена</div>
+    <div class="svc-block-header">
+      <span class="svc-num">04</span>
+      <h2 class="svc-title">Дизайн и <em>ландшафт</em></h2>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">Дизайн интерьера</div>
         <div class="row-sub">Планы полов, потолков, развёртки, спецификации, визуализации</div>
       </div>
-      <div class="svc-cell"><div class="row-market">от 3 500 ₽/м²</div></div>
-      <div class="svc-cell"><div class="row-price">4 200 ₽</div><div class="row-unit">за м²</div></div>
+      <div><div class="row-price">4 200 ₽</div><div class="row-unit">за м²</div></div>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">Световой дизайн</div>
         <div class="row-sub">Концепция освещения, план расстановки, спецификация</div>
       </div>
-      <div class="svc-cell"><div class="row-market">500 – 1 500 ₽/м²</div></div>
-      <div class="svc-cell"><div class="row-price">1 800 ₽</div><div class="row-unit">за м²</div></div>
+      <div><div class="row-price">1 800 ₽</div><div class="row-unit">за м²</div></div>
     </div>
     <div class="svc-row">
-      <div class="svc-cell">
+      <div>
         <div class="row-name">Ландшафтный дизайн</div>
         <div class="row-sub">Вертикальная планировка, мощение, посадки, освещение</div>
       </div>
-      <div class="svc-cell"><div class="row-market">от 2 000 ₽/м²</div></div>
-      <div class="svc-cell"><div class="row-price">2 400 ₽</div><div class="row-unit">за м²</div></div>
+      <div><div class="row-price">2 400 ₽</div><div class="row-unit">за сотку</div></div>
     </div>
   </div>
 
   <!-- ИТОГ -->
   <div class="svc-total reveal">
-    <div>
+    <div class="total-left">
       <div class="total-label">Полный проект под ключ</div>
-      <div class="total-title">Все разделы.<br>Один коллектив.</div>
-      <div class="total-desc">АР + КР + ОВ + ВК + ЭО + СС + дизайн интерьера + световой дизайн + ландшафт. Единая ответственность, единый контракт, единый срок.</div>
+      <div class="total-title">Все разделы. Один коллектив.</div>
+      <div class="total-desc">АР + КР + ОВ + ВК + ЭО + СС + дизайн интерьера + световой дизайн + ландшафт. Единая ответственность, единый контракт. Стоимость концепции засчитывается.</div>
     </div>
-    <div class="total-sum">
+    <div class="total-right">
       <div class="total-from">от</div>
       <div class="total-num">7 000 ₽/м²</div>
-      <div class="total-sub">стоимость полного архитектурного проекта<br>концепция засчитывается в стоимость</div>
+      <div class="total-sub">полный архитектурный проект</div>
     </div>
   </div>
 
 </div>
 
-<!-- CTA -->
 <div class="svc-cta">
   <div class="section-label">НАЧАТЬ</div>
   <h2>Начнём с <em>концепции?</em></h2>
@@ -334,7 +300,6 @@ footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div>
     <div class="footer-logo">ARCH 3.14</div>
