@@ -2,437 +2,154 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Концепция и эскизы — ARCH 3.14</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Unbounded:wght@200;300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200;300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:         #080808;
-  --bg2:        #0e0e0e;
-  --surface:    #131313;
-  --border:     #1a1a1a;
-  --border2:    #272727;
-  --accent:     #c9a96e;
-  --accent2:    #e8c880;
-  --accent-dim: #9c7d4a;
-  --text:       #ede8df;
-  --text2:      #9a8e80;
-  --text3:      #3e3830;
-  --white:      #f5f0e8;
+:root{
+  --bg:#080808;--bg2:#0e0e0e;--surface:#131313;
+  --border:#1a1a1a;--border2:#272727;
+  --accent:#c9a96e;--accent2:#e8c880;--accent-dim:#6b4f28;
+  --text:#ede8df;--text2:#9a8e80;--text3:#3e3830;--white:#f5f0e8;
 }
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+a,a:link,a:visited,a:hover,a:active{color:inherit;text-decoration:none;}
 
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 9999; opacity: 0.5;
-}
+/* CURSOR */
+.cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(201,169,110,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s ease-out;}
+@media(max-width:900px){.cursor,.cursor-ring{display:none!important;}*{cursor:auto!important;}}
 
-/* ── NAV ── */
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  min-0vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 72px;
-  position: relative;
-  overflow: hidden;
-}
-.hero-left {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 64px 80px 48px;
-  position: relative; z-index: 2;
-}
-.hero-right {
-  position: relative; overflow: hidden;
-  background: var(--surface);
-}
-.hero-right img {
-  width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(0.55) saturate(0.7);
-  transition: transform 8s ease;
-  transform: scale(1.05);
-}
-.hero-right img.loaded { transform: scale(1); }
-
-.hero-right-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(8,8,8,0.5) 0%, transparent 40%);
-}
-
-.h-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
-.h-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(52px, 5.5vw, 82px); font-weight: 300;
-  line-height: 1.0; color: var(--white); margin-bottom: 32px;
-}
-.h-title em { font-style: italic; color: var(--accent); }
-.h-desc { font-size: 15px; line-height: 1.85; color: var(--text2); max-width: 460px; margin-bottom: 40px; }
-
-.price-pill {
-  display: inline-flex; flex-direction: column;
-  border: 1px solid var(--accent-dim); padding: 20px 28px;
-  margin-bottom: 40px; background: rgba(201,169,110,0.04);
-  max-width: 360px;
-}
-.price-pill-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
-.price-pill-row { display: flex; gap: 24px; align-items: baseline; }
-.price-pill-val {
-  font-family: 'Cormorant Garamond', serif; font-size: 36px;
-  font-weight: 300; color: var(--accent); line-height: 1;
-}
-.price-pill-sep { color: var(--text3); font-size: 14px; }
-.price-pill-sub { font-size: 12px; color: var(--text2); margin-top: 8px; line-height: 1.5; }
-
-.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--accent); color: var(--bg);
-  font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500;
-  letter-spacing: 2px; text-transform: uppercase;
-  padding: 16px 28px; text-decoration: none; border: none; cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
-.btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-.btn-ghost {
-  display: inline-flex; align-items: center; gap: 10px;
-  border: 1px solid var(--border2); color: var(--text2);
-  font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 2px;
-  text-transform: uppercase; padding: 16px 28px; text-decoration: none;
-  transition: border-color 0.3s, color 0.3s;
-}
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-/* badge на фото */
-.hero-badge {
-  position: absolute; bottom: 48px; right: 48px;
-  background: rgba(8,8,8,0.88); border: 1px solid var(--border2);
-  border-left: 2px solid var(--accent);
-  padding: 14px 20px; backdrop-filter: blur(10px); z-index: 2;
-}
-.hero-badge-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
-.hero-badge-val { font-size: 13px; color: var(--text2); }
-
-/* ── ЧТО ВХОДИТ ── */
-.what {
-  padding: 120px 48px;
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-}
-.what-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 72px; }
-.section-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
-.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 300; color: var(--white); line-height: 1.1; }
-.section-title em { font-style: italic; color: var(--accent); }
-
-.what-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-.what-item {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 40px 32px; position: relative; overflow: hidden;
-  transition: border-color 0.3s;
-}
-.what-item:hover { border-color: var(--accent-dim); }
-.what-num {
-  font-family: 'Cormorant Garamond', serif; font-size: 56px;
-  font-weight: 300; color: var(--border2); line-height: 1;
-  margin-bottom: 20px; transition: color 0.3s;
-}
-.what-item:hover .what-num { color: var(--accent-dim); }
-.what-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--white); margin-bottom: 12px; }
-.what-desc { font-size: 13px; line-height: 1.8; color: var(--text2); }
-
-/* ── РЕЗУЛЬТАТ — ПРИМЕРЫ ── */
-.examples {
-  padding: 120px 48px;
-  border-top: 1px solid var(--border);
-}
-.examples-header { margin-bottom: 56px; }
-
-.examples-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 3px;
-}
-.ex-group { display: flex; flex-direction: column; gap: 3px; }
-.ex-label {
-  padding: 16px 24px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--accent);
-  display: flex; align-items: center; gap: 12px;
-}
-.ex-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent); }
-
-.ex-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
-.ex-img {
-  position: relative; overflow: hidden; background: var(--surface);
-  aspect-ratio: 4/3;
-}
-.ex-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) saturate(0.75); transition: transform 0.6s, filter 0.4s; display: block; }
-.ex-img:hover img { transform: scale(1.04); filter: brightness(0.85) saturate(0.9); }
-.ex-img-caption {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 12px 16px;
-  background: linear-gradient(to top, rgba(8,8,8,0.9), transparent);
-  font-size: 11px; color: var(--text2); letter-spacing: 1px;
-}
-
-/* Большое фото рендера */
-.ex-render {
-  position: relative; overflow: hidden; background: var(--surface);
-  grid-column: 1 / -1;
-  height: 460px;
-}
-.ex-render img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65) saturate(0.8); transition: transform 0.8s, filter 0.5s; }
-.ex-render:hover img { transform: scale(1.03); filter: brightness(0.8) saturate(0.95); }
-.ex-render-info {
-  position: absolute; bottom: 40px; left: 40px; right: 40px;
-  display: flex; justify-content: space-between; align-items: flex-end;
-}
-.ex-render-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--white); }
-.ex-render-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-top: 6px; }
-.ex-render-note {
-  font-size: 11px; color: var(--text2); text-align: right;
-  border: 1px solid var(--border2); padding: 10px 16px;
-  background: rgba(8,8,8,0.7); backdrop-filter: blur(8px);
-}
-
-/* placeholder SVG */
-.sketch-placeholder {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--surface);
-  position: relative;
-}
-
-/* ── КАК ПРОХОДИТ ── */
-.process {
-  padding: 120px 48px;
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-}
-.process-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: start; margin-top: 64px;
-}
-.process-steps { display: flex; flex-direction: column; gap: 2px; }
-.process-step {
-  display: grid; grid-template-columns: 48px 1fr;
-  gap: 24px; padding: 28px 24px;
-  border: 1px solid var(--border); background: var(--surface);
-  transition: border-color 0.3s;
-}
-.process-step:hover { border-color: var(--accent-dim); }
-.ps-num {
-  font-family: 'Cormorant Garamond', serif; font-size: 32px;
-  font-weight: 300; color: var(--accent-dim); line-height: 1.1;
-  transition: color 0.3s;
-}
-.process-step:hover .ps-num { color: var(--accent); }
-.ps-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 8px; }
-.ps-desc { font-size: 13px; line-height: 1.75; color: var(--text2); }
-.ps-time {
-  display: inline-block; margin-top: 10px;
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--accent); border: 1px solid var(--accent-dim);
-  padding: 3px 10px;
-}
-
-.process-visual {
-  position: sticky; top: 100px;
-}
-.process-visual-img {
-  width: 100%; aspect-ratio: 3/4; overflow: hidden; background: var(--surface);
-  border: 1px solid var(--border); position: relative;
-}
-.process-visual-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) saturate(0.75); }
-.process-visual-caption {
-  margin-top: 20px; padding: 20px 24px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-left: 2px solid var(--accent);
-}
-.pvc-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
-.pvc-text { font-size: 13px; line-height: 1.7; color: var(--text2); }
-
-/* ── CTA ── */
-.cta {
-  padding: 160px 48px;
-  border-top: 1px solid var(--border);
-  text-align: center; position: relative; overflow: hidden;
-}
-.cta::before {
-  content: '01';
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Cormorant Garamond', serif; font-size: 500px;
-  font-weight: 300; color: rgba(201,169,110,0.025);
-  pointer-events: none; line-height: 1; white-space: nowrap;
-}
-.cta .section-label { display: inline-block; margin-bottom: 20px; }
-.cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 72px); font-weight: 300; color: var(--white); line-height: 1.05; margin-bottom: 24px; }
-.cta h2 em { font-style: italic; color: var(--accent); }
-.cta p { font-size: 15px; color: var(--text2); max-width: 480px; margin: 0 auto 48px; line-height: 1.8; }
-.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-/* divider с путём */
-.path-hint {
-  margin-top: 64px; padding-top: 48px;
-  border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  gap: 20px; flex-wrap: wrap;
-}
-.path-hint-text { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
-.path-steps { display: flex; align-items: center; gap: 8px; }
-.path-step { font-size: 11px; color: var(--text3); padding: 6px 14px; border: 1px solid var(--border); }
-.path-step.current { color: var(--accent); border-color: var(--accent-dim); background: rgba(201,169,110,0.05); }
-.path-arrow { color: var(--text3); font-size: 12px; }
-
-/* ── FOOTER ── */
-footer {
-  padding: 40px 48px;
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-  display: flex; justify-content: space-between; align-items: center;
-}
-.footer-logo { font-family: 'Unbounded', sans-serif; font-weight: 200; font-size: 13px; letter-spacing: 4px; color: var(--accent); }
-.footer-copy { font-size: 11px; letter-spacing: 1px; color: var(--text3); }
-.footer-links { display: flex; gap: 24px; }
-.footer-links a { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); text-decoration: none; transition: color 0.3s; }
-.footer-links a:hover { color: var(--accent); }
-
-/* ── ANIMATIONS ── */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal.in { opacity: 1; transform: none; }
-.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
-
-/* ── MOBILE ── */
-@media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; min-0vh; }
-  .hero-left { padding: 40px 24px 48px; }
-  .hero-right { height: 60vw; min-height: 100vh; }
-  .what { padding: 72px 24px; }
-  .what-header { flex-direction: column; gap: 24px; align-items: flex-start; }
-  .what-grid { grid-template-columns: repeat(4, 1fr); }
-  .examples { padding: 72px 24px; }
-  .examples-grid { grid-template-columns: 1fr; }
-  .ex-render { height: 280px; }
-  .ex-render-info { flex-direction: column; gap: 12px; }
-  .process { padding: 72px 24px; }
-  .process-grid { grid-template-columns: 1fr; gap: 48px; }
-  .process-visual { position: static; }
-  .cta { padding: 100px 24px; }
-  .cta::before { font-size: 200px; }
-  .cta-btns { flex-direction: column; align-items: center; }
-  .path-steps { flex-wrap: wrap; justify-content: center; }
-  footer { flex-direction: column; gap: 16px; padding: 32px 24px; text-align: center; }
-  .footer-links { justify-content: center; }
-}
-@media(max-width:900px){}
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);transition:background .4s;}
-nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid #1e1e1e;}
-.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:15px;letter-spacing:4px;color:#c9a96e;text-decoration:none;}
-.nav-logo span{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:4px;color:#8a8072;display:block;margin-top:3px;text-transform:uppercase;}
+nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:15px;letter-spacing:4px;color:var(--accent);text-decoration:none;}
+.nav-logo span{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:4px;color:var(--text3);display:block;margin-top:3px;text-transform:uppercase;}
 .nav-links{display:flex;gap:36px;align-items:center;}
-.nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c4b8a4;text-decoration:none;transition:color .3s;position:relative;white-space:nowrap;}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#c9a96e;transition:width .3s;}
-.nav-links a:hover,.nav-links a.nav-active{color:#c9a96e;}
+.nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .3s;position:relative;white-space:nowrap;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+.nav-links a:hover,.nav-links a.nav-active{color:var(--accent);}
 .nav-links a:hover::after,.nav-links a.nav-active::after{width:100%;}
 .nav-dropdown{position:relative;display:inline-flex;align-items:center;}
 .nav-dropdown>a::after{display:none;}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);background:#151515;border:1px solid #2a2a2a;min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--surface);border:1px solid var(--border2);min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;}
 .nav-dropdown-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
-.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid #1e1e1e;color:#c4b8a4;text-decoration:none;transition:color .2s,background .2s;white-space:nowrap;}
+.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);white-space:nowrap;transition:color .2s,background .2s;}
 .nav-dropdown-menu a::after{display:none!important;}
 .nav-dropdown-menu a:last-child{border-bottom:none;}
-.nav-dropdown-menu a:hover{background:#1e1e1e;color:#c9a96e;}
-.nav-cta{font-size:11px!important;letter-spacing:2px;text-transform:uppercase;color:#080808!important;background:#c9a96e;padding:10px 20px;text-decoration:none;font-weight:500;transition:background .3s!important;}
+.nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
+.nav-cta{font-size:11px!important;letter-spacing:2px;text-transform:uppercase;color:var(--bg)!important;background:var(--accent);padding:10px 20px;font-weight:500;transition:background .3s!important;}
 .nav-cta::after{display:none!important;}
-.nav-cta:hover{background:#e8c880!important;}
+.nav-cta:hover{background:var(--accent2)!important;}
 @media(max-width:900px){nav{padding:20px 24px;}.nav-links a:not(.nav-cta){display:none;}}
 
-/* Cursor */
-body { cursor: none; }
-.cursor { position: fixed; width: 8px; height: 8px; background: #c9a96e; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s, width 0.3s, height 0.3s; }
-.cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(201,169,110,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease-out; }
-@media(max-width:900px){ .cursor, .cursor-ring { display: none !important; } * { cursor: auto !important; } }
-</style>
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:120px 64px 80px 48px;}
+.hero-eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,4.5vw,68px);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:24px;}
+.hero-title em{font-style:italic;color:var(--accent);}
+.hero-desc{font-size:14px;line-height:1.85;color:var(--text2);margin-bottom:32px;max-width:420px;}
+.price-box{border:1px solid var(--border2);background:rgba(201,169,110,.04);padding:24px 28px;margin-bottom:28px;}
+.price-box-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:16px;}
+.price-box-row{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+.price-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--accent);}
+.price-sep{color:var(--text3);font-size:18px;}
+.price-sub{font-size:11px;letter-spacing:1px;color:var(--text3);margin-top:8px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--bg)!important;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:14px 28px;transition:background .3s;}
+.btn-primary:hover{background:var(--accent2);}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border2);color:var(--text2)!important;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:14px 28px;transition:border-color .3s,color .3s;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)!important;}
 
-<style id="ux-fixes">
-/* === UX FIXES === */
-/* 1. Кнопки одного размера */
-.btn-primary, .btn-ghost {
-  min-height: 56px;
-  justify-content: center;
-  box-sizing: border-box;
-}
-/* 3. Убрать синий цвет подчёркнутых/посещённых ссылок */
-a, a:link, a:visited, a:hover, a:active { color: inherit; }
-u, .underline { text-decoration-color: var(--accent); }
-/* Подчёркивания в тексте — золотым, не синим */
-a[href] { -webkit-tap-highlight-color: transparent; }
+.hero-right{position:relative;overflow:hidden;}
+.hero-right img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.6) saturate(.8);}
+.hero-badge{position:absolute;bottom:40px;right:40px;background:rgba(8,8,8,.88);border:1px solid var(--border2);border-left:2px solid var(--accent);padding:14px 20px;}
+.hero-badge-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.hero-badge-val{font-size:13px;color:var(--text2);}
 
-@media (max-width: 768px) {
-  /* 2. Прячем кастомный курсор на мобильных */
-  .cursor, .cursor-ring { display: none !important; }
-  * { cursor: auto !important; }
-  /* Кнопки на всю ширину и по центру */
-  .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
-  .hero-btns, .cta-btns, .hero-buttons, .cta-buttons,
-  .hero-cta, .concept-cta, .price-cta, [class*="-buttons"], [class*="-btns"] {
-    flex-direction: column !important; gap: 12px !important; width: 100%;
-  }
-  /* Заголовки не вылезают за экран */
-  h1, h2, .hero-title, .section-title { word-break: break-word; overflow-wrap: break-word; }
-  /* Меньше горизонтального скролла */
-  body { overflow-x: hidden; }
-  /* 4. Прячем "Вы здесь" на мобильных */
-  .path-hint { display: none !important; }
-}
-a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+/* RESULTS */
+.results{padding:100px 48px;border-top:1px solid var(--border);}
+.results-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+.section-label{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.5vw,52px);font-weight:300;color:var(--white);line-height:1.1;}
+.section-title em{font-style:italic;color:var(--accent);}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.result-item{background:var(--surface);border:1px solid var(--border);padding:36px 28px;transition:border-color .3s;}
+.result-item:hover{border-color:var(--accent-dim);}
+.result-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--border2);line-height:1;margin-bottom:20px;transition:color .3s;}
+.result-item:hover .result-num{color:var(--accent-dim);}
+.result-title{font-size:15px;color:var(--white);font-weight:400;margin-bottom:12px;line-height:1.4;}
+.result-desc{font-size:13px;line-height:1.75;color:var(--text2);}
 
-/* === ЧИТАЕМОСТЬ МЕЛКИХ ПОДПИСЕЙ (мягко) === */
-/* Золотые эйбрау/лейблы — ярче и чуть плотнее */
-.section-label, .eyebrow, .hero-eyebrow, .desc-eyebrow, .h-eyebrow,
-.hero-tag, .stage-badge, .flp-label, .pvc-label, .sb-label,
-.price-pill-label, .entry-price-label, .dna-fact-label {
-  color: var(--accent) !important;
-  font-weight: 500 !important;
-  letter-spacing: 3px;
+/* GALLERY */
+.gallery{border-top:1px solid var(--border);}
+.gallery-header{padding:60px 48px 40px;display:flex;justify-content:space-between;align-items:flex-end;}
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;padding:0 3px 3px;}
+.gimg{overflow:hidden;background:var(--surface);aspect-ratio:4/3;}
+.gimg.wide{grid-column:span 2;aspect-ratio:auto;height:420px;}
+.gimg img{width:100%;height:100%;object-fit:cover;filter:brightness(.85);transition:transform .6s,filter .4s;display:block;}
+.gimg:hover img{transform:scale(1.04);filter:brightness(1);}
+.gimg-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#0f0f0f,#1a1a1a);display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
+
+/* PROCESS */
+.process{padding:100px 48px;border-top:1px solid var(--border);background:var(--bg2);}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
+.pstep{padding:36px 28px;background:var(--surface);border:1px solid var(--border);}
+.pstep-num{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.pstep-title{font-size:15px;color:var(--white);font-weight:400;margin-bottom:10px;}
+.pstep-desc{font-size:12px;line-height:1.75;color:var(--text2);}
+
+/* CTA */
+.cta{padding:120px 48px;border-top:1px solid var(--border);text-align:center;}
+.cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,60px);font-weight:300;color:var(--white);margin:16px 0 40px;line-height:1.1;}
+.cta h2 em{font-style:italic;color:var(--accent);}
+.cta-form{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+.cta-input{background:var(--surface);border:1px solid var(--border2);color:var(--text);font-family:'Jost',sans-serif;font-size:14px;font-weight:300;padding:16px 20px;outline:none;transition:border-color .3s;width:100%;}
+.cta-input:focus{border-color:var(--accent);}
+.cta-input::placeholder{color:var(--text3);}
+.cta-submit{background:var(--accent);color:var(--bg);font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:background .3s;width:100%;}
+.cta-submit:hover{background:var(--accent2);}
+.cta-note{font-size:12px;color:var(--text3);margin-top:8px;}
+
+/* FOOTER */
+footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(--bg2);display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;}
+.footer-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:14px;letter-spacing:4px;color:var(--accent);margin-bottom:16px;}
+.footer-about{font-size:12px;line-height:1.8;color:var(--text3);max-width:280px;margin-bottom:24px;}
+.footer-contact{font-size:13px;color:var(--text2);line-height:2;}
+.footer-contact a{color:var(--accent);}
+.footer-col h4{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:20px;}
+.footer-col a{display:block;font-size:13px;color:var(--text2);padding:5px 0;transition:color .3s;border-bottom:1px solid var(--border);}
+.footer-col a:hover{color:var(--accent);}
+.footer-bottom{padding:24px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;}
+.footer-copy{font-size:12px;letter-spacing:1px;color:var(--text3);}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-left{padding:100px 24px 48px;}
+  .hero-right{height:60vw;min-height:260px;}
+  .results,.gallery-header,.process,.cta{padding:80px 24px;}
+  .results-grid,.process-steps{grid-template-columns:1fr 1fr;}
+  .gallery-grid{grid-template-columns:1fr;}
+  .gimg.wide{grid-column:1;height:260px;}
+  footer{grid-template-columns:1fr;padding:48px 24px;}
+  .footer-bottom{padding:20px 24px;flex-direction:column;gap:8px;}
 }
-/* Серые подписи под цифрами и в карточках — заметно светлее */
-.stat-label, .spec-label, .spec-row-label, .row-label, .row-sub,
-.card-meta, .card-tag, .portfolio-tag, .pni-tag, .s-tag, .ex-label,
-.ex-render-tag, .ex-img-caption, .price-pill-sub, .step-meta,
-.process-visual-caption, .dot-label, .hero-badge-label, .f-sub,
-.subtitle, .stage-timer, .path-hint-text {
-  color: #c9bca8 !important;
-  font-weight: 400 !important;
-}
-/* Чипы/теги-кнопки (2-3 встречи, АР·КР и т.п.) — рамка и текст ярче */
-.s-tag, .chip, [class*="-tag"]:not(.card-tag):not(.hero-tag) {
-  color: #d8ccb8 !important;
-  border-color: var(--accent-dim) !important;
-}
-/* Подписи-юниты под крупными цифрами (м², год) — светлее */
-.spec-label, .pni-tag { opacity: 1 !important; }
-/* Метки в карточках портфолио крупнее на 1px для читаемости */
-.card-meta { font-size: 11px !important; }
-.card-tag { font-size: 10px !important; letter-spacing: 2px; }
-/* Табы планировок (1 этаж / 2 этаж / разрез) — активный ярче, неактивные читаемее */
-.flp-tab, .plan-tab { color: #b0a48f !important; }
-.flp-tab.active, .plan-tab.active { color: var(--accent) !important; border-color: var(--accent) !important; }
-/* "Следующий проект" блок */
-.next-proj-label, .pni-dir { color: #b0a48f !important; }
 </style>
 </head>
 <body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <nav id="navbar">
   <a href="index.html" class="nav-logo">ARCH 3.14<span>АРХИТЕКТУРНОЕ БЮРО</span></a>
   <div class="nav-links">
@@ -450,123 +167,98 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
     <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<!-- NAV -->
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <div class="h-eyebrow reveal">ARCH 3.14 · Этап 01</div>
-    <h1 class="h-title reveal d1">
-      Концепция<br>
-      и <em>эскизы</em><br>
-      вашего дома
-    </h1>
-    <p class="h-desc reveal d2">Первый шаг — без риска и больших обязательств. Несколько встреч, три-четыре варианта того, каким может быть ваш дом. Скетчи, планировки, идеи. И — фотореалистичная визуализация выбранного варианта.</p>
-
-    <div class="price-pill reveal d2">
-      <div class="price-pill-label">Стоимость этапа · фиксированная</div>
-      <div class="price-pill-row">
-        <div class="price-pill-val">200 000 ₽</div>
-        <div class="price-pill-sep">+</div>
-        <div class="price-pill-val">100 000 ₽</div>
+    <div class="hero-eyebrow reveal">ARCH 3.14 · Этап 01</div>
+    <h1 class="hero-title reveal d1">Концепция<br>и <em>эскизы</em><br>вашего дома</h1>
+    <p class="hero-desc reveal d2">Первый шаг — без риска и больших обязательств. Несколько встреч, три-четыре варианта того, каким может быть ваш дом. Скетчи, планировки, идеи и фотореалистичная визуализация.</p>
+    <div class="price-box reveal d2">
+      <div class="price-box-label">Стоимость этапа · Фиксированная</div>
+      <div class="price-box-row">
+        <div class="price-val">200 000 ₽</div>
+        <div class="price-sep">+</div>
+        <div class="price-val">100 000 ₽</div>
       </div>
-      <div class="price-pill-sub">эскизы и концепция &nbsp;·&nbsp; фотореалистичная визуализация</div>
+      <div class="price-sub">эскизы и концепция · фотореалистичная визуализация</div>
     </div>
-
     <div class="hero-btns reveal d3">
       <a href="#cta" class="btn-primary">Начать с концепции →</a>
       <a href="start.html" class="btn-ghost">Весь путь проекта</a>
     </div>
   </div>
-
   <div class="hero-right">
-    <img src="assets/images/concept/hero.jpg" alt="Концепция дома" id="heroImg">
-    <div class="hero-right-overlay"></div>
+    <img src="assets/images/concept/hero.jpg" alt="Концепция дома"
+         onerror="this.style.display='none'">
     <div class="hero-badge">
       <div class="hero-badge-label">Срок этапа</div>
       <div class="hero-badge-val">6–8 недель</div>
     </div>
-  
-    <div class="what-item reveal d3">
-      <div class="what-num">04</div>
-      <div class="what-title">Смета с ориентировочным бюджетом</div>
-      <div class="what-desc">После выбора концепции подготовим ориентировочную смету на реализацию — чтобы вы понимали порядок цифр ещё до начала рабочего проектирования.</div>
-    </div>
-</div>
+  </div>
 </section>
 
-<!-- ЧТО ВХОДИТ -->
-<section class="what">
-  <div class="what-header reveal">
+<!-- РЕЗУЛЬТАТЫ -->
+<section class="results">
+  <div class="results-header reveal">
     <div>
       <div class="section-label">ЧТО ВХОДИТ</div>
       <h2 class="section-title">Четыре результата<br><em>первого этапа</em></h2>
     </div>
     <a href="#cta" class="btn-ghost">Записаться →</a>
   </div>
-  <div class="what-grid">
-    <div class="what-item reveal">
-      <div class="what-num">01</div>
-      <div class="what-title">Вы поймёте, какой дом хотите</div>
-      <div class="what-desc">Три-четыре разных направления — разные характеры, разные идеи, разные способы жить на вашем участке. Не одно навязанное решение, а выбор.</div>
+  <div class="results-grid">
+    <div class="result-item reveal">
+      <div class="result-num">01</div>
+      <div class="result-title">Вы поймёте, какой дом хотите</div>
+      <div class="result-desc">Три-четыре разных направления — разные характеры, идеи, способы жить на вашем участке. Не одно навязанное решение, а выбор.</div>
     </div>
-    <div class="what-item reveal d1">
-      <div class="what-num">02</div>
-      <div class="what-title">Скетчи и планировки</div>
-      <div class="what-desc">Ручные и цифровые эскизы каждого варианта с планировочными решениями. Вы видите объём, характер пространства, расположение на участке.</div>
+    <div class="result-item reveal d1">
+      <div class="result-num">02</div>
+      <div class="result-title">Скетчи и планировки</div>
+      <div class="result-desc">Ручные и цифровые эскизы каждого варианта с планировочными решениями. Вы видите объём, характер пространства, расположение на участке.</div>
     </div>
-    <div class="what-item reveal d2">
-      <div class="what-num">03</div>
-      <div class="what-title">Фотореалистичная визуализация</div>
-      <div class="what-desc">Выбранный вариант прорабатываем до детального рендера — с материалами, светом, ландшафтом. Вы видите дом таким, каким он будет на самом деле.</div>
+    <div class="result-item reveal d2">
+      <div class="result-num">03</div>
+      <div class="result-title">Фотореалистичная визуализация</div>
+      <div class="result-desc">Выбранный вариант прорабатывается до детального рендера — с материалами, светом, ландшафтом. Можно распечатать на доску желаний.</div>
+    </div>
+    <div class="result-item reveal d3">
+      <div class="result-num">04</div>
+      <div class="result-title">Смета с ориентировочным бюджетом</div>
+      <div class="result-desc">После выбора концепции подготовим ориентировочную смету на реализацию — чтобы понимать порядок цифр ещё до начала рабочего проектирования.</div>
     </div>
   </div>
 </section>
 
-<!-- ПРИМЕРЫ -->
-<section class="examples">
-  <div class="examples-header reveal">
-    <div class="section-label">НА ВЫХОДЕ</div>
-    <h2 class="section-title">Как это <em>выглядит</em></h2>
-  </div>
-
-  <div class="reveal">
-    <!-- Скетчи -->
-    <div class="ex-label">Эскизы и скетчи</div>
-    <div class="ex-imgs" style="margin-bottom: 3px;">
-      <div class="ex-img">
-        <img src="assets/images/concept/example-01.jpg" alt="Архитектурный скетч">
-        <div class="ex-img-caption">Концептуальный скетч · вариант А</div>
-      </div>
-      <div class="ex-img">
-        <img src="assets/images/concept/example-02.jpg" alt="Планировка">
-        <div class="ex-img-caption">Планировочное решение · 1 этаж</div>
-      </div>
-      <div class="ex-img">
-        <img src="assets/images/concept/example-03.jpg" alt="Скетч фасада">
-        <div class="ex-img-caption">Эскиз фасада · вариант Б</div>
-      </div>
-      <div class="ex-img">
-        <img src="assets/images/concept/example-04.jpg" alt="Скетч интерьера">
-        <div class="ex-img-caption">Эскиз интерьера · гостиная</div>
-      </div>
+<!-- ГАЛЕРЕЯ -->
+<section class="gallery">
+  <div class="gallery-header reveal">
+    <div>
+      <div class="section-label">НА ВЫХОДЕ</div>
+      <h2 class="section-title">Как это <em>выглядит</em></h2>
     </div>
-
-    <!-- Рендер -->
-    <div class="ex-label">Фотореалистичная визуализация</div>
-    <div class="ex-render">
-      <img src="assets/images/concept/render.png" alt="Финальный рендер">
-      <div class="ex-render-info">
-        <div>
-          <div class="ex-render-title">Финальная визуализация</div>
-          <div class="ex-render-tag">Параметрика · Частный дом · 420 м²</div>
-        </div>
-        <div class="ex-render-note">
-          Здесь будут ваши реальные фото<br>
-          — добавим после первых проектов
-        </div>
-      </div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gimg wide">
+      <img src="assets/images/concept/example-01.jpg" alt="Эскиз"
+           onerror="this.innerHTML='<div class=gimg-placeholder>Эскизы и скетчи</div>';this.style.display='block'">
+    </div>
+    <div class="gimg">
+      <img src="assets/images/concept/example-02.jpg" alt="Вариант А"
+           onerror="this.innerHTML='<div class=gimg-placeholder>Вариант А</div>';this.style.display='block'">
+    </div>
+    <div class="gimg">
+      <img src="assets/images/concept/example-03.jpg" alt="Планировка"
+           onerror="this.innerHTML='<div class=gimg-placeholder>Планировка</div>';this.style.display='block'">
+    </div>
+    <div class="gimg">
+      <img src="assets/images/concept/example-04.jpg" alt="Вариант Б"
+           onerror="this.innerHTML='<div class=gimg-placeholder>Вариант Б</div>';this.style.display='block'">
+    </div>
+    <div class="gimg wide">
+      <img src="assets/images/concept/render.png" alt="Визуализация"
+           onerror="this.innerHTML='<div class=gimg-placeholder>Фотореалистичная визуализация</div>';this.style.display='block'">
     </div>
   </div>
 </section>
@@ -574,109 +266,112 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
 <!-- КАК ПРОХОДИТ -->
 <section class="process">
   <div class="reveal">
-    <div class="section-label">КАК ЭТО РАБОТАЕТ</div>
-    <h2 class="section-title">Четыре шага<br><em>концептуального этапа</em></h2>
+    <div class="section-label">КАК ПРОХОДИТ</div>
+    <h2 class="section-title">Четыре встречи.<br><em>Шесть недель.</em></h2>
   </div>
-  <div class="process-grid">
-    <div class="process-steps">
-      <div class="process-step reveal d1">
-        <div class="ps-num">1</div>
-        <div>
-          <div class="ps-title">Первая встреча</div>
-          <div class="ps-desc">Приезжаем к вам или принимаем в офисе. Разговариваем о том, как вы хотите жить — без технических заданий и таблиц. Смотрим участок, если возможно.</div>
-          <div class="ps-time">1,5–2 часа · бесплатно</div>
-        </div>
-      </div>
-      <div class="process-step reveal d1">
-        <div class="ps-num">2</div>
-        <div>
-          <div class="ps-title">Разработка вариантов</div>
-          <div class="ps-desc">Готовим три-четыре концептуальных варианта. Скетчи, планировки, характер каждого решения. На второй встрече — обсуждаем и выбираем направление.</div>
-          <div class="ps-time">2–3 недели</div>
-        </div>
-      </div>
-      <div class="process-step reveal d1">
-        <div class="ps-num">3</div>
-        <div>
-          <div class="ps-title">Доработка концепции</div>
-          <div class="ps-desc">Дорабатываем выбранный вариант — уточняем планировки, пространство, детали. Финальная встреча для согласования перед визуализацией.</div>
-          <div class="ps-time">1–2 недели</div>
-        </div>
-      </div>
-      <div class="process-step reveal d1">
-        <div class="ps-num">4</div>
-        <div>
-          <div class="ps-title">Фотореалистичная визуализация</div>
-          <div class="ps-desc">Готовим финальные рендеры утверждённого варианта — экстерьер, ключевые интерьеры, ландшафт. Вы видите будущий дом и говорите «да, это оно».</div>
-          <div class="ps-time">2–3 недели</div>
-        </div>
-      </div>
+  <div class="process-steps">
+    <div class="pstep reveal">
+      <div class="pstep-num">Неделя 1–2</div>
+      <div class="pstep-title">Знакомство и бриф</div>
+      <div class="pstep-desc">Рассказываете как хотите жить. Показываете участок. Обсуждаем бюджет, стиль, приоритеты.</div>
     </div>
-
-    <div class="process-visual reveal d2">
-      <div class="process-visual-img">
-        <img src="assets/images/concept/process.jpg" alt="Встреча с архитектором">
-      </div>
-      <div class="process-visual-caption">
-        <div class="pvc-label">Важно знать</div>
-        <div class="pvc-text">Первая встреча — бесплатно и без обязательств. Вы можете познакомиться с командой, задать все вопросы и только после этого принять решение о старте концептуального этапа.</div>
-      </div>
+    <div class="pstep reveal d1">
+      <div class="pstep-num">Неделя 2–4</div>
+      <div class="pstep-title">Варианты концепции</div>
+      <div class="pstep-desc">Три-четыре эскизных варианта. Встреча — выбираем направление, корректируем.</div>
+    </div>
+    <div class="pstep reveal d2">
+      <div class="pstep-num">Неделя 4–6</div>
+      <div class="pstep-title">Финальный эскиз</div>
+      <div class="pstep-desc">Доработка выбранного варианта. Детальные планировки, фасады, разрезы.</div>
+    </div>
+    <div class="pstep reveal d3">
+      <div class="pstep-num">Неделя 6–8</div>
+      <div class="pstep-title">Визуализация и смета</div>
+      <div class="pstep-desc">Фотореалистичный рендер выбранной концепции. Ориентировочная смета на реализацию.</div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta" id="cta">
-  <div class="section-label reveal">НАЧАТЬ</div>
-  <h2 class="reveal d1">Запишитесь<br>на <em>первую встречу</em></h2>
-  <p class="reveal d2">Бесплатно. Без обязательств. Просто разговор о том, каким может быть ваш дом.</p>
-  <div class="cta-btns reveal d2">
-    <a href="tel:+74996477680" class="btn-primary">+7 499 647 76 80 →</a>
-    <a href="mailto:mail@arch314.ru" class="btn-ghost">Написать нам</a>
-  </div>
-
-  <!-- Путь проекта -->
-  <div class="path-hint reveal d3">
-    <div class="path-hint-text">Вы здесь</div>
-    <div class="path-steps">
-      <a href="concept.html" class="path-step current">01 · Концепция</a>
-      <div class="path-arrow">→</div>
-      <a href="start.html" class="path-step">02 · Проект</a>
-      <div class="path-arrow">→</div>
-      <a href="start.html" class="path-step">03 · Реализация</a>
-      <div class="path-arrow">→</div>
-      <a href="start.html" class="path-step">04 · Жизнь в доме</a>
-    </div>
-    <a href="start.html" class="btn-ghost" style="font-size:10px; padding: 10px 18px;">Смотреть весь путь →</a>
+  <div class="section-label reveal">НАЧАТЬ ПРОЕКТ</div>
+  <h2 class="reveal">Обсудим<br>ваш <em>будущий дом?</em></h2>
+  <div class="cta-form reveal">
+    <input class="cta-input" type="text" placeholder="Ваше имя">
+    <input class="cta-input" type="tel" placeholder="Телефон">
+    <input class="cta-input" type="text" placeholder="Коротко о проекте — участок, площадь, бюджет">
+    <button class="cta-submit">Записаться на встречу →</button>
+    <div class="cta-note">Первая встреча бесплатно · Ответим в течение дня</div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">ARCH 3.14</div>
-  <div class="footer-links">
-    <a href="index.html">Главная</a>
-    <a href="start.html">Путь проекта</a>
-    <a href="#cta">Контакты</a>
+  <div>
+    <div class="footer-logo">ARCH 3.14</div>
+    <div class="footer-about">Архитектурное бюро полного цикла. Специализация — параметрическая и бионическая архитектура. 15 лет экспертизы, 200+ реализованных объектов.</div>
+    <div class="footer-contact">
+      <a href="tel:+74996477680">+7 499 647 76 80</a><br>
+      mail@arch314.ru<br>Москва, Artplay<br>Пн–Пт, 10:00–19:00
+    </div>
   </div>
-  <div class="footer-copy">© 2024–2026 ARCH 3.14</div>
+  <div class="footer-col">
+    <h4>Направления</h4>
+    <a href="index.html">ARCH 3.14 — Частные дома</a>
+    <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
+    <a href="construct.html">CONSTRUCT 3.14 — Конструкции</a>
+  </div>
+  <div class="footer-col">
+    <h4>Услуги</h4>
+    <a href="concept.html">Концепция и эскизы</a>
+    <a href="#">Полный проект</a>
+    <a href="#">Реализация</a>
+  </div>
+  <div class="footer-col">
+    <h4>О бюро</h4>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="#">Команда</a>
+    <a href="#">Контакты</a>
+  </div>
 </footer>
+<div class="footer-bottom">
+  <div class="footer-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
+  <div class="footer-copy">Политика конфиденциальности</div>
+</div>
 
 <script>
-// Reveal
-const ro = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
-
-// Hero img load
-setTimeout(() => {
-  const img = document.getElementById('heroImg');
-  if (img) img.classList.add('loaded');
-}, 100);
-
-
 (function(){
+  // Cursor
+  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  var cursor = document.getElementById('cursor');
+  var ring = document.getElementById('cursorRing');
+  if(cursor && !isTouch){
+    var mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+    function anim(){
+      cursor.style.left=mx+'px';cursor.style.top=my+'px';
+      rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+      ring.style.left=rx+'px';ring.style.top=ry+'px';
+      requestAnimationFrame(anim);
+    }
+    anim();
+    document.addEventListener('mouseover',function(e){
+      if(e.target.closest('a,button,.result-item,.gimg')){
+        cursor.style.transform='translate(-50%,-50%) scale(2.5)';
+        ring.style.transform='translate(-50%,-50%) scale(1.5)';
+      }
+    });
+    document.addEventListener('mouseout',function(e){
+      if(e.target.closest('a,button,.result-item,.gimg')){
+        cursor.style.transform='translate(-50%,-50%) scale(1)';
+        ring.style.transform='translate(-50%,-50%) scale(1)';
+      }
+    });
+  }
+
+  // Nav
   var nb=document.getElementById('navbar');
   if(nb) window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>60);});
   var btn=document.querySelector('.nav-dropdown>a');
@@ -685,39 +380,12 @@ setTimeout(() => {
     btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();menu.classList.toggle('open');});
     document.addEventListener('click',function(e){if(!e.target.closest('.nav-dropdown'))menu.classList.remove('open');});
   }
-  var page=window.location.pathname.split('/').pop().replace('.html','');
-  document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
-    if(a.dataset.page===page)a.classList.add('nav-active');
-  });
-})();
 
-// Cursor
-(function(){
-  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-  var cursor = document.getElementById('cursor');
-  var ring = document.getElementById('cursorRing');
-  if(!cursor || isTouch) return;
-  var mx=0, my=0, rx=0, ry=0;
-  document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; });
-  function anim(){
-    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
-    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(anim);
-  }
-  anim();
-  document.addEventListener('mouseover', function(e){
-    if(e.target.closest('a,button,.card,.portfolio-item,.gimg')){
-      cursor.style.transform='translate(-50%,-50%) scale(2.5)';
-      ring.style.transform='translate(-50%,-50%) scale(1.5)';
-    }
-  });
-  document.addEventListener('mouseout', function(e){
-    if(e.target.closest('a,button,.card,.portfolio-item,.gimg')){
-      cursor.style.transform='translate(-50%,-50%) scale(1)';
-      ring.style.transform='translate(-50%,-50%) scale(1)';
-    }
-  });
+  // Reveal
+  var ro=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
 })();
 </script>
 </body>
