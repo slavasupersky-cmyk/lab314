@@ -37,6 +37,7 @@ body::after {
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
+  min-0vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-top: 72px;
@@ -129,7 +130,7 @@ body::after {
 .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 300; color: var(--white); line-height: 1.1; }
 .section-title em { font-style: italic; color: var(--accent); }
 
-.what-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.what-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
 .what-item {
   background: var(--surface); border: 1px solid var(--border);
   padding: 40px 32px; position: relative; overflow: hidden;
@@ -313,12 +314,12 @@ footer {
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero { grid-template-columns: 1fr; min-0vh; }
   .hero-left { padding: 40px 24px 48px; }
-  .hero-right { height: 60vw; min-height: 240px; }
+  .hero-right { height: 60vw; min-height: 100vh; }
   .what { padding: 72px 24px; }
   .what-header { flex-direction: column; gap: 24px; align-items: flex-start; }
-  .what-grid { grid-template-columns: 1fr; }
+  .what-grid { grid-template-columns: repeat(4, 1fr); }
   .examples { padding: 72px 24px; }
   .examples-grid { grid-template-columns: 1fr; }
   .ex-render { height: 280px; }
