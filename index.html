@@ -997,6 +997,45 @@ var dropBtn = document.querySelector(');
     if(a.dataset.page===page)a.classList.add('nav-active');
   });
 })();
+
+// Портфолио на главной
+fetch('models.json?v=' + Date.now())
+  .then(function(r){ return r.json(); })
+  .then(function(models){
+    var grid = document.getElementById('indexPortfolioGrid');
+    if(!grid) return;
+    grid.innerHTML = models.slice(0,6).map(function(m){
+      return '<div class="portfolio-item" onclick="location.href=\'project.html?id='+m.id+'\'" style="cursor:pointer">' +
+        '<img class="portfolio-img" src="assets/images/models/'+m.folder+'/cover.jpeg" alt="'+m.name+'" loading="lazy"' +
+        ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+        '<div class="portfolio-item-placeholder" style="display:none">'+m.name+'</div>' +
+        '<div class="portfolio-overlay"></div>' +
+        '<div class="portfolio-info"><div class="portfolio-name">'+m.name+'</div>' +
+        '<div class="portfolio-tag">'+m.type+'</div></div></div>';
+    }).join('');
+  })
+  .catch(function(){
+    var grid = document.getElementById('indexPortfolioGrid');
+    if(!grid) return;
+    var fb=[
+      {id:'riba',folder:'Riba',name:'Riba House',type:'Органическая форма'},
+      {id:'high',folder:'High',name:'High house',type:'3 уровня · скала'},
+      {id:'slope',folder:'Slope',name:'Slope',type:'Частный дом · склон'},
+      {id:'skyframe',folder:'Skyframe',name:'Skyframe',type:'3 этажа · панорама'},
+      {id:'stream',folder:'Stream',name:'Stream',type:'1 этаж · органика'},
+      {id:'zigzag',folder:'Zigzag',name:'Zigzag',type:'Вписан в рельеф'},
+    ];
+    grid.innerHTML = fb.map(function(m){
+      return '<div class="portfolio-item" onclick="location.href=\'project.html?id='+m.id+'\'" style="cursor:pointer">' +
+        '<img class="portfolio-img" src="assets/images/models/'+m.folder+'/cover.jpeg" alt="'+m.name+'" loading="lazy"' +
+        ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+        '<div class="portfolio-item-placeholder" style="display:none">'+m.name+'</div>' +
+        '<div class="portfolio-overlay"></div>' +
+        '<div class="portfolio-info"><div class="portfolio-name">'+m.name+'</div>' +
+        '<div class="portfolio-tag">'+m.type+'</div></div></div>';
+    }).join('');
+  });
+
 </script>
 </body>
 </html>
