@@ -2,387 +2,342 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Услуги — ARCH 3.14</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200;300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#080808;--bg2:#0e0e0e;--surface:#131313;
-  --border:#1a1a1a;--border2:#272727;
-  --accent:#c9a96e;--accent2:#e8c880;--accent-dim:#6b4f28;
-  --text:#ede8df;--text2:#9a8e80;--text3:#3e3830;--white:#f5f0e8;
+:root {
+  --bg: #080808; --bg2: #0f0f0f; --surface: #141414;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --gold: #c9a96e; --gold2: #e8c880;
+  --text: #ede8df; --text2: #9a8e80; --text3: #4a4238;
+  --white: #f5f0e8; --nav-h: 80px;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
-a,a:link,a:visited,a:hover,a:active{color:inherit;text-decoration:none;}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+a { color: inherit; text-decoration: none; }
+img { display: block; }
 
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);transition:background .4s;}
-nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:15px;letter-spacing:4px;color:var(--accent);text-decoration:none;}
-.nav-logo span{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:4px;color:#8a8072;display:block;margin-top:3px;text-transform:uppercase;}
-.nav-links{display:flex;gap:36px;align-items:center;}
-.nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .3s;position:relative;white-space:nowrap;}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
-.nav-links a:hover,.nav-links a.nav-active{color:var(--accent);}
-.nav-links a:hover::after,.nav-links a.nav-active::after{width:100%;}
-.nav-dropdown{position:relative;display:inline-flex;align-items:center;}
-.nav-dropdown>a::after{display:none;}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--surface);border:1px solid var(--border2);min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;}
-.nav-dropdown-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
-.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid var(--border);color:var(--text2);white-space:nowrap;transition:color .2s,background .2s;}
-.nav-dropdown-menu a::after{display:none!important;}
-.nav-dropdown-menu a:last-child{border-bottom:none;}
-.nav-dropdown-menu a:hover{background:var(--border);color:var(--accent);}
-.nav-cta{font-size:11px!important;letter-spacing:2px;text-transform:uppercase;color:var(--bg)!important;background:var(--accent);padding:10px 20px;font-weight:500;transition:background .3s!important;}
-.nav-cta::after{display:none!important;}
-.nav-cta:hover{background:var(--accent2)!important;}
-@media(max-width:900px){nav{padding:20px 24px;}.nav-links a:not(.nav-cta){display:none;}}
+.cur-dot, .cur-ring { position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+.cur-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; transition: transform 0.2s; }
+.cur-ring { width: 36px; height: 36px; border: 1px solid rgba(201,169,110,0.5); border-radius: 50%; transition: width 0.3s, height 0.3s, border-color 0.3s; }
+body.hovering .cur-dot { transform: translate(-50%,-50%) scale(2); }
+body.hovering .cur-ring { width: 56px; height: 56px; border-color: var(--gold); }
+@media (hover: none) { .cur-dot, .cur-ring { display: none; } body { cursor: auto; } }
 
-/* HERO — компактный */
-.page-hero{padding:140px 48px 60px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;}
-.eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
-.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,5vw,72px);font-weight:300;color:var(--white);line-height:1;}
-.h1 em{font-style:italic;color:var(--accent);}
-.hero-desc{max-width:360px;font-size:13px;line-height:1.8;color:var(--text2);}
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(8,8,8,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: 'Unbounded', sans-serif; font-weight: 200; font-size: 18px; letter-spacing: 4px; color: var(--white); line-height: 1; }
+.nav-logo span { display: block; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--text3); margin-top: 4px; }
+.nav-links { display: flex; align-items: center; gap: 40px; }
+.nav-links a { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); position: relative; transition: color 0.3s; }
+.nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-cta { background: var(--gold); color: var(--bg) !important; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; padding: 12px 26px; transition: background 0.3s !important; }
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--gold2) !important; }
+@media (max-width: 768px) { nav { padding: 0 24px; } .nav-links a:not(.nav-cta) { display: none; } }
 
-/* NOTE */
-.svc-note{padding:20px 48px;border-bottom:1px solid var(--border);background:var(--bg2);font-size:12px;line-height:1.7;color:var(--text3);}
-.svc-note strong{color:var(--accent);font-weight:400;}
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
 
-/* ГЛАВНАЯ ТАБЛИЦА */
-.services{padding:0 48px 100px;}
+/* HERO */
+.hero {
+  padding: calc(var(--nav-h) + 80px) 48px 80px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(48px, 6vw, 96px); line-height: 0.95;
+  color: var(--white); margin-bottom: 28px;
+}
+.hero-h1 em { font-style: italic; color: var(--gold); }
+.hero-desc { font-size: 17px; line-height: 1.85; color: var(--text2); max-width: 580px; }
+.hero-note { font-size: 13px; letter-spacing: 1px; color: var(--text3); margin-top: 16px; line-height: 1.6; }
 
-/* Блок секции — компактный */
-.svc-block{padding-top:56px;border-top:1px solid var(--border);margin-top:56px;}
-.svc-block:first-child{margin-top:0;}
-.svc-block-header{display:flex;align-items:baseline;gap:24px;margin-bottom:24px;}
-.svc-num{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);}
-.svc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,2.5vw,36px);font-weight:300;color:var(--white);}
-.svc-title em{font-style:italic;color:var(--accent);}
+/* СЕКЦИИ УСЛУГ */
+.services-section { padding: 80px 48px; border-top: 1px solid var(--border); }
+.services-section:nth-child(even) { background: var(--bg2); }
 
-/* Строки таблицы — 2 колонки: название + цена */
-.svc-row{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;padding:18px 0;border-bottom:1px solid var(--border);transition:background .2s;}
-.svc-row:first-child{border-top:1px solid var(--border);}
-.svc-row:hover{background:var(--surface);padding-left:16px;padding-right:16px;margin:0 -16px;}
-.row-name{font-size:14px;color:var(--white);font-weight:400;display:flex;align-items:center;gap:10px;}
-.row-name .badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;background:rgba(201,169,110,.1);color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;flex-shrink:0;}
-.row-sub{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5;}
-.row-price{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--accent);white-space:nowrap;text-align:right;}
-.row-unit{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);text-align:right;margin-top:3px;}
+.section-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.section-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(32px, 3.5vw, 52px); line-height: 1.05;
+  color: var(--white); margin-bottom: 40px;
+}
+.section-title em { font-style: italic; color: var(--gold); }
 
-/* ИТОГ */
-.svc-total{margin-top:56px;padding:40px 48px;background:var(--surface);border:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;gap:48px;}
-.total-left .total-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-.total-left .total-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,2.5vw,36px);font-weight:300;color:var(--white);}
-.total-left .total-desc{font-size:13px;line-height:1.8;color:var(--text2);margin-top:10px;max-width:560px;}
-.total-right{text-align:right;flex-shrink:0;}
-.total-from{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
-.total-num{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.5vw,52px);font-weight:300;color:var(--accent);}
-.total-sub{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6;}
+/* Таблица услуг */
+.services-grid { display: flex; flex-direction: column; gap: 2px; }
+.service-row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  align-items: center; gap: 32px;
+  padding: 24px 28px;
+  background: var(--surface); border: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+.service-row:hover { border-color: var(--text3); }
+.service-name { font-size: 16px; color: var(--white); font-weight: 400; margin-bottom: 4px; }
+.service-desc { font-size: 14px; color: var(--text2); line-height: 1.5; }
+.service-price {
+  font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300;
+  color: var(--gold); white-space: nowrap; text-align: right;
+}
+.service-unit { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); white-space: nowrap; text-align: right; }
+
+/* Блок "под ключ" */
+.package-block {
+  margin-top: 40px; padding: 40px 40px;
+  background: var(--surface); border: 1px solid var(--border2);
+  border-left: 2px solid var(--gold);
+  display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+}
+.package-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--white); margin-bottom: 8px; }
+.package-desc { font-size: 15px; line-height: 1.75; color: var(--text2); margin-bottom: 12px; }
+.package-includes { font-size: 13px; letter-spacing: 1px; color: var(--text3); line-height: 1.6; }
+.package-price-val { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: var(--gold); line-height: 1; white-space: nowrap; }
+.package-price-label { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-top: 4px; }
 
 /* CTA */
-.svc-cta{padding:100px 48px;border-top:1px solid var(--border);text-align:center;}
-.svc-cta .section-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);display:inline-block;margin-bottom:16px;}
-.svc-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,56px);font-weight:300;color:var(--white);margin-bottom:36px;line-height:1.1;}
-.svc-cta h2 em{font-style:italic;color:var(--accent);}
-.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-.btn-primary{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:var(--bg)!important;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:16px 32px;transition:background .3s;}
-.btn-primary:hover{background:var(--accent2);}
-.btn-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border2);color:var(--text2)!important;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 32px;transition:border-color .3s,color .3s;}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent)!important;}
+.cta-section { padding: 120px 48px; border-top: 1px solid var(--border); text-align: center; position: relative; overflow: hidden; }
+.cta-deco { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Cormorant Garamond', serif; font-size: 400px; font-weight: 300; color: rgba(201,169,110,0.025); pointer-events: none; line-height: 1; white-space: nowrap; user-select: none; }
+.cta-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+.cta-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(36px, 4vw, 64px); color: var(--white); line-height: 1.05; margin-bottom: 24px; }
+.cta-h2 em { font-style: italic; color: var(--gold); }
+.cta-desc { font-size: 17px; color: var(--text2); max-width: 480px; margin: 0 auto 40px; line-height: 1.85; }
+.btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 16px 28px; transition: background 0.3s, transform 0.2s; }
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+.btn-ghost { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--border2); color: var(--text2); font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; padding: 16px 28px; transition: border-color 0.3s, color 0.3s; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-/* FOOTER */
-footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(--bg2);display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;}
-.footer-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:14px;letter-spacing:4px;color:var(--accent);margin-bottom:16px;}
-.footer-about{font-size:12px;line-height:1.8;color:var(--text3);max-width:280px;margin-bottom:24px;}
-.footer-contact{font-size:13px;color:var(--text2);line-height:2;}
-.footer-contact a{color:var(--accent);}
-.footer-col h4{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:20px;}
-.footer-col a{display:block;font-size:13px;color:var(--text2);padding:5px 0;transition:color .3s;border-bottom:1px solid var(--border);}
-.footer-col a:hover{color:var(--accent);}
-.footer-bottom{padding:24px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;}
-.footer-copy{font-size:12px;letter-spacing:1px;color:var(--text3);}
+/* BOTTOM BAR */
+.bottom-bar { padding: 24px 48px; border-top: 1px solid var(--border); background: var(--bg2); display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+.bb-copy { font-size: 14px; letter-spacing: 1px; color: var(--text3); flex: 1; }
+.bb-links { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; flex: 1; }
+.bb-links a { font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text2); transition: color 0.3s; }
+.bb-links a:hover { color: var(--gold); }
+.bb-policy { font-size: 14px; letter-spacing: 1px; color: var(--text3); flex: 1; text-align: right; transition: color 0.3s; }
+.bb-policy:hover { color: var(--text2); }
 
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
-.reveal.in{opacity:1;transform:none;}
-
-@media(max-width:900px){
-  .page-hero{flex-direction:column;gap:24px;padding:120px 24px 48px;}
-  .services{padding:0 24px 80px;}
-  .svc-total{flex-direction:column;padding:32px 24px;}
-  .total-right{text-align:left;}
-  .svc-cta{padding:80px 24px;}
-  footer{grid-template-columns:1fr;padding:48px 24px;}
-  .footer-bottom{padding:20px 24px;flex-direction:column;gap:8px;}
+@media (max-width: 1024px) {
+  .package-block { grid-template-columns: 1fr; }
 }
-
-/* Cursor */
-body { cursor: none; }
-.cursor { position: fixed; width: 8px; height: 8px; background: #c9a96e; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s, width 0.3s, height 0.3s; }
-.cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(201,169,110,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease-out; }
-@media(max-width:900px){ .cursor, .cursor-ring { display: none !important; } * { cursor: auto !important; } }
+@media (max-width: 768px) {
+  .hero, .services-section { padding-left: 24px; padding-right: 24px; }
+  .cta-section { padding: 80px 24px; }
+  .service-row { grid-template-columns: 1fr; gap: 12px; }
+  .service-price, .service-unit { text-align: left; }
+  .package-block { padding: 28px 24px; }
+  .cta-deco { font-size: 180px; }
+  .cta-btns { flex-direction: column; align-items: center; }
+  .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
 
-<nav id="navbar">
-  <a href="index.html" class="nav-logo">ARCH 3.14<span>АРХИТЕКТУРНОЕ БЮРО</span></a>
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
   <div class="nav-links">
-    <div class="nav-dropdown">
-      <a href="#">Направления</a>
-      <div class="nav-dropdown-menu">
-        <a href="index.html">ARCH 3.14 — Частная архитектура</a>
-        <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
-        <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
-      </div>
-    </div>
-    <a href="portfolio.html" data-page="portfolio">Портфолио</a>
-    <a href="prices.html" data-page="prices" class="nav-active">Услуги</a>
-    <a href="start.html" data-page="start">Как мы работаем</a>
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
     <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
-<div class="page-hero reveal">
-  <div>
-    <div class="eyebrow">ARCH 3.14 · Услуги</div>
-    <h1 class="h1">Полный цикл.<br><em>Все разделы внутри.</em></h1>
-  </div>
-  <p class="hero-desc">Все разделы проектирования — внутри бюро. Никаких субподрядчиков, единая ответственность, прозрачные цены.</p>
-</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label reveal">ARCH 3.14 · Услуги</div>
+  <h1 class="hero-h1 reveal d1">Полный цикл.<br><em>Все разделы внутри.</em></h1>
+  <p class="hero-desc reveal d2">Все разделы проектирования — внутри бюро. Никаких субподрядчиков, единая ответственность, прозрачные цены.</p>
+  <p class="hero-note reveal d3">Цены указаны за 1 м² площади объекта. Параметрические и бионические формы — по отдельному расчёту.</p>
+</section>
 
-<div class="svc-note">
-  Цены указаны за 1 м² площади объекта. Итоговая стоимость зависит от сложности форм и состава разделов. <strong>Параметрические и бионические формы — по отдельному расчёту.</strong>
-</div>
-
-<div class="services">
-
-  <!-- 01 КОНЦЕПЦИЯ -->
-  <div class="svc-block reveal">
-    <div class="svc-block-header">
-      <span class="svc-num">01</span>
-      <h2 class="svc-title">Концепция и <em>эскизы</em></h2>
+<!-- КОНЦЕПЦИЯ -->
+<section class="services-section">
+  <div class="section-label reveal">01</div>
+  <h2 class="section-title reveal d1">Концепция и <em>эскизы</em></h2>
+  <div class="services-grid">
+    <div class="service-row reveal">
+      <div>
+        <div class="service-name">Концептуальный проект</div>
+        <div class="service-desc">3–4 варианта концепции · Скетчи и планировки · 2–3 встречи · Вход в проект</div>
+      </div>
+      <div class="service-price">200 000 – 300 000 ₽</div>
+      <div class="service-unit">фикс</div>
     </div>
-    <div class="svc-row">
+    <div class="service-row reveal d1">
       <div>
-        <div class="row-name">Концептуальный проект <span class="badge">Вход</span></div>
-        <div class="row-sub">3–4 варианта концепции · Скетчи и планировки · 2–3 встречи</div>
+        <div class="service-name">Фотореалистичная визуализация</div>
+        <div class="service-desc">3–5 видовых точек · Экстерьер + ключевые интерьеры</div>
       </div>
-      <div>
-        <div class="row-price">200 000 – 300 000 ₽</div>
-        <div class="row-unit">фикс</div>
-      </div>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">Фотореалистичная визуализация</div>
-        <div class="row-sub">3–5 видовых точек · Экстерьер + ключевые интерьеры</div>
-      </div>
-      <div>
-        <div class="row-price">от 150 000 ₽</div>
-        <div class="row-unit">фикс</div>
-      </div>
+      <div class="service-price">от 150 000 ₽</div>
+      <div class="service-unit">фикс</div>
     </div>
   </div>
+</section>
 
-  <!-- 02 АРХИТЕКТУРА -->
-  <div class="svc-block reveal">
-    <div class="svc-block-header">
-      <span class="svc-num">02</span>
-      <h2 class="svc-title">Архитектура и <em>конструктив</em></h2>
+<!-- АРХИТЕКТУРА -->
+<section class="services-section">
+  <div class="section-label reveal">02</div>
+  <h2 class="section-title reveal d1">Архитектура и <em>конструктив</em></h2>
+  <div class="services-grid">
+    <div class="service-row reveal">
+      <div>
+        <div class="service-name">АР — Архитектурные решения</div>
+        <div class="service-desc">Планы, фасады, разрезы, узлы, спецификации</div>
+      </div>
+      <div class="service-price">7 000 ₽</div>
+      <div class="service-unit">за м²</div>
     </div>
-    <div class="svc-row">
+    <div class="service-row reveal d1">
       <div>
-        <div class="row-name">АР — Архитектурные решения</div>
-        <div class="row-sub">Планы, фасады, разрезы, узлы, спецификации</div>
+        <div class="service-name">КР — Конструктивные решения</div>
+        <div class="service-desc">Фундамент, стены, перекрытия, кровля</div>
       </div>
-      <div>
-        <div class="row-price">7 000 ₽</div>
-        <div class="row-unit">за м²</div>
-      </div>
+      <div class="service-price">3 600 ₽</div>
+      <div class="service-unit">за м²</div>
     </div>
-    <div class="svc-row">
+  </div>
+</section>
+
+<!-- ИНЖЕНЕРИЯ -->
+<section class="services-section">
+  <div class="section-label reveal">03</div>
+  <h2 class="section-title reveal d1"><em>Инженерные</em> разделы</h2>
+  <div class="services-grid">
+    <div class="service-row reveal">
       <div>
-        <div class="row-name">КР — Конструктивные решения</div>
-        <div class="row-sub">Фундамент, стены, перекрытия, кровля</div>
+        <div class="service-name">ОВ — Отопление и вентиляция</div>
+        <div class="service-desc">Теплоснабжение, радиаторы, тёплые полы, вентиляция</div>
+      </div>
+      <div class="service-price">960 ₽</div>
+      <div class="service-unit">за м²</div>
+    </div>
+    <div class="service-row reveal d1">
+      <div>
+        <div class="service-name">ВК — Водоснабжение и канализация</div>
+        <div class="service-desc">Холодная, горячая вода, канализация</div>
+      </div>
+      <div class="service-price">960 ₽</div>
+      <div class="service-unit">за м²</div>
+    </div>
+    <div class="service-row reveal d1">
+      <div>
+        <div class="service-name">ЭО — Электроснабжение</div>
+        <div class="service-desc">Силовые цепи, освещение, щитовые</div>
+      </div>
+      <div class="service-price">960 ₽</div>
+      <div class="service-unit">за м²</div>
+    </div>
+    <div class="service-row reveal d2">
+      <div>
+        <div class="service-name">СС — Слаботочные системы</div>
+        <div class="service-desc">Умный дом, безопасность, сети</div>
+      </div>
+      <div class="service-price">720 ₽</div>
+      <div class="service-unit">за м²</div>
+    </div>
+  </div>
+</section>
+
+<!-- ДИЗАЙН И ЛАНДШАФТ -->
+<section class="services-section">
+  <div class="section-label reveal">04</div>
+  <h2 class="section-title reveal d1">Дизайн и <em>ландшафт</em></h2>
+  <div class="services-grid">
+    <div class="service-row reveal">
+      <div>
+        <div class="service-name">Дизайн интерьера</div>
+        <div class="service-desc">Планы полов, потолков, развёртки, спецификации, визуализации</div>
+      </div>
+      <div class="service-price">4 200 ₽</div>
+      <div class="service-unit">за м²</div>
+    </div>
+    <div class="service-row reveal d1">
+      <div>
+        <div class="service-name">Световой дизайн</div>
+        <div class="service-desc">Концепция освещения, план расстановки, спецификация</div>
+      </div>
+      <div class="service-price">1 800 ₽</div>
+      <div class="service-unit">за м²</div>
+    </div>
+    <div class="service-row reveal d2">
+      <div>
+        <div class="service-name">Ландшафтный дизайн</div>
+        <div class="service-desc">Вертикальная планировка, мощение, посадки, освещение</div>
+      </div>
+      <div class="service-price">2 400 ₽</div>
+      <div class="service-unit">за сотку</div>
+    </div>
+  </div>
+</section>
+
+<!-- ПОЛНЫЙ ПРОЕКТ ПОД КЛЮЧ -->
+<section class="services-section">
+  <div class="reveal">
+    <div class="package-block">
+      <div>
+        <div class="package-title">Полный проект под ключ</div>
+        <p class="package-desc">Все разделы. Один коллектив. Единая ответственность, единый контракт.</p>
+        <p class="package-includes">АР + КР + ОВ + ВК + ЭО + СС + дизайн интерьера + световой дизайн + ландшафт<br>Стоимость концепции засчитывается.</p>
       </div>
       <div>
-        <div class="row-price">3 600 ₽</div>
-        <div class="row-unit">за м²</div>
+        <div class="package-price-val">7 000 ₽/м²</div>
+        <div class="package-price-label">полный архитектурный проект</div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- 03 ИНЖЕНЕРИЯ -->
-  <div class="svc-block reveal">
-    <div class="svc-block-header">
-      <span class="svc-num">03</span>
-      <h2 class="svc-title">Инженерные <em>разделы</em></h2>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">ОВ — Отопление и вентиляция</div>
-        <div class="row-sub">Теплоснабжение, радиаторы, тёплые полы, вентиляция</div>
-      </div>
-      <div><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">ВК — Водоснабжение и канализация</div>
-        <div class="row-sub">Холодная, горячая вода, канализация</div>
-      </div>
-      <div><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">ЭО — Электроснабжение</div>
-        <div class="row-sub">Силовые цепи, освещение, щитовые</div>
-      </div>
-      <div><div class="row-price">960 ₽</div><div class="row-unit">за м²</div></div>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">СС — Слаботочные системы</div>
-        <div class="row-sub">Умный дом, безопасность, сети</div>
-      </div>
-      <div><div class="row-price">720 ₽</div><div class="row-unit">за м²</div></div>
-    </div>
-  </div>
-
-  <!-- 04 ДИЗАЙН -->
-  <div class="svc-block reveal">
-    <div class="svc-block-header">
-      <span class="svc-num">04</span>
-      <h2 class="svc-title">Дизайн и <em>ландшафт</em></h2>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">Дизайн интерьера</div>
-        <div class="row-sub">Планы полов, потолков, развёртки, спецификации, визуализации</div>
-      </div>
-      <div><div class="row-price">4 200 ₽</div><div class="row-unit">за м²</div></div>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">Световой дизайн</div>
-        <div class="row-sub">Концепция освещения, план расстановки, спецификация</div>
-      </div>
-      <div><div class="row-price">1 800 ₽</div><div class="row-unit">за м²</div></div>
-    </div>
-    <div class="svc-row">
-      <div>
-        <div class="row-name">Ландшафтный дизайн</div>
-        <div class="row-sub">Вертикальная планировка, мощение, посадки, освещение</div>
-      </div>
-      <div><div class="row-price">2 400 ₽</div><div class="row-unit">за сотку</div></div>
-    </div>
-  </div>
-
-  <!-- ИТОГ -->
-  <div class="svc-total reveal">
-    <div class="total-left">
-      <div class="total-label">Полный проект под ключ</div>
-      <div class="total-title">Все разделы. Один коллектив.</div>
-      <div class="total-desc">АР + КР + ОВ + ВК + ЭО + СС + дизайн интерьера + световой дизайн + ландшафт. Единая ответственность, единый контракт. Стоимость концепции засчитывается.</div>
-    </div>
-    <div class="total-right">
-      <div class="total-from">от</div>
-      <div class="total-num">7 000 ₽/м²</div>
-      <div class="total-sub">полный архитектурный проект</div>
-    </div>
-  </div>
-
-</div>
-
-<div class="svc-cta">
-  <div class="section-label">НАЧАТЬ</div>
-  <h2>Начнём с <em>концепции?</em></h2>
-  <div class="cta-buttons">
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-deco">3.14</div>
+  <div class="cta-label reveal">НАЧАТЬ</div>
+  <h2 class="cta-h2 reveal d1">Начнём с<br><em>концепции?</em></h2>
+  <p class="cta-desc reveal d2">Первая встреча бесплатно. Покажем каким может быть ваш дом — без обязательств.</p>
+  <div class="cta-btns reveal d3">
     <a href="concept.html" class="btn-primary">Узнать про концепцию →</a>
     <a href="start.html" class="btn-ghost">Как мы работаем</a>
   </div>
-</div>
+</section>
 
-<footer>
-  <div>
-    <div class="footer-logo">ARCH 3.14</div>
-    <div class="footer-about">Архитектурное бюро полного цикла. Специализация — параметрическая и бионическая архитектура. 15 лет экспертизы, 200+ реализованных объектов.</div>
-    <div class="footer-contact">
-      <a href="tel:+74996477680">+7 499 647 76 80</a><br>
-      mail@arch314.ru<br>Москва, Artplay<br>Пн–Пт, 10:00–19:00
-    </div>
-  </div>
-  <div class="footer-col">
-    <h4>Направления</h4>
-    <a href="index.html">ARCH 3.14 — Частные дома</a>
-    <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
-    <a href="construct.html">CONSTRUCT 3.14 — Конструкции</a>
-  </div>
-  <div class="footer-col">
-    <h4>Услуги</h4>
-    <a href="concept.html">Концепция и эскизы</a>
-    <a href="#">Полный проект</a>
-    <a href="#">Реализация</a>
-  </div>
-  <div class="footer-col">
-    <h4>О бюро</h4>
+<!-- НИЖНЯЯ СТРОКА -->
+<div class="bottom-bar">
+  <div class="bb-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
+  <div class="bb-links">
+    <a href="index.html#about">О нас</a>
     <a href="portfolio.html">Портфолио</a>
     <a href="start.html">Как мы работаем</a>
-    <a href="#">Команда</a>
-    <a href="#">Контакты</a>
+    <a href="concept.html">Начать проект</a>
   </div>
-</footer>
-<div class="footer-bottom">
-  <div class="footer-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
-  <div class="footer-copy">Политика конфиденциальности</div>
+  <a href="#" class="bb-policy">Политика конфиденциальности</a>
 </div>
 
 <script>
 (function(){
-  var nb=document.getElementById('navbar');
-  if(nb) window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>60);});
-  var btn=document.querySelector('.nav-dropdown>a');
-  var menu=document.querySelector('.nav-dropdown-menu');
-  if(btn&&menu){
-    btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();menu.classList.toggle('open');});
-    document.addEventListener('click',function(e){if(!e.target.closest('.nav-dropdown'))menu.classList.remove('open');});
-  }
-  var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in');});},{threshold:.1});
-  document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
-})();
-
-// Cursor
-(function(){
-  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-  var cursor = document.getElementById('cursor');
-  var ring = document.getElementById('cursorRing');
-  if(!cursor || isTouch) return;
+  var dot=document.getElementById('curDot'), ring=document.getElementById('curRing');
   var mx=0, my=0, rx=0, ry=0;
-  document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; });
-  function anim(){
-    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
-    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(anim);
+  if (!window.matchMedia('(hover:none)').matches) {
+    document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+    (function tick(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(tick); })();
+    document.addEventListener('mouseover', function(e){ if(e.target.closest('a,button,.service-row')) document.body.classList.add('hovering'); });
+    document.addEventListener('mouseout',  function(e){ if(e.target.closest('a,button,.service-row')) document.body.classList.remove('hovering'); });
   }
-  anim();
-  document.addEventListener('mouseover', function(e){
-    if(e.target.closest('a,button,.card,.portfolio-item,.gimg')){
-      cursor.style.transform='translate(-50%,-50%) scale(2.5)';
-      ring.style.transform='translate(-50%,-50%) scale(1.5)';
-    }
-  });
-  document.addEventListener('mouseout', function(e){
-    if(e.target.closest('a,button,.card,.portfolio-item,.gimg')){
-      cursor.style.transform='translate(-50%,-50%) scale(1)';
-      ring.style.transform='translate(-50%,-50%) scale(1)';
-    }
-  });
+  var io = new IntersectionObserver(function(ee){ ee.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold: 0.1});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>
