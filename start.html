@@ -202,38 +202,43 @@ nav {
 
 /* ── ФОРМА ── */
 .form-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
+  padding: 120px 48px;
   border-top: 1px solid var(--border);
+  background: var(--bg2);
+  display: flex; flex-direction: column; align-items: center;
 }
-.form-left {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 64px; background: var(--bg2);
-}
-.fl-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
-.fl-title {
+.form-top { text-align: center; margin-bottom: 56px; }
+.form-top-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+.form-top-title {
   font-family: 'Cormorant Garamond', serif; font-weight: 300;
   font-size: clamp(36px, 4vw, 56px); line-height: 1.05;
-  color: var(--white); margin-bottom: 20px;
+  color: var(--white); margin-bottom: 12px;
 }
-.fl-title em { font-style: italic; color: var(--gold); }
-.fl-desc { font-size: 17px; line-height: 1.85; color: var(--text2); margin-bottom: 40px; }
-.contacts { display: flex; flex-direction: column; gap: 20px; }
-.c-row {
-  display: flex; align-items: center; gap: 16px;
+.form-top-title em { font-style: italic; color: var(--gold); }
+.form-top-desc { font-size: 17px; line-height: 1.8; color: var(--text2); }
+.form-contacts { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 48px; }
+.form-phone {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 300;
-  color: var(--text2); transition: color 0.3s; text-decoration: none; line-height: 1.2;
+  font-size: clamp(44px, 5.5vw, 72px); font-weight: 300; line-height: 1;
+  color: var(--white); text-decoration: none; transition: color 0.3s; letter-spacing: -1px;
 }
-.c-row:hover { color: var(--gold); }
-.c-row-sub { font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; color: var(--text3); margin-top: 2px; letter-spacing: 0; }
-.c-icon { width: 22px; height: 22px; flex-shrink: 0; opacity: 0.5; }
-.c-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-
-.form-right { display: flex; flex-direction: column; justify-content: center; padding: 80px 64px; }
-.fr-title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--white); margin-bottom: 6px; }
-.fr-sub { font-size: 13px; letter-spacing: 1px; color: var(--text3); margin-bottom: 32px; }
+.form-phone:hover { color: var(--gold); }
+.form-email {
+  font-family: 'Jost', sans-serif; font-size: 18px; font-weight: 300;
+  color: var(--text2); text-decoration: none; letter-spacing: 1px; transition: color 0.3s;
+}
+.form-email:hover { color: var(--gold); }
+.form-divider {
+  display: flex; align-items: center; gap: 20px;
+  width: 100%; max-width: 560px; margin-bottom: 40px;
+  color: var(--text3); font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+}
+.form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.form-body { width: 100%; max-width: 560px; }
+.form-ask {
+  font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300;
+  color: var(--white); margin-bottom: 24px; text-align: center;
+}
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 .fg { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
 .frow .fg { margin-bottom: 0; }
@@ -245,39 +250,24 @@ nav {
 }
 .fi:focus, .fta:focus { border-color: var(--gold); }
 .fi::placeholder, .fta::placeholder { color: var(--text3); }
-.fta { resize: vertical; min-height: 90px; }
-
-/* Каналы */
-.ch-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
-.channels { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.ch-btn {
-  padding: 8px 16px; border: 1px solid var(--border2); background: none;
-  font-family: 'Jost', sans-serif; font-size: 13px; color: var(--text2);
-  cursor: pointer; transition: border-color 0.3s, color 0.3s, background 0.3s;
-}
-.ch-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.06); }
-.ch-btn:hover:not(.active) { border-color: var(--text2); color: var(--text); }
-
-/* Чекбоксы */
-.checkboxes { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.fta { resize: vertical; min-height: 80px; }
+.checkboxes { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; margin-top: 4px; }
 .cb-row { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; line-height: 1.5; color: var(--text2); cursor: pointer; }
 .cb-row input[type="checkbox"] { display: none; }
 .cb-box {
   width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
   border: 1px solid var(--border2); background: var(--surface);
-  display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.3s;
+  display: flex; align-items: center; justify-content: center; transition: border-color 0.3s;
 }
 .cb-row input:checked + .cb-box { border-color: var(--gold); }
-.cb-row input:checked + .cb-box::after { content: '✓'; font-size: 11px; color: var(--gold); }
+.cb-row input:checked + .cb-box::after { content: '\2713'; font-size: 11px; color: var(--gold); }
 .cb-row a { color: var(--gold); }
-
 .btn-send {
   width: 100%; background: var(--gold); color: var(--bg);
   font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500;
   letter-spacing: 2px; text-transform: uppercase; padding: 18px;
-  border: none; cursor: pointer; transition: background 0.3s;
-  opacity: 0.45; pointer-events: none;
+  border: none; cursor: pointer; transition: background 0.3s, opacity 0.3s;
+  opacity: 0.4; pointer-events: none;
 }
 .btn-send.ready { opacity: 1; pointer-events: auto; }
 .btn-send.ready:hover { background: var(--gold2); }
@@ -314,7 +304,7 @@ nav {
 
 /* ── АДАПТИВ ── */
 @media (max-width: 1024px) {
-  .stage, .form-wrap { grid-template-columns: 1fr; }
+  .stage { grid-template-columns: 1fr; }
   .stage.flip .st-photo { order: 0; }
   .stage.flip .st-body { order: 0; }
   .st-photo { min-height: 55vw; }
@@ -322,7 +312,7 @@ nav {
 @media (max-width: 768px) {
   .hero { padding: calc(var(--nav-h) + 48px) 24px 56px; }
   .steps-row { grid-template-columns: 1fr 1fr; }
-  .st-body, .form-left, .form-right { padding: 48px 24px; }
+  .st-body { padding: 48px 24px; } .form-wrap { padding: 60px 24px; } .frow { grid-template-columns: 1fr; }
   .frow { grid-template-columns: 1fr; }
   .progress { display: none; }
   .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
@@ -501,55 +491,34 @@ nav {
 
 <!-- ФОРМА -->
 <section class="form-wrap" id="s5">
-  <div class="form-left">
-    <div class="fl-label reveal">НАЧАТЬ ПРОЕКТ</div>
-    <h2 class="fl-title reveal d1">Первая встреча —<br><em>бесплатно</em></h2>
-    <p class="fl-desc reveal d2">Расскажите о своём участке и о том, как хотите жить. Мы приедем, посмотрим, зададим правильные вопросы. Без обязательств.</p>
-    <div class="contacts reveal d3">
-      <a href="tel:+74996477680" class="c-row">
-        <span class="c-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.2 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg></span>
-        +7 499 647 76 80
-      </a>
-      <a href="mailto:mail@arch314.ru" class="c-row">
-        <span class="c-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
-        mail@arch314.ru
-      </a>
-      <div class="c-row">
-        <span class="c-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-        Москва, Artplay · Пн–Пт 10–19
-      </div>
-    </div>
+  <div class="form-top reveal">
+    <div class="form-top-label">НАЧАТЬ ПРОЕКТ</div>
+    <h2 class="form-top-title">Первая встреча —<br><em>бесплатно</em></h2>
+    <p class="form-top-desc">Расскажите о своём участке и о том, как хотите жить.<br>Мы приедем, посмотрим, зададим правильные вопросы. Без обязательств.</p>
   </div>
-  <div class="form-right">
-    <div class="fr-title">Расскажите о проекте</div>
-    <div class="fr-sub">Первая встреча бесплатна · Без обязательств</div>
+  <div class="form-contacts reveal d1">
+    <a href="tel:+74996477680" class="form-phone">+7 499 647 76 80</a>
+    <a href="mailto:mail@arch314.ru" class="form-email">mail@arch314.ru</a>
+  </div>
+  <div class="form-divider reveal d2">или оставьте заявку</div>
+  <div class="form-body reveal d2">
+    <div class="form-ask">Как к вам обращаться?</div>
+    <div class="fg"><input class="fi" type="text" placeholder="Ваше имя" id="fName"></div>
     <div class="frow">
-      <div class="fg"><label class="fl-lbl">Имя</label><input class="fi" type="text" placeholder="Ваше имя" id="fName"></div>
-      <div class="fg"><label class="fl-lbl">Телефон / Telegram</label><input class="fi" type="text" placeholder="+7 или @username" id="fContact"></div>
+      <div class="fg"><label class="fl-lbl">Телефон / Telegram / WhatsApp</label><input class="fi" type="text" placeholder="+7 или @username" id="fContact"></div>
+      <div class="fg"><label class="fl-lbl">Email</label><input class="fi" type="email" placeholder="mail@example.com" id="fEmail"></div>
     </div>
-    <div class="fg">
-      <label class="fl-lbl">Чем можем помочь</label>
-      <textarea class="fta" placeholder="Расскажите об участке, идеях, сроках — или просто напишите, что хотите поговорить"></textarea>
-    </div>
-    <div class="fg">
-      <div class="ch-label">Удобный способ связи</div>
-      <div class="channels">
-        <button type="button" class="ch-btn" onclick="this.classList.toggle('active')">WhatsApp</button>
-        <button type="button" class="ch-btn" onclick="this.classList.toggle('active')">Telegram</button>
-        <button type="button" class="ch-btn" onclick="this.classList.toggle('active')">Звонок</button>
-        <button type="button" class="ch-btn" onclick="this.classList.toggle('active')">Email</button>
-      </div>
-    </div>
+    <div class="fg"><label class="fl-lbl">Чем можем помочь</label><textarea class="fta" placeholder="Расскажите об участке, идеях, сроках — или просто напишите «хочу поговорить»"></textarea></div>
     <div class="checkboxes">
       <label class="cb-row">
         <input type="checkbox" id="cbPolicy">
         <span class="cb-box"></span>
-        <span>Я ознакомлен с <a href="#">политикой конфиденциальности</a> и даю согласие на обработку персональных данных</span>
+        <span>Я ознакомлен с <a href="#">политикой конфиденциальности</a> и даю согласие на обработку персональных данных в соответствии с законодательством РФ</span>
       </label>
       <label class="cb-row">
         <input type="checkbox" id="cbMarketing">
         <span class="cb-box"></span>
-        <span>Хочу получать новости о проектах и материалы от ARCH 3.14</span>
+        <span>Согласен получать новости о проектах и материалы от ARCH 3.14</span>
       </label>
     </div>
     <button class="btn-send" id="btnSend">Записаться на встречу →</button>
