@@ -80,7 +80,7 @@ body { cursor: none; }
 </nav>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-<script src="nav.js">(function(){
+<script>(function(){
   var nb=document.getElementById('navbar');
   if(nb) window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>60);});
   var btn=document.querySelector('.nav-dropdown>a');
