@@ -35,7 +35,11 @@ body::after {
 
 /* ── NAV ── */
 /* ── HERO ── */
-J0px;
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 72px;
   position: relative;
   overflow: hidden;
 }
@@ -51,9 +55,10 @@ J0px;
 .hero-right img {
   width: 100%; height: 100%; object-fit: cover;
   filter: brightness(0.55) saturate(0.7);
-  transition: none;
+  transition: transform 8s ease;
+  transform: scale(1.05);
 }
-
+.hero-right img.loaded { transform: scale(1); }
 
 .hero-right-overlay {
   position: absolute; inset: 0;
@@ -63,7 +68,7 @@ J0px;
 .h-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
 .h-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 4.5vw, 64px); font-weight: 300;
+  font-size: clamp(52px, 5.5vw, 82px); font-weight: 300;
   line-height: 1.0; color: var(--white); margin-bottom: 32px;
 }
 .h-title em { font-style: italic; color: var(--accent); }
@@ -481,7 +486,13 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
       <div class="hero-badge-label">Срок этапа</div>
       <div class="hero-badge-val">6–8 недель</div>
     </div>
-  </div>
+  
+    <div class="what-item reveal d3">
+      <div class="what-num">04</div>
+      <div class="what-title">Смета с ориентировочным бюджетом</div>
+      <div class="what-desc">После выбора концепции подготовим ориентировочную смету на реализацию — чтобы вы понимали порядок цифр ещё до начала рабочего проектирования.</div>
+    </div>
+</div>
 </section>
 
 <!-- ЧТО ВХОДИТ -->
@@ -610,12 +621,6 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
         <div class="pvc-text">Первая встреча — бесплатно и без обязательств. Вы можете познакомиться с командой, задать все вопросы и только после этого принять решение о старте концептуального этапа.</div>
       </div>
     </div>
-
-    <div class="what-item reveal d3">
-      <div class="what-num">04</div>
-      <div class="what-title">Смета с ориентировочным бюджетом</div>
-      <div class="what-desc">После выбора концепции подготовим ориентировочную смету на реализацию — чтобы вы понимали порядок цифр ещё до начала рабочего проектирования.</div>
-    </div>
   </div>
 </section>
 
@@ -664,7 +669,10 @@ const ro = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
 // Hero img load
-
+setTimeout(() => {
+  const img = document.getElementById('heroImg');
+  if (img) img.classList.add('loaded');
+}, 100);
 
 
 (function(){
