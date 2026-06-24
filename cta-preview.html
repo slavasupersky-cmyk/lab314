@@ -12,6 +12,7 @@
   --bg: #080808; --bg2: #0f0f0f; --surface: #141414;
   --border: #1e1e1e; --border2: #2a2a2a;
   --gold: #c9a96e; --gold2: #e8c880;
+  --green: #4a9e6b;
   --text: #ede8df; --text2: #9a8e80; --text3: #4a4238;
   --white: #f5f0e8; --nav-h: 80px;
 }
@@ -19,78 +20,56 @@
 body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; }
 a { color: inherit; text-decoration: none; }
 
-/* NAV */
 nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(8,8,8,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
 .nav-logo { font-family: 'Unbounded', sans-serif; font-weight: 200; font-size: 18px; letter-spacing: 4px; color: var(--white); line-height: 1; }
 .nav-logo span { display: block; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--text3); margin-top: 4px; }
 .nav-note { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
 
-/* DIVIDER между блоками */
 .page-divider {
-  display: flex; align-items: center; gap: 24px;
-  padding: 0 48px;
-  background: var(--bg);
-  border-top: 1px solid var(--border2);
-  border-bottom: 1px solid var(--border2);
-  height: 56px;
+  display: flex; align-items: center; gap: 24px; padding: 0 48px;
+  border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); height: 56px;
 }
-.page-divider-label {
-  font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text3);
-  white-space: nowrap;
-}
+.page-divider-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
 .page-divider-line { flex: 1; height: 1px; background: var(--border); }
-.page-divider-tag {
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--gold); border: 1px solid var(--border2); padding: 4px 12px;
-  white-space: nowrap;
-}
+.page-divider-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); border: 1px solid var(--border2); padding: 4px 12px; white-space: nowrap; }
 
-/* ОБЩИЕ СТИЛИ CTA-БЛОКА */
-.cta-block {
-  padding: 120px 48px;
-  position: relative; overflow: hidden;
-}
+/* CTA BLOCK */
+.cta-block { padding: 120px 48px; position: relative; overflow: hidden; }
 .cta-block.bg2 { background: var(--bg2); }
 .cta-deco {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  font-family: 'Cormorant Garamond', serif; font-size: 360px; font-weight: 300;
-  color: rgba(201,169,110,0.025); pointer-events: none; line-height: 1;
-  white-space: nowrap; user-select: none;
+  position: absolute; bottom: -40px; right: -20px;
+  font-family: 'Cormorant Garamond', serif; font-size: 280px; font-weight: 300;
+  color: rgba(201,169,110,0.035); pointer-events: none; line-height: 1;
+  user-select: none; z-index: 0;
 }
-
-.cta-inner {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-  position: relative; z-index: 1; max-width: 1200px; margin: 0 auto;
-}
+.cta-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
 .cta-left { display: flex; flex-direction: column; justify-content: center; }
 .cta-page-tag { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 16px; }
 .cta-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
-.cta-h2 {
-  font-family: 'Cormorant Garamond', serif; font-weight: 300;
-  font-size: clamp(36px, 4vw, 60px); color: var(--white); line-height: 1.05; margin-bottom: 20px;
-}
+.cta-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(36px, 4vw, 60px); color: var(--white); line-height: 1.05; margin-bottom: 20px; }
 .cta-h2 em { font-style: italic; color: var(--gold); }
 .cta-desc { font-size: 17px; line-height: 1.85; color: var(--text2); margin-bottom: 36px; max-width: 420px; }
-
-/* Контакты */
 .cta-contacts { display: flex; flex-direction: column; gap: 8px; }
-.cta-phone {
-  font-family: 'Jost', sans-serif; font-size: clamp(24px, 3vw, 36px);
-  font-weight: 300; letter-spacing: 1px; color: var(--white);
-  text-decoration: none; transition: color 0.3s;
-}
-.cta-phone:hover { color: var(--gold); }
-.cta-email {
-  font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300;
-  letter-spacing: 1px; color: var(--text2); text-decoration: none; transition: color 0.3s;
-}
+.cta-phone { font-family: 'Jost', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 300; letter-spacing: 1px; color: var(--white); text-decoration: none; transition: color 0.3s; }
+.cta-phone:hover { color: var(--green); }
+.cta-email { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 1px; color: var(--text2); text-decoration: none; transition: color 0.3s; }
 .cta-email:hover { color: var(--gold); }
 
-/* Форма */
+/* FORM */
 .cta-form { display: flex; flex-direction: column; gap: 14px; }
+
+/* Канал */
+.channel-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+.channel-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2px; }
+.ch-btn {
+  padding: 8px 14px; border: 1px solid var(--border2); background: none;
+  font-family: 'Jost', sans-serif; font-size: 13px; color: var(--text2);
+  cursor: pointer; transition: all 0.25s; letter-spacing: 0.5px;
+}
+.ch-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.06); }
+.ch-btn:hover:not(.active) { border-color: var(--text2); color: var(--text); }
+
 .fg { display: flex; flex-direction: column; gap: 8px; }
-.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.frow .fg { }
 .fl { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
 .fi, .fta {
   background: var(--surface); border: 1px solid var(--border2);
@@ -101,7 +80,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 .fi::placeholder, .fta::placeholder { color: var(--text3); }
 .fta { resize: vertical; min-height: 80px; }
 
-/* Чекбокс */
 .cb-row { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; line-height: 1.5; color: var(--text2); cursor: pointer; }
 .cb-row input[type="checkbox"] { display: none; }
 .cb-box { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; border: 1px solid var(--border2); background: var(--surface); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s; }
@@ -109,12 +87,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 .cb-row input:checked + .cb-box::after { content: '✓'; font-size: 11px; color: var(--gold); }
 .cb-row a { color: var(--gold); }
 
-/* Кнопки */
-.btn-primary { display: inline-flex; align-items: center; justify-content: center; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 18px 28px; border: none; cursor: pointer; transition: background 0.3s; width: 100%; }
+.btn-primary { display: flex; align-items: center; justify-content: center; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 18px 28px; border: none; cursor: pointer; transition: background 0.3s; width: 100%; }
 .btn-primary:hover { background: var(--gold2); }
 
 @media (max-width: 1024px) { .cta-inner { grid-template-columns: 1fr; gap: 48px; } }
-@media (max-width: 768px) { .cta-block { padding: 80px 24px; } .page-divider { padding: 0 24px; } .frow { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .cta-block { padding: 80px 24px; } .page-divider { padding: 0 24px; } }
 </style>
 </head>
 <body>
@@ -123,13 +100,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
   <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
   <div class="nav-note">Превью CTA-блоков · черновик</div>
 </nav>
+<div style="height:var(--nav-h)"></div>
 
-<div style="height: var(--nav-h)"></div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- БЛОК 1 · ГЛАВНАЯ СТРАНИЦА -->
-<!-- ══════════════════════════════════════════ -->
-
+<!-- ══ БЛОК 1 · ГЛАВНАЯ ══ -->
 <div class="page-divider">
   <div class="page-divider-line"></div>
   <div class="page-divider-label">Блок 1</div>
@@ -150,29 +123,38 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
         <a href="mailto:mail@arch314.ru" class="cta-email">mail@arch314.ru</a>
       </div>
     </div>
-    <div class="cta-form">
+    <div class="cta-form" id="form1">
       <div class="fg">
-        <label class="fl">Как к вам обращаться?</label>
-        <input class="fi" type="text" placeholder="Имя или как вам удобно">
+        <div class="channel-label">Как вам удобнее связаться?</div>
+        <div class="channel-btns">
+          <button type="button" class="ch-btn active" data-form="form1" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn" data-form="form1" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
+          <button type="button" class="ch-btn" data-form="form1" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
+          <button type="button" class="ch-btn" data-form="form1" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
+          <button type="button" class="ch-btn" data-form="form1" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
+        </div>
+        <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
       </div>
       <div class="fg">
-        <label class="fl">Телефон / Telegram / WhatsApp</label>
-        <input class="fi" type="text" placeholder="Телефон, Telegram или WhatsApp">
+        <label class="fl">Чем можем помочь?</label>
+        <textarea class="fta" placeholder="Расскажите об участке, идеях, сроках — или просто напишите «хочу поговорить»"></textarea>
       </div>
       <label class="cb-row">
         <input type="checkbox">
         <span class="cb-box"></span>
         <span>Согласен на обработку <a href="#">персональных данных</a></span>
       </label>
+      <label class="cb-row">
+        <input type="checkbox">
+        <span class="cb-box"></span>
+        <span>Согласен получать новости и материалы от ARCH 3.14</span>
+      </label>
       <button class="btn-primary">Перезвоните мне →</button>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- БЛОК 2 · ПОРТФОЛИО -->
-<!-- ══════════════════════════════════════════ -->
-
+<!-- ══ БЛОК 2 · ПОРТФОЛИО ══ -->
 <div class="page-divider">
   <div class="page-divider-line"></div>
   <div class="page-divider-label">Блок 2</div>
@@ -181,45 +163,50 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 </div>
 
 <section class="cta-block bg2">
-  <div class="cta-deco">01</div>
+  <div class="cta-deco">3.14</div>
   <div class="cta-inner">
     <div class="cta-left">
       <div class="cta-page-tag">portfolio.html · CTA</div>
       <div class="cta-label">ПОНРАВИЛСЯ ПРОЕКТ?</div>
-      <h2 class="cta-h2">Сделаем<br><em>непохожий.</em></h2>
+      <h2 class="cta-h2">Создадим ваш<br><em>индивидуальный проект?</em></h2>
       <p class="cta-desc">Каждый проект — единственный. Берём понравившуюся концепцию за отправную точку и создаём дом именно под вас — участок, образ жизни, характер.</p>
       <div class="cta-contacts">
         <a href="tel:+74996477680" class="cta-phone">+7 499 647 76 80</a>
         <a href="mailto:mail@arch314.ru" class="cta-email">mail@arch314.ru</a>
       </div>
     </div>
-    <div class="cta-form">
+    <div class="cta-form" id="form2">
       <div class="fg">
-        <label class="fl">Как к вам обращаться?</label>
-        <input class="fi" type="text" placeholder="Имя или как вам удобно">
+        <div class="channel-label">Как вам удобнее связаться?</div>
+        <div class="channel-btns">
+          <button type="button" class="ch-btn active" data-form="form2" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn" data-form="form2" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
+          <button type="button" class="ch-btn" data-form="form2" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
+          <button type="button" class="ch-btn" data-form="form2" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
+          <button type="button" class="ch-btn" data-form="form2" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
+        </div>
+        <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
       </div>
       <div class="fg">
-        <label class="fl">Телефон / Telegram / WhatsApp</label>
-        <input class="fi" type="text" placeholder="Телефон, Telegram или WhatsApp">
-      </div>
-      <div class="fg">
-        <label class="fl">Какой проект вас зацепил?</label>
-        <input class="fi" type="text" placeholder="Название или просто опишите что понравилось">
+        <label class="fl">Чем можем помочь?</label>
+        <textarea class="fta" placeholder="Какой проект вас зацепил? Расскажите о своих идеях"></textarea>
       </div>
       <label class="cb-row">
         <input type="checkbox">
         <span class="cb-box"></span>
         <span>Согласен на обработку <a href="#">персональных данных</a></span>
       </label>
+      <label class="cb-row">
+        <input type="checkbox">
+        <span class="cb-box"></span>
+        <span>Согласен получать новости и материалы от ARCH 3.14</span>
+      </label>
       <button class="btn-primary">Обсудить мой дом →</button>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- БЛОК 3 · КАК МЫ РАБОТАЕМ -->
-<!-- ══════════════════════════════════════════ -->
-
+<!-- ══ БЛОК 3 · КАК МЫ РАБОТАЕМ ══ -->
 <div class="page-divider">
   <div class="page-divider-line"></div>
   <div class="page-divider-label">Блок 3</div>
@@ -240,23 +227,20 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
         <a href="mailto:mail@arch314.ru" class="cta-email">mail@arch314.ru</a>
       </div>
     </div>
-    <div class="cta-form">
+    <div class="cta-form" id="form3">
       <div class="fg">
-        <label class="fl">Как к вам обращаться?</label>
-        <input class="fi" type="text" placeholder="Имя или как вам удобно">
-      </div>
-      <div class="frow">
-        <div class="fg">
-          <label class="fl">Телефон / Telegram / WhatsApp</label>
-          <input class="fi" type="text" placeholder="Телефон или @username">
+        <div class="channel-label">Как вам удобнее связаться?</div>
+        <div class="channel-btns">
+          <button type="button" class="ch-btn active" data-form="form3" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn" data-form="form3" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
+          <button type="button" class="ch-btn" data-form="form3" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
+          <button type="button" class="ch-btn" data-form="form3" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
+          <button type="button" class="ch-btn" data-form="form3" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
         </div>
-        <div class="fg">
-          <label class="fl">Email</label>
-          <input class="fi" type="email" placeholder="mail@example.com">
-        </div>
+        <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
       </div>
       <div class="fg">
-        <label class="fl">Чем можем помочь</label>
+        <label class="fl">Чем можем помочь?</label>
         <textarea class="fta" placeholder="Расскажите об участке, идеях, сроках — или просто напишите «хочу поговорить»"></textarea>
       </div>
       <label class="cb-row">
@@ -267,17 +251,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
       <label class="cb-row">
         <input type="checkbox">
         <span class="cb-box"></span>
-        <span>Согласен получать новости о проектах и материалы от ARCH 3.14</span>
+        <span>Согласен получать новости и материалы от ARCH 3.14</span>
       </label>
       <button class="btn-primary">Записаться на встречу →</button>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════ -->
-<!-- БЛОК 4 · НАЧАТЬ ПРОЕКТ -->
-<!-- ══════════════════════════════════════════ -->
-
+<!-- ══ БЛОК 4 · НАЧАТЬ ПРОЕКТ ══ -->
 <div class="page-divider">
   <div class="page-divider-line"></div>
   <div class="page-divider-label">Блок 4</div>
@@ -286,7 +267,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 </div>
 
 <section class="cta-block bg2">
-  <div class="cta-deco">01</div>
+  <div class="cta-deco">3.14</div>
   <div class="cta-inner">
     <div class="cta-left">
       <div class="cta-page-tag">concept.html · CTA</div>
@@ -298,33 +279,21 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
         <a href="mailto:mail@arch314.ru" class="cta-email">mail@arch314.ru</a>
       </div>
     </div>
-    <div class="cta-form">
+    <div class="cta-form" id="form4">
       <div class="fg">
-        <label class="fl">Как к вам обращаться?</label>
-        <input class="fi" type="text" placeholder="Имя или как вам удобно">
-      </div>
-      <div class="frow">
-        <div class="fg">
-          <label class="fl">Телефон / Telegram / WhatsApp</label>
-          <input class="fi" type="text" placeholder="Телефон или @username">
+        <div class="channel-label">Как вам удобнее связаться?</div>
+        <div class="channel-btns">
+          <button type="button" class="ch-btn active" data-form="form4" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn" data-form="form4" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
+          <button type="button" class="ch-btn" data-form="form4" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
+          <button type="button" class="ch-btn" data-form="form4" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
+          <button type="button" class="ch-btn" data-form="form4" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
         </div>
-        <div class="fg">
-          <label class="fl">Email</label>
-          <input class="fi" type="email" placeholder="mail@example.com">
-        </div>
+        <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
       </div>
       <div class="fg">
-        <label class="fl">Чем можем помочь</label>
+        <label class="fl">Чем можем помочь?</label>
         <textarea class="fta" placeholder="Расскажите об участке, идеях, сроках — или просто напишите «хочу поговорить»"></textarea>
-      </div>
-      <div class="fg">
-        <label class="fl">Удобный способ связи</label>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
-          <button type="button" onclick="this.classList.toggle('active');this.style.borderColor=this.classList.contains('active')?'var(--gold)':'var(--border2)';this.style.color=this.classList.contains('active')?'var(--gold)':'var(--text2)';" style="padding:8px 16px;border:1px solid var(--border2);background:none;font-family:'Jost',sans-serif;font-size:13px;color:var(--text2);cursor:pointer;transition:all 0.3s;">WhatsApp</button>
-          <button type="button" onclick="this.classList.toggle('active');this.style.borderColor=this.classList.contains('active')?'var(--gold)':'var(--border2)';this.style.color=this.classList.contains('active')?'var(--gold)':'var(--text2)';" style="padding:8px 16px;border:1px solid var(--border2);background:none;font-family:'Jost',sans-serif;font-size:13px;color:var(--text2);cursor:pointer;transition:all 0.3s;">Telegram</button>
-          <button type="button" onclick="this.classList.toggle('active');this.style.borderColor=this.classList.contains('active')?'var(--gold)':'var(--border2)';this.style.color=this.classList.contains('active')?'var(--gold)':'var(--text2)';" style="padding:8px 16px;border:1px solid var(--border2);background:none;font-family:'Jost',sans-serif;font-size:13px;color:var(--text2);cursor:pointer;transition:all 0.3s;">Звонок</button>
-          <button type="button" onclick="this.classList.toggle('active');this.style.borderColor=this.classList.contains('active')?'var(--gold)':'var(--border2)';this.style.color=this.classList.contains('active')?'var(--gold)':'var(--text2)';" style="padding:8px 16px;border:1px solid var(--border2);background:none;font-family:'Jost',sans-serif;font-size:13px;color:var(--text2);cursor:pointer;transition:all 0.3s;">Email</button>
-        </div>
       </div>
       <label class="cb-row">
         <input type="checkbox">
@@ -334,7 +303,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
       <label class="cb-row">
         <input type="checkbox">
         <span class="cb-box"></span>
-        <span>Согласен получать новости о проектах и материалы от ARCH 3.14</span>
+        <span>Согласен получать новости и материалы от ARCH 3.14</span>
       </label>
       <button class="btn-primary">Записаться на встречу →</button>
     </div>
@@ -343,5 +312,26 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 
 <div style="height:1px;background:var(--border);"></div>
 
+<script>
+document.querySelectorAll('.ch-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var formId = this.dataset.form;
+    var form = document.getElementById(formId);
+    // Deactivate all in this form
+    form.querySelectorAll('.ch-btn').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    // Update input
+    var input = form.querySelector('.contact-input');
+    var lbl = form.querySelector('.fl') || form.querySelector('.channel-label');
+    input.placeholder = this.dataset.ph;
+    // Change input type for email
+    if (this.dataset.ch === 'email') {
+      input.type = 'email';
+    } else {
+      input.type = 'text';
+    }
+  });
+});
+</script>
 </body>
 </html>
