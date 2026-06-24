@@ -373,23 +373,49 @@ function render(m) {
     </div>
   `).join('');
 
-  // Plans
-  const plans = [
+  // Plans — показываем только те что есть
+  const planDefs = [
     {key:'floor1', label:'1 Этаж', src:`${folder}/plan-floor-1.png`},
     {key:'floor2', label:'2 Этаж', src:`${folder}/plan-floor-2.png`},
     {key:'section', label:'Разрез', src:`${folder}/section.png`},
   ];
 
+  const plansSection = document.querySelector('.plans');
   const tabs = document.getElementById('planTabs');
   const display = document.getElementById('planDisplay');
-  tabs.innerHTML = plans.map((p,i) => `
-    <button class="plan-tab${i===0?' active':''}" onclick="switchPlan('${p.key}',this)">${p.label}</button>
-  `).join('');
 
-  display.innerHTML = plans.map((p,i) => `
-    <img class="plan-img${i===0?' active':''}" id="plan-${p.key}" src="${p.src}" alt="${p.label}"
-         onerror="this.style.display='none'">
-  `).join('');
+  // Проверяем какие картинки реально существуют
+  let loadedPlans = [];
+  let checked = 0;
+
+  planDefs.forEach(p => {
+    const img = new Image();
+    img.onload = function() {
+      loadedPlans.push(p);
+      checked++;
+      if(checked === planDefs.length) renderPlans();
+    };
+    img.onerror = function() {
+      checked++;
+      if(checked === planDefs.length) renderPlans();
+    };
+    img.src = p.src;
+  });
+
+  function renderPlans() {
+    if(loadedPlans.length === 0) {
+      if(plansSection) plansSection.style.display = 'none';
+      return;
+    }
+    // Сортируем в исходном порядке
+    loadedPlans.sort((a,b) => planDefs.indexOf(a) - planDefs.indexOf(b));
+    tabs.innerHTML = loadedPlans.map((p,i) => `
+      <button class="plan-tab${i===0?' active':''}" onclick="switchPlan('${p.key}',this)">${p.label}</button>
+    `).join('');
+    display.innerHTML = loadedPlans.map((p,i) => `
+      <img class="plan-img${i===0?' active':''}" id="plan-${p.key}" src="${p.src}" alt="${p.label}">
+    `).join('');
+  }
 
   // Suitable for
   if(m.suitableFor) {
