@@ -44,8 +44,6 @@ body::after {
 }
 
 /* ── NAV ── */
-.nav-back:hover { color: var(--accent); }
-
 /* ── PROGRESS DOTS ── */
 .progress {
   position: fixed; right: 32px; top: 50%; transform: translateY(-50%);
@@ -412,17 +410,16 @@ body::after {
   .f-note { font-size: 12px; }
   .btn-send { font-size: 12px; padding: 16px; }
 }
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);transition:background .4s;}
-nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid var(--border,#1e1e1e);}
+@media(max-width:900px){}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);transition:background .4s;}
+nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid #1e1e1e;}
 .nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:15px;letter-spacing:4px;color:#c9a96e;text-decoration:none;}
 .nav-logo span{color:#8a8072;font-size:11px;display:block;letter-spacing:4px;margin-top:3px;font-weight:300;text-transform:uppercase;}
 .nav-links{display:flex;gap:36px;align-items:center;}
 .nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c4b8a4;text-decoration:none;transition:color .3s;position:relative;white-space:nowrap;}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#c9a96e;transition:width .3s;}
-.nav-links a:hover{color:#c9a96e;}
-.nav-links a:hover::after{width:100%;}
-.nav-links a.active{color:#c9a96e;}
-.nav-links a.active::after{width:100%;}
+.nav-links a:hover,.nav-links a.nav-active{color:#c9a96e;}
+.nav-links a:hover::after,.nav-links a.nav-active::after{width:100%;}
 .nav-dropdown{position:relative;display:inline-flex;align-items:center;}
 .nav-dropdown>a::after{display:none;}
 .nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);background:#151515;border:1px solid #2a2a2a;min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;}
@@ -515,10 +512,10 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
         <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
       </div>
     </div>
-    <a href="start.html" data-active="start">Как мы работаем</a>
-    <a href="portfolio.html" data-active="portfolio">Портфолио</a>
-    <a href="prices.html" data-active="prices">Услуги</a>
-    <a href="start.html" class="nav-cta">Начать проект →</a>
+    <a href="portfolio.html" data-page="portfolio">Портфолио</a>
+    <a href="start.html" data-page="start">Как мы работаем</a>
+    <a href="prices.html" data-page="prices">Услуги</a>
+    <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
 <!-- NAV -->
@@ -796,6 +793,7 @@ const so = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 sections.forEach(id => { const el = document.getElementById(id); if (el) so.observe(el); });
 
+
 (function(){
   var nb=document.getElementById('navbar');
   if(nb) window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>60);});
@@ -805,9 +803,9 @@ sections.forEach(id => { const el = document.getElementById(id); if (el) so.obse
     btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();menu.classList.toggle('open');});
     document.addEventListener('click',function(e){if(!e.target.closest('.nav-dropdown'))menu.classList.remove('open');});
   }
-  var page=window.location.pathname.split('/').pop();
-  document.querySelectorAll('.nav-links a[data-active]').forEach(function(a){
-    if(page.indexOf(a.dataset.active)===0) a.classList.add('active');
+  var page=window.location.pathname.split('/').pop().replace('.html','');
+  document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
+    if(a.dataset.page===page)a.classList.add('nav-active');
   });
 })();
 </script>
