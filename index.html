@@ -72,94 +72,6 @@ body::before {
 }
 
 /* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 48px;
-  background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
-  transition: background 0.4s;
-}
-nav.scrolled { background: rgba(8,8,8,0.97); border-bottom: 1px solid var(--border); }
-
-.nav-logo {
-  font-family: 'Unbounded', sans-serif;
-  font-weight: 200;
-  font-size: 15px;
-  letter-spacing: 4px;
-  color: var(--accent);
-  text-decoration: none;
-}
-.nav-logo span { color: var(--text3); font-size: 12px; display: block; letter-spacing: 4px; margin-top: 2px; }
-
-.nav-links { display: flex; gap: 36px; align-items: center; }
-.nav-links a {
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text2);
-  text-decoration: none;
-  transition: color 0.3s;
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0;
-  width: 0; height: 1px;
-  background: var(--accent);
-  transition: width 0.3s;
-}
-.nav-links a:hover { color: var(--accent); }
-.nav-links a:hover::after { width: 100%; }
-
-.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
-.nav-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-6px);
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  min-width: 280px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 200;
-}
-.nav-dropdown-menu.open {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(-50%) translateY(0);
-}
-.nav-dropdown-menu a {
-  display: block;
-  padding: 12px 20px;
-  font-size: 12px;
-  letter-spacing: 1px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text2);
-}
-.nav-dropdown-menu a:last-child { border-bottom: none; }
-.nav-dropdown-menu a::after { display: none; }
-.nav-dropdown-menu a:hover { background: var(--border); color: var(--accent); }
-
-.nav-cta {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--bg) !important;
-  background: var(--accent);
-  padding: 10px 20px;
-  text-decoration: none;
-  transition: background 0.3s !important;
-}
-.nav-cta::after { display: none !important; }
-.nav-cta:hover { background: var(--accent2) !important; color: var(--bg) !important; }
-
 /* ── HERO ── */
 .hero {
   position: relative;
@@ -713,8 +625,6 @@ a[href] { -webkit-tap-highlight-color: transparent; }
 
 /* ── MOBILE ── */
 @media (max-width: 900px) {
-  nav { padding: 20px 24px; }
-  .nav-links { display: none; }
   .hero { padding: 0 24px 60px; }
   .hero-stats { display: none; }
   .hero-bottom { flex-direction: column; gap: 32px; align-items: flex-start; }
@@ -736,19 +646,33 @@ a[href] { -webkit-tap-highlight-color: transparent; }
   * { cursor: auto !important; }
   .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
 }
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);transition:background .4s;}
+nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid #1e1e1e;}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:15px;letter-spacing:4px;color:#c9a96e;text-decoration:none;}
+.nav-logo span{color:#8a8072;font-size:11px;display:block;letter-spacing:4px;margin-top:3px;font-weight:300;text-transform:uppercase;}
+.nav-links{display:flex;gap:36px;align-items:center;}
+.nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c4b8a4;text-decoration:none;transition:color .3s;position:relative;white-space:nowrap;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#c9a96e;transition:width .3s;}
+.nav-links a:hover,.nav-links a.nav-active{color:#c9a96e;}
+.nav-links a:hover::after,.nav-links a.nav-active::after{width:100%;}
+.nav-dropdown{position:relative;display:inline-flex;align-items:center;}
+.nav-dropdown>a::after{display:none;}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);background:#151515;border:1px solid #2a2a2a;min-width:280px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;}
+.nav-dropdown-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);}
+.nav-dropdown-menu a{display:block;padding:14px 20px;font-size:11px;letter-spacing:1px;border-bottom:1px solid #1e1e1e;color:#c4b8a4;text-decoration:none;transition:color .2s,background .2s;white-space:nowrap;}
+.nav-dropdown-menu a::after{display:none!important;}
+.nav-dropdown-menu a:last-child{border-bottom:none;}
+.nav-dropdown-menu a:hover{background:#1e1e1e;color:#c9a96e;}
+.nav-cta{font-size:11px!important;letter-spacing:2px;text-transform:uppercase;color:#080808!important;background:#c9a96e;padding:10px 20px;text-decoration:none;font-weight:500;transition:background .3s!important;}
+.nav-cta::after{display:none!important;}
+.nav-cta:hover{background:#e8c880!important;}
+@media(max-width:900px){nav{padding:20px 24px;}.nav-links a:not(.nav-cta){display:none;}}
 </style>
 </head>
 <body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <nav id="navbar">
-  <a href="#" class="nav-logo">
-    ARCH 3.14
-    <span>Архитектурное бюро</span>
-  </a>
-    <div class="nav-links">
+  <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
+  <div class="nav-links">
     <div class="nav-dropdown">
       <a href="#">Направления</a>
       <div class="nav-dropdown-menu">
@@ -757,12 +681,14 @@ a[href] { -webkit-tap-highlight-color: transparent; }
         <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
       </div>
     </div>
-    <a href="portfolio.html">Портфолио</a>
-    <a href="prices.html">Стоимость</a>
-    <a href="#">О бюро</a>
-    <a href="start.html" class="nav-cta">Начать проект →</a>
+    <a href="portfolio.html" data-page="portfolio">Портфолио</a>
+    <a href="start.html" data-page="start">Как мы работаем</a>
+    <a href="prices.html" data-page="prices">Услуги</a>
+    <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -1053,34 +979,24 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // Dropdown на click
-var dropBtn = document.querySelector('.nav-dropdown > a');
-var dropMenu = document.querySelector('.nav-dropdown-menu');
-if(dropBtn && dropMenu) {
-  dropBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    dropMenu.classList.toggle('open');
-  });
+var dropBtn = document.querySelector(');
   document.addEventListener('click', function(e) {
-    if(!e.target.closest('.nav-dropdown')) dropMenu.classList.remove('open');
+    if(!e.target.closest(').join('');
   });
-}
-
-// Портфолио на главной
-fetch('models.json?v=' + Date.now())
-  .then(r => r.json())
-  .then(function(models) {
-    var grid = document.getElementById('indexPortfolioGrid');
-    if(!grid) return;
-    grid.innerHTML = models.slice(0,6).map(function(m) {
-      return '<div class="portfolio-item" onclick="location.href=\'project.html?id=' + m.id + '\'" style="cursor:pointer">' +
-        '<img class="portfolio-img" src="assets/images/models/' + m.folder + '/cover.jpeg" alt="' + m.name + '" loading="lazy"' +
-        ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
-        '<div class="portfolio-item-placeholder" style="display:none">' + m.name + '</div>' +
-        '<div class="portfolio-overlay"></div>' +
-        '<div class="portfolio-info"><div class="portfolio-name">' + m.name + '</div>' +
-        '<div class="portfolio-tag">' + m.type + '</div></div></div>';
-    }).join('');
+(function(){
+  var nb=document.getElementById('navbar');
+  if(nb) window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>60);});
+  var btn=document.querySelector('.nav-dropdown>a');
+  var menu=document.querySelector('.nav-dropdown-menu');
+  if(btn&&menu){
+    btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();menu.classList.toggle('open');});
+    document.addEventListener('click',function(e){if(!e.target.closest('.nav-dropdown'))menu.classList.remove('open');});
+  }
+  var page=window.location.pathname.split('/').pop().replace('.html','');
+  document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
+    if(a.dataset.page===page)a.classList.add('nav-active');
   });
+})();
 </script>
 </body>
 </html>
