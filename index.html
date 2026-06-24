@@ -563,27 +563,32 @@ footer {
   nav { padding: 0 24px; }
 
   /* Compress vertical spacing on mobile */
-  .section-inner { padding: 48px 24px; }
-  footer { padding: 40px 24px 24px; }
-  .footer-grid { gap: 32px; margin-bottom: 24px; }
-  .footer-contacts-row { padding: 20px 0; gap: 16px; font-size: 14px; }
-  .footer-bottom { padding-top: 16px; }
+  .section-inner { padding: 40px 20px !important; }
+  footer { padding: 32px 20px 20px !important; }
+  .footer-grid { gap: 24px !important; margin-bottom: 16px !important; }
+  .footer-contacts-row { padding: 16px 0 !important; gap: 12px !important; font-size: 13px !important; }
+  .footer-bottom { padding-top: 12px !important; }
   /* CTA form tighter */
-  .new-cta { padding: 40px 24px !important; }
-  .new-cta-header { margin-bottom: 20px; }
-  .new-cta-desc { font-size: 15px; margin-bottom: 20px; }
-  .new-cta-contacts { margin-bottom: 24px; }
-  .ch-group { gap: 6px; }
-  .ch-btns { gap: 4px; }
-  .ch-btn { padding: 7px 12px; font-size: 12px; }
-  .cta-fi { padding: 11px 14px; font-size: 14px; }
-  .cta-fta { min-height: 56px; padding: 11px 14px; font-size: 14px; }
-  .cta-cb { font-size: 12px; }
-  .cta-btn { padding: 16px; }
-  .new-cta-form { gap: 10px; }
+  .new-cta { padding: 36px 20px !important; }
+  .new-cta-header { margin-bottom: 16px !important; }
+  .new-cta-h2 { font-size: 28px !important; line-height: 1.1 !important; }
+  .new-cta-desc { font-size: 14px !important; margin-bottom: 16px !important; }
+  .new-cta-phone { font-size: 18px !important; }
+  .new-cta-contacts { gap: 4px !important; margin-bottom: 20px !important; }
+  .new-cta-inner { gap: 24px !important; }
+  .ch-group { gap: 6px !important; }
+  .ch-btns { gap: 4px !important; }
+  .ch-btn { padding: 6px 12px !important; font-size: 12px !important; }
+  .cta-fi { padding: 10px 12px !important; font-size: 14px !important; }
+  .cta-fta { min-height: 52px !important; padding: 10px 12px !important; font-size: 14px !important; }
+  .cta-cb { font-size: 12px !important; }
+  .cta-btn { padding: 14px !important; font-size: 12px !important; }
+  .new-cta-form { gap: 8px !important; }
+  .ch-label { font-size: 11px !important; }
+  .cta-fl { font-size: 11px !important; }
   /* Hero tighter */
-  .hero { padding: 0 24px 40px; }
-  .hero-actions { gap: 10px; }
+  .hero { padding: 0 20px 32px !important; }
+  .hero-actions { gap: 8px !important; }
 
   /* Контрастнее тексты */
   .body-text, .step-desc, .footer-about { color: #c4b8a8; }
@@ -678,38 +683,45 @@ footer {
   background: var(--bg);
   display: flex; flex-direction: column;
   justify-content: center;
-  padding: 100px 40px 60px;
+  padding: 80px 32px 40px;
   transform: translateX(-100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .mobile-menu.open { transform: translateX(0); }
+.mobile-menu-close {
+  position: absolute; top: 24px; right: 24px;
+  background: none; border: none; cursor: pointer;
+  font-size: 28px; color: var(--text2); line-height: 1;
+  padding: 8px;
+}
 .mobile-menu a {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 8vw, 52px);
-  font-weight: 300; color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-size: 18px; font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--white);
   text-decoration: none; line-height: 1.2;
-  padding: 12px 0; border-bottom: 1px solid var(--border);
+  padding: 14px 0; border-bottom: 1px solid var(--border);
   transition: color 0.3s;
 }
 .mobile-menu a:hover { color: var(--gold); }
 .mobile-menu a.mobile-cta {
   font-family: 'Jost', sans-serif;
-  font-size: 14px; font-weight: 500;
+  font-size: 13px; font-weight: 500;
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--bg); background: var(--gold);
-  padding: 18px 28px; border: none;
-  margin-top: 32px; text-align: center;
+  padding: 16px 24px; border: none;
+  margin-top: 24px; text-align: center;
   transition: background 0.3s;
 }
 .mobile-menu a.mobile-cta:hover { background: var(--gold2); }
 .mobile-menu-contacts {
-  margin-top: 40px;
-  display: flex; flex-direction: column; gap: 6px;
+  margin-top: 24px;
+  display: flex; flex-direction: column; gap: 4px;
 }
 .mobile-menu-contacts a {
   font-family: 'Jost', sans-serif;
-  font-size: 14px; font-weight: 300;
-  color: var(--text2); border: none; padding: 4px 0;
+  font-size: 13px; font-weight: 300;
+  color: var(--text2); border: none; padding: 3px 0;
 }
 
 @media (max-width: 768px) {
@@ -721,6 +733,7 @@ footer {
 </head>
 <body>
 <div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="menuClose">✕</button>
   <a href="index.html#about">О нас</a>
   <a href="portfolio.html">Портфолио</a>
   <a href="start.html">Как мы работаем</a>
@@ -1100,18 +1113,21 @@ footer {
 (function(){
   var btn = document.getElementById('burgerBtn');
   var menu = document.getElementById('mobileMenu');
+  var closeBtn = document.getElementById('menuClose');
   if(!btn || !menu) return;
+  function closeMenu() {
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
   btn.addEventListener('click', function(){
     btn.classList.toggle('open');
     menu.classList.toggle('open');
     document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
   });
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
   menu.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){
-      btn.classList.remove('open');
-      menu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    a.addEventListener('click', closeMenu);
   });
 })();
 </script>
