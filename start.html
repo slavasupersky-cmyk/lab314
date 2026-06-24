@@ -301,8 +301,8 @@ nav {
 /* ── АДАПТИВ ── */
 @media (max-width: 1024px) {
   .stage { grid-template-columns: 1fr; }
-  .stage.flip .st-photo { order: 0; }
-  .stage.flip .st-body { order: 0; }
+  .stage.flip .st-photo { order: -1; }
+  .stage.flip .st-body { order: 1; }
   .st-photo { min-height: 55vw; }
 }
 @media (max-width: 768px) {
@@ -773,6 +773,7 @@ nav {
 </script>
 </body>
 </html>
+
 
 
 
