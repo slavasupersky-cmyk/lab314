@@ -361,7 +361,7 @@ section { position: relative; }
 .process-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
+  gap: 16px;
 }
 .step {
   background: var(--surface);
@@ -656,7 +656,6 @@ footer {
         <div class="label" style="margin-bottom:12px">КАК МЫ РАБОТАЕМ</div>
         <h2 class="h2">Четыре этапа.<br><em>Один путь.</em></h2>
       </div>
-      <a href="start.html" class="btn-ghost">Подробнее →</a>
     </div>
     <div class="process-steps">
       <div class="step reveal">
@@ -688,6 +687,9 @@ footer {
         <div class="step-time">бессрочно</div>
       </div>
     </div>
+    <div class="reveal" style="text-align:right;margin-top:32px;">
+      <a href="start.html" class="btn-ghost">Подробнее →</a>
+    </div>
   </div>
 </section>
 
@@ -699,10 +701,12 @@ footer {
         <div class="label" style="margin-bottom:12px">ПОРТФОЛИО</div>
         <h2 class="h2">200+ объектов.<br><em>Каждый — единственный.</em></h2>
       </div>
-      <a href="portfolio.html" class="btn-ghost">Все проекты →</a>
     </div>
     <div class="portfolio-grid" id="portfolioGrid">
       <!-- JS -->
+    </div>
+    <div class="reveal" style="text-align:right;margin-top:32px;">
+      <a href="portfolio.html" class="btn-ghost">Все проекты →</a>
     </div>
   </div>
 </section>
@@ -879,4 +883,5 @@ footer {
 </script>
 </body>
 </html>
+
 
