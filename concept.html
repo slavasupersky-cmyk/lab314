@@ -139,6 +139,26 @@ footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(
   footer{grid-template-columns:1fr;padding:48px 24px;}
   .footer-bottom{padding:20px 24px;flex-direction:column;gap:8px;}
 }
+
+/* GALLERY */
+.examples{padding:100px 48px;border-top:1px solid var(--border);}
+.examples-header{margin-bottom:56px;}
+.ex-label{padding:16px 24px;background:var(--surface);border:1px solid var(--border);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px;}
+.ex-label::before{content:'';display:block;width:20px;height:1px;background:var(--accent);}
+.ex-imgs{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:3px;}
+.ex-img{position:relative;overflow:hidden;background:var(--surface);aspect-ratio:4/3;}
+.ex-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.75);transition:transform .6s,filter .4s;display:block;}
+.ex-img:hover img{transform:scale(1.04);filter:brightness(.85) saturate(.9);}
+.ex-img-caption{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(to top,rgba(8,8,8,.9),transparent);font-size:11px;color:var(--text2);letter-spacing:1px;}
+.ex-render{position:relative;overflow:hidden;background:var(--surface);height:460px;margin-top:3px;}
+.ex-render img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.8);transition:transform .8s,filter .5s;display:block;}
+.ex-render:hover img{transform:scale(1.03);filter:brightness(.8) saturate(.95);}
+.ex-render-info{position:absolute;bottom:40px;left:40px;right:40px;display:flex;justify-content:space-between;align-items:flex-end;}
+.ex-render-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);}
+.ex-render-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-top:6px;}
+.ex-render-note{font-size:11px;color:var(--text2);text-align:right;border:1px solid var(--border2);padding:10px 16px;background:rgba(8,8,8,.7);}
+.ex-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#111,#1a1a1a);display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
+@media(max-width:900px){.examples{padding:72px 24px;}.ex-imgs{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -225,33 +245,52 @@ footer{padding:64px 48px 40px;border-top:1px solid var(--border);background:var(
 </section>
 
 <!-- ГАЛЕРЕЯ -->
-<section class="gallery">
-  <div class="gallery-header reveal">
-    <div>
-      <div class="section-label">НА ВЫХОДЕ</div>
-      <h2 class="section-title">Как это <em>выглядит</em></h2>
-    </div>
+<section class="examples">
+  <div class="examples-header reveal">
+    <div class="section-label">НА ВЫХОДЕ</div>
+    <h2 class="section-title">Как это <em>выглядит</em></h2>
   </div>
-  <div class="gallery-grid">
-    <div class="gimg wide">
-      <img src="assets/images/concept/example-01.jpg" alt="Эскиз"
-           onerror="this.innerHTML='<div class=gimg-placeholder>Эскизы и скетчи</div>';this.style.display='block'">
+
+  <div class="reveal">
+    <div class="ex-label">Эскизы и скетчи</div>
+    <div class="ex-imgs">
+      <div class="ex-img">
+        <img src="assets/images/concept/example-01.jpg" alt="Скетч вариант А"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ex-img-placeholder" style="display:none">Скетч А</div>
+        <div class="ex-img-caption">Концептуальный скетч · вариант А</div>
+      </div>
+      <div class="ex-img">
+        <img src="assets/images/concept/example-02.jpg" alt="Планировка 1 этаж"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ex-img-placeholder" style="display:none">Планировка</div>
+        <div class="ex-img-caption">Планировочное решение · 1 этаж</div>
+      </div>
+      <div class="ex-img">
+        <img src="assets/images/concept/example-03.jpg" alt="Эскиз фасада"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ex-img-placeholder" style="display:none">Фасад</div>
+        <div class="ex-img-caption">Эскиз фасада · вариант Б</div>
+      </div>
+      <div class="ex-img">
+        <img src="assets/images/concept/example-04.jpg" alt="Эскиз интерьера"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ex-img-placeholder" style="display:none">Интерьер</div>
+        <div class="ex-img-caption">Эскиз интерьера · гостиная</div>
+      </div>
     </div>
-    <div class="gimg">
-      <img src="assets/images/concept/example-02.jpg" alt="Вариант А"
-           onerror="this.innerHTML='<div class=gimg-placeholder>Вариант А</div>';this.style.display='block'">
-    </div>
-    <div class="gimg">
-      <img src="assets/images/concept/example-03.jpg" alt="Планировка"
-           onerror="this.innerHTML='<div class=gimg-placeholder>Планировка</div>';this.style.display='block'">
-    </div>
-    <div class="gimg">
-      <img src="assets/images/concept/example-04.jpg" alt="Вариант Б"
-           onerror="this.innerHTML='<div class=gimg-placeholder>Вариант Б</div>';this.style.display='block'">
-    </div>
-    <div class="gimg wide">
-      <img src="assets/images/concept/render.png" alt="Визуализация"
-           onerror="this.innerHTML='<div class=gimg-placeholder>Фотореалистичная визуализация</div>';this.style.display='block'">
+
+    <div class="ex-label">Фотореалистичная визуализация</div>
+    <div class="ex-render">
+      <img src="assets/images/concept/render.png" alt="Финальная визуализация"
+           onerror="this.style.display='none'">
+      <div class="ex-render-info">
+        <div>
+          <div class="ex-render-title">Финальная визуализация</div>
+          <div class="ex-render-tag">Параметрика · Частный дом</div>
+        </div>
+        <div class="ex-render-note">Такой рендер вы получите<br>по итогам этапа концепции</div>
+      </div>
     </div>
   </div>
 </section>
