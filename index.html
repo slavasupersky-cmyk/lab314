@@ -470,6 +470,21 @@ section { position: relative; }
 }
 
 /* ─── FOOTER ─── */
+
+.footer-contacts-row {
+  display: flex; gap: 32px; align-items: center; flex-wrap: wrap;
+  padding: 28px 0; border-top: 1px solid var(--border);
+  margin-top: 24px;
+}
+.footer-contacts-row a, .footer-contacts-row span {
+  font-size: 15px; color: var(--text2); text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-contacts-row a:hover { color: var(--gold); }
+@media (max-width: 768px) {
+  .footer-contacts-row { flex-direction: column; gap: 12px; }
+}
+
 footer {
   border-top: 1px solid var(--border);
   background: var(--bg2);
@@ -546,6 +561,20 @@ footer {
 }
 @media (max-width: 768px) {
   nav { padding: 0 24px; }
+  /* Контрастнее тексты */
+  .body-text, .step-desc, .footer-about { color: #c4b8a8; }
+  .label, .step-time, .fact-label { color: #8a7e70; }
+  /* Полоска между карточками портфолио */
+  .p-card { border-bottom: 1px solid var(--border); }
+  /* Форма компактнее */
+  .new-cta { padding: 48px 24px !important; }
+  .new-cta-header { margin-bottom: 24px; }
+  .new-cta-inner { grid-template-columns: 1fr; gap: 32px; }
+  .new-cta-h2 { font-size: clamp(32px, 8vw, 48px); }
+  .new-cta-phone { font-size: 22px; }
+  .new-cta-contacts { margin-bottom: 0; }
+  .cta-fta { min-height: 60px; }
+
   .nav-links a:not(.nav-cta) { display: none; }
   .hero { padding: 0 24px 60px; }
   .hero-stats { display: none; }
@@ -870,18 +899,6 @@ footer {
     <div>
       <div class="footer-logo">ARCH 3.14</div>
       <p class="footer-about">Архитектурное бюро полного цикла. Специализация — параметрическая и бионическая архитектура. 15 лет экспертизы.</p>
-      <div class="footer-contacts">
-        <a href="tel:+74996477680">+7 499 647 76 80</a>
-        <a href="mailto:mail@arch314.ru">mail@arch314.ru</a>
-        <a>Москва, Artplay · Пн–Пт 10:00–19:00</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>О нас</h4>
-      <a href="portfolio.html">Портфолио</a>
-      <a href="start.html">Как мы работаем</a>
-      <a href="#about">О бюро</a>
-      <a href="mailto:mail@arch314.ru">Контакты</a>
     </div>
     <div class="footer-col">
       <h4>Услуги</h4>
@@ -890,11 +907,22 @@ footer {
       <a href="prices.html#configurator">Конфигуратор цены</a>
     </div>
     <div class="footer-col">
+      <h4>О нас</h4>
+      <a href="portfolio.html">Портфолио</a>
+      <a href="start.html">Как мы работаем</a>
+      <a href="#about">О бюро</a>
+    </div>
+    <div class="footer-col">
       <h4>Направления</h4>
       <a href="index.html">Arch — Частная архитектура</a>
       <a href="lab.html">Lab — Бизнес архитектура</a>
       <a href="construct.html">Construct — Бионические конструкции</a>
     </div>
+  </div>
+  <div class="footer-contacts-row">
+    <a href="tel:+74996477680">+7 499 647 76 80</a>
+    <a href="mailto:mail@arch314.ru">mail@arch314.ru</a>
+    <span>Москва, Artplay · Пн–Пт 10:00–19:00</span>
   </div>
   <div class="footer-bottom">
     <div class="footer-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
