@@ -8,147 +8,543 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+
+/* ─── ПЕРЕМЕННЫЕ ─── */
 :root {
-  --bg:#080808; --bg2:#0f0f0f; --surface:#141414;
-  --border:#1e1e1e; --border2:#2a2a2a;
-  --gold:#c9a96e; --gold2:#e8c880;
-  --text:#ede8df; --text2:#9a8e80; --text3:#4a4238; --white:#f5f0e8;
-  --nav-h:80px;
+  --bg:      #080808;
+  --bg2:     #0f0f0f;
+  --surface: #141414;
+  --border:  #1e1e1e;
+  --border2: #2a2a2a;
+  --gold:    #c9a96e;
+  --gold2:   #e8c880;
+  --text:    #ede8df;
+  --text2:   #9a8e80;
+  --text3:   #4a4238;
+  --white:   #f5f0e8;
+  --nav-h:   80px;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;animation:pageFade .5s ease both;}
-a{color:inherit;text-decoration:none;}
-img{display:block;}
-@keyframes pageFade{from{opacity:0;}to{opacity:1;}}
 
-/* CURSOR */
-.cur-dot,.cur-ring{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
-.cur-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;transition:transform .2s;}
-.cur-ring{width:36px;height:36px;border:1px solid rgba(201,169,110,.5);border-radius:50%;transition:width .3s,height .3s,border-color .3s;}
-body.hovering .cur-dot{transform:translate(-50%,-50%) scale(2);}
-body.hovering .cur-ring{width:56px;height:56px;border-color:var(--gold);}
-@media(hover:none){.cur-dot,.cur-ring{display:none;}body{cursor:auto;}}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(8,8,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:18px;letter-spacing:4px;color:var(--white);line-height:1;}
-.nav-logo span{display:block;font-family:'Jost',sans-serif;font-weight:300;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--text3);margin-top:4px;}
-.nav-links{display:flex;align-items:center;gap:40px;}
-.nav-links a{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);position:relative;transition:color .3s;}
-.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s;}
-.nav-links a:hover,.nav-links a.active{color:var(--gold);}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-.nav-cta{background:var(--gold);color:var(--bg)!important;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:500;padding:12px 26px;transition:background .3s!important;}
-.nav-cta::after{display:none!important;}
-.nav-cta:hover{background:var(--gold2)!important;}
-@media(max-width:768px){nav{padding:0 24px;}.nav-links a:not(.nav-cta){display:none;}}
-
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s,transform .9s;}
-.reveal.in{opacity:1;transform:none;}
-.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
-
-/* ПРОГРЕСС */
-.progress{position:fixed;right:32px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:16px;align-items:flex-end;}
-.dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--text3);cursor:pointer;transition:all .3s;position:relative;}
-.dot.active{background:var(--gold);border-color:var(--gold);}
-.dot:hover{border-color:var(--gold);}
-.dot-label{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);white-space:nowrap;opacity:0;transition:opacity .3s;}
-.dot:hover .dot-label{opacity:1;}
-@media(max-width:768px){.progress{display:none;}}
-
-/* ПОЛНОЭКРАННЫЕ СЕКЦИИ */
-.fs{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:var(--nav-h);}
-.fs.flip{direction:rtl;}
-.fs.flip>*{direction:ltr;}
-
-/* HERO */
-.hero-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+80px) 48px 80px;border-bottom:1px solid var(--border);}
-.hero-eyebrow{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(52px,7vw,100px);line-height:.95;color:var(--white);margin-bottom:28px;}
-.hero-h1 em{font-style:italic;color:var(--gold);}
-.hero-sub{font-size:17px;line-height:1.85;color:var(--text2);max-width:560px;margin-bottom:56px;}
-
-/* ЭТАПЫ СПИСОК */
-.step-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
-.ss-item{background:var(--surface);border:1px solid var(--border);padding:24px 20px;display:flex;gap:16px;align-items:flex-start;transition:border-color .3s,background .3s;}
-.ss-item:hover{border-color:var(--text3);background:var(--border);}
-.ss-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--gold);line-height:1;flex-shrink:0;}
-.ss-name{font-size:14px;color:var(--white);font-weight:400;margin-bottom:4px;}
-.ss-time{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
-
-/* ФОТО СЕКЦИЯ */
-.stage-img{position:relative;overflow:hidden;background:var(--surface);}
-.stage-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.8);}
-.stage-num-bg{position:absolute;bottom:-20px;right:-10px;font-family:'Cormorant Garamond',serif;font-size:220px;font-weight:300;color:rgba(255,255,255,.04);line-height:1;pointer-events:none;}
-.stage-timer{position:absolute;top:40px;left:40px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--text2);background:rgba(8,8,8,.7);border:1px solid var(--border2);padding:8px 16px;}
-.stage-badge{position:absolute;bottom:40px;left:40px;border-left:2px solid var(--gold);padding-left:16px;}
-.sb-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
-.sb-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold);}
-
-/* ТЕЛО ЭТАПА */
-.stage-body{display:flex;flex-direction:column;justify-content:center;padding:80px 64px;}
-.s-step{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
-.s-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5vw,72px);line-height:1;color:var(--white);margin-bottom:28px;}
-.s-title em{font-style:italic;color:var(--gold);}
-.s-text{font-size:16px;line-height:1.9;color:var(--text2);margin-bottom:28px;}
-.s-text p{margin-bottom:14px;}
-.s-divider{width:40px;height:1px;background:var(--border2);margin-bottom:24px;}
-.s-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
-.s-tag{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border2);color:var(--text2);padding:8px 14px;transition:border-color .3s,color .3s;}
-.s-tag:hover{border-color:var(--gold);color:var(--gold);}
-.s-scroll-hint{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
-.s-scroll-hint::before{content:'↓ ';color:var(--gold);}
-
-/* ФОРМА */
-.form-section{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:var(--nav-h);border-top:1px solid var(--border);}
-.form-left{display:flex;flex-direction:column;justify-content:center;padding:80px 64px;background:var(--bg2);}
-.flp-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
-.flp-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(36px,4vw,56px);line-height:1.05;color:var(--white);margin-bottom:20px;}
-.flp-title em{font-style:italic;color:var(--gold);}
-.flp-desc{font-size:16px;line-height:1.85;color:var(--text2);margin-bottom:40px;}
-.contact-row{display:flex;flex-direction:column;gap:16px;}
-.c-item{display:flex;align-items:center;gap:14px;font-size:15px;color:var(--text2);transition:color .3s;}
-.c-item:hover{color:var(--gold);}
-.c-icon{width:20px;height:20px;flex-shrink:0;opacity:.6;}
-.c-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-
-.form-right{display:flex;flex-direction:column;justify-content:center;padding:80px 64px;}
-.f-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);margin-bottom:6px;}
-.f-sub{font-size:13px;letter-spacing:1px;color:var(--text3);margin-bottom:36px;}
-.fg{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:0;}
-.fg-row .fg{margin-bottom:0;}
-.fl{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
-.fi,.fsel,.fta{background:var(--surface);border:1px solid var(--border2);color:var(--text);font-family:'Jost',sans-serif;font-size:15px;font-weight:300;padding:14px 16px;outline:none;transition:border-color .3s;width:100%;}
-.fi:focus,.fsel:focus,.fta:focus{border-color:var(--gold);}
-.fi::placeholder,.fta::placeholder{color:var(--text3);}
-.fsel{appearance:none;cursor:pointer;}
-.fta{resize:vertical;min-height:100px;}
-.f-note{font-size:13px;color:var(--text3);margin:16px 0;}
-.btn-send{width:100%;background:var(--gold);color:var(--bg);font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:18px;border:none;cursor:pointer;transition:background .3s;}
-.btn-send:hover{background:var(--gold2);}
-
-/* НИЖНЯЯ СТРОКА */
-.bottom-bar{padding:24px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
-.bottom-bar-copy{font-size:14px;letter-spacing:1px;color:var(--text3);flex:1;}
-.bottom-bar-links{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;flex:1;}
-.bottom-bar-links a{font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);transition:color .3s;}
-.bottom-bar-links a:hover{color:var(--gold);}
-.bottom-bar-policy{font-size:14px;letter-spacing:1px;color:var(--text3);flex:1;text-align:right;transition:color .3s;}
-.bottom-bar-policy:hover{color:var(--text2);}
-
-@media(max-width:768px){
-  .fs,.form-section{grid-template-columns:1fr;min-height:auto;}
-  .fs.flip{direction:ltr;}
-  .stage-img{height:60vw;min-height:260px;}
-  .stage-body,.form-left,.form-right{padding:48px 24px;}
-  .hero-section{padding:calc(var(--nav-h)+48px) 24px 48px;}
-  .step-strip{grid-template-columns:1fr 1fr;}
-  .fg-row{grid-template-columns:1fr;}
-  .bottom-bar{padding:24px;flex-direction:column;align-items:flex-start;}
+/* ─── RESET ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+  animation: pageFade 0.5s ease both;
 }
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+@keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ─── CURSOR ─── */
+.cur-dot, .cur-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+.cur-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.cur-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201,169,110,0.5);
+  border-radius: 50%;
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+body.hovering .cur-dot { transform: translate(-50%,-50%) scale(2); }
+body.hovering .cur-ring { width: 56px; height: 56px; border-color: var(--gold); }
+@media (hover: none) { .cur-dot, .cur-ring { display: none; } body { cursor: auto; } }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(8,8,8,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  letter-spacing: 4px;
+  color: var(--white);
+  line-height: 1;
+}
+.nav-logo span {
+  display: block;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 4px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.nav-links a {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text2);
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-cta {
+  background: var(--gold);
+  color: var(--bg) !important;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 12px 26px;
+  transition: background 0.3s !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--gold2) !important; }
+@media (max-width: 768px) {
+  nav { padding: 0 24px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+}
+
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.d1 { transition-delay: 0.1s; }
+.reveal.d2 { transition-delay: 0.2s; }
+.reveal.d3 { transition-delay: 0.3s; }
+
+/* ─── LABEL (малый заголовок) ─── */
+.label {
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── HERO ─── */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--nav-h) + 80px) 48px 80px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(52px, 7vw, 100px);
+  line-height: 0.95;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.hero-h1 em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text2);
+  max-width: 560px;
+  margin-bottom: 56px;
+}
+
+/* ─── ПОЛОСКА ЭТАПОВ ─── */
+.step-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+.ss-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: border-color 0.3s, background 0.3s;
+}
+.ss-item:hover { border-color: var(--text3); background: var(--border); }
+.ss-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.ss-name {
+  font-size: 15px;
+  color: var(--white);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+.ss-time {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+/* ─── ПОЛНОЭКРАННЫЕ СЕКЦИИ ─── */
+.stage-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  border-top: 1px solid var(--border);
+}
+.stage-section.flip { direction: rtl; }
+.stage-section.flip > * { direction: ltr; }
+
+/* ─── ФОТО ─── */
+.stage-img {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+.stage-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.65) saturate(0.8);
+}
+.stage-num-bg {
+  position: absolute;
+  bottom: -20px; right: -10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 220px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+.stage-timer {
+  position: absolute;
+  top: 40px; left: 40px;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text2);
+  background: rgba(8,8,8,0.7);
+  border: 1px solid var(--border2);
+  padding: 8px 16px;
+}
+.stage-badge {
+  position: absolute;
+  bottom: 40px; left: 40px;
+  border-left: 2px solid var(--gold);
+  padding-left: 16px;
+}
+.sb-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 4px;
+}
+.sb-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+/* ─── ТЕЛО ЭТАПА ─── */
+.stage-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 64px;
+}
+.s-step {
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.s-title em { font-style: italic; color: var(--gold); }
+.s-text {
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+.s-text p { margin-bottom: 14px; }
+.s-divider {
+  width: 40px; height: 1px;
+  background: var(--border2);
+  margin-bottom: 24px;
+}
+.s-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.s-tag {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  padding: 8px 14px;
+  transition: border-color 0.3s, color 0.3s;
+}
+.s-tag:hover { border-color: var(--gold); color: var(--gold); }
+.s-scroll-hint {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.s-scroll-hint::before { content: '↓ '; color: var(--gold); }
+
+/* ─── СЕКЦИЯ ФОРМЫ ─── */
+.form-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  border-top: 1px solid var(--border);
+}
+.form-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 64px;
+  background: var(--bg2);
+}
+.flp-label {
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.flp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.flp-title em { font-style: italic; color: var(--gold); }
+.flp-desc {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text2);
+  margin-bottom: 40px;
+}
+.contact-row { display: flex; flex-direction: column; gap: 16px; }
+.c-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  color: var(--text2);
+  transition: color 0.3s;
+}
+.c-item:hover { color: var(--gold); }
+.c-icon { width: 20px; height: 20px; flex-shrink: 0; opacity: 0.6; }
+.c-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.form-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 64px;
+}
+.f-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.f-sub {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  margin-bottom: 36px;
+}
+.fg { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.fg-row .fg { margin-bottom: 0; }
+.fl {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.fi, .fsel, .fta {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+.fi:focus, .fsel:focus, .fta:focus { border-color: var(--gold); }
+.fi::placeholder, .fta::placeholder { color: var(--text3); }
+.fsel { appearance: none; cursor: pointer; }
+.fta { resize: vertical; min-height: 100px; }
+.f-note { font-size: 13px; color: var(--text3); margin: 16px 0; line-height: 1.6; }
+.btn-send {
+  width: 100%;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 18px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-send:hover { background: var(--gold2); }
+
+/* ─── ПРОГРЕСС (боковые точки) ─── */
+.progress {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-end;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--text3);
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+.dot.active { background: var(--gold); border-color: var(--gold); }
+.dot:hover { border-color: var(--gold); }
+.dot-label {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.dot:hover .dot-label { opacity: 1; }
+
+/* ─── НИЖНЯЯ СТРОКА ─── */
+.bottom-bar {
+  padding: 24px 48px;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.bottom-bar-copy {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  flex: 1;
+}
+.bottom-bar-links {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 1;
+}
+.bottom-bar-links a {
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text2);
+  transition: color 0.3s;
+}
+.bottom-bar-links a:hover { color: var(--gold); }
+.bottom-bar-policy {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  flex: 1;
+  text-align: right;
+  transition: color 0.3s;
+}
+.bottom-bar-policy:hover { color: var(--text2); }
+
+/* ─── АДАПТИВ ─── */
+@media (max-width: 1024px) {
+  .stage-section, .form-section { grid-template-columns: 1fr; min-height: auto; }
+  .stage-section.flip { direction: ltr; }
+  .stage-img { height: 60vw; min-height: 280px; }
+}
+@media (max-width: 768px) {
+  .hero-section { padding: calc(var(--nav-h) + 48px) 24px 48px; }
+  .step-strip { grid-template-columns: 1fr 1fr; }
+  .stage-body, .form-left, .form-right { padding: 48px 24px; }
+  .fg-row { grid-template-columns: 1fr; }
+  .progress { display: none; }
+  .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
+}
+
 </style>
 </head>
 <body>
@@ -156,6 +552,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
 <div class="cur-dot" id="curDot"></div>
 <div class="cur-ring" id="curRing"></div>
 
+<!-- ─── NAV ─── -->
 <nav>
   <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
   <div class="nav-links">
@@ -166,7 +563,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
   </div>
 </nav>
 
-<!-- ПРОГРЕСС -->
+<!-- ─── ПРОГРЕСС ─── -->
 <div class="progress" id="progress">
   <div class="dot active" onclick="goTo(0)"><span class="dot-label">Начало</span></div>
   <div class="dot" onclick="goTo(1)"><span class="dot-label">Концепция</span></div>
@@ -176,9 +573,9 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
   <div class="dot" onclick="goTo(5)"><span class="dot-label">Начать</span></div>
 </div>
 
-<!-- HERO -->
-<section class="hero-section" id="s0">
-  <div class="hero-eyebrow reveal">ARCH 3.14 · Как мы работаем</div>
+<!-- ─── HERO ─── -->
+<section id="s0" class="hero-section">
+  <div class="label reveal" style="margin-bottom:20px">ARCH 3.14 · Как мы работаем</div>
   <h1 class="hero-h1 reveal d1">От разговора<br>до <em>ключей.</em><br>И <em>дальше.</em></h1>
   <p class="hero-sub reveal d2">Четыре этапа с фиксированной стоимостью и понятными сроками. Прокрутите, чтобы пройти этот путь.</p>
   <div class="step-strip reveal d3">
@@ -201,8 +598,8 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
   </div>
 </section>
 
-<!-- ЭТАП 01 -->
-<section class="fs" id="s1">
+<!-- ─── ЭТАП 01 ─── -->
+<section class="stage-section" id="s1">
   <div class="stage-img">
     <img src="assets/images/process/stage-01-concept.jpg" alt="Концепция"
          onerror="this.style.background='#141414';this.style.display='block'">
@@ -231,78 +628,76 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
   </div>
 </section>
 
-<!-- ЭТАП 02 -->
-<section class="fs flip" id="s2">
+<!-- ─── ЭТАП 02 ─── -->
+<section class="stage-section flip" id="s2">
   <div class="stage-img">
-    <img src="assets/images/process/stage-02-project.jpg" alt="Проект"
+    <img src="assets/images/process/stage-02-project.jpg" alt="Полный проект"
          onerror="this.style.background='#141414';this.style.display='block'">
     <div class="stage-num-bg">02</div>
     <div class="stage-timer">6–12 месяцев</div>
     <div class="stage-badge">
-      <div class="sb-label">Архитектурный раздел</div>
-      <div class="sb-price">от 7 000 ₽/м²</div>
+      <div class="sb-label">Стоимость этапа</div>
+      <div class="sb-price">от 3 000 ₽/м²</div>
     </div>
   </div>
   <div class="stage-body">
     <div class="s-step reveal">ЭТАП 02</div>
     <h2 class="s-title reveal d1">Полный<br><em>проект</em></h2>
     <div class="s-text reveal d2">
-      <p>Все разделы — внутри бюро, без субподрядчиков. Каждый специалист работает в одной команде и видит общую картину. Свет, вентиляция, конструктив — всё согласовано с первого дня.</p>
-      <p>За пятнадцать лет — больше 200 объектов с параметрической и бионической архитектурой. Для других это вызов, для нас — привычная работа.</p>
+      <p>Рабочая документация — это язык, на котором говорит стройка. Мы делаем её так, чтобы не оставалось вопросов у строителей и не возникало сюрпризов у вас.</p>
+      <p>Архитектурный, конструктивный, инженерный разделы. Спецификации материалов, узлы, детали. Согласование с государственными органами там, где это требуется.</p>
     </div>
     <div class="s-divider reveal d3"></div>
     <div class="s-tags reveal d3">
-      <span class="s-tag">АР · КР</span>
-      <span class="s-tag">ОВ · ВК · ЭО · СС</span>
-      <span class="s-tag">Дизайн интерьера</span>
-      <span class="s-tag">Световой дизайн</span>
-      <span class="s-tag">Ландшафт и ПЗУ</span>
+      <span class="s-tag">Архитектурный раздел</span>
+      <span class="s-tag">Конструктивный раздел</span>
+      <span class="s-tag">Инженерные разделы</span>
+      <span class="s-tag">Согласования</span>
     </div>
     <div class="s-scroll-hint reveal d3">следующий этап</div>
   </div>
 </section>
 
-<!-- ЭТАП 03 -->
-<section class="fs" id="s3">
+<!-- ─── ЭТАП 03 ─── -->
+<section class="stage-section" id="s3">
   <div class="stage-img">
-    <img src="assets/images/process/stage-03-build.jpg" alt="Реализация"
+    <img src="assets/images/concept/process.jpg" alt="Реализация"
          onerror="this.style.background='#141414';this.style.display='block'">
     <div class="stage-num-bg">03</div>
     <div class="stage-timer">18–24 месяца</div>
     <div class="stage-badge">
-      <div class="sb-label">Вознаграждение бюро</div>
-      <div class="sb-price">15–20% от бюджета</div>
+      <div class="sb-label">Авторский надзор</div>
+      <div class="sb-price">по договору</div>
     </div>
   </div>
   <div class="stage-body">
     <div class="s-step reveal">ЭТАП 03</div>
     <h2 class="s-title reveal d1">Реали-<br><em>зация</em></h2>
     <div class="s-text reveal d2">
-      <p>Мы работаем как Технический заказчик — юридически на вашей стороне. Прозрачные сметы, реальные цифры. Скидки от постоянных подрядчиков — вам.</p>
-      <p>Авторский и технический надзор на всём протяжении стройки. Контролируем подрядчиков, качество работ и материалов — чтобы дом был именно таким, каким задумывался.</p>
+      <p>Авторский надзор — не формальность. Мы приезжаем на ключевые этапы, проверяем соответствие проекту, решаем вопросы, которые всегда возникают на стройке.</p>
+      <p>Работаем с проверенными подрядчиками или помогаем выбрать новых. Контролируем качество, а не только сроки.</p>
     </div>
     <div class="s-divider reveal d3"></div>
     <div class="s-tags reveal d3">
-      <span class="s-tag">Отбор подрядчиков</span>
-      <span class="s-tag">Прозрачные сметы</span>
       <span class="s-tag">Авторский надзор</span>
-      <span class="s-tag">Технический надзор</span>
-      <span class="s-tag">На вашей стороне</span>
+      <span class="s-tag">Подбор подрядчиков</span>
+      <span class="s-tag">Контроль качества</span>
+      <span class="s-tag">Управление изменениями</span>
     </div>
     <div class="s-scroll-hint reveal d3">следующий этап</div>
   </div>
 </section>
 
-<!-- ЭТАП 04 -->
-<section class="fs flip" id="s4">
+<!-- ─── ЭТАП 04 ─── -->
+<section class="stage-section flip" id="s4">
   <div class="stage-img">
     <img src="assets/images/process/stage-04-life.jpg" alt="Жизнь в доме"
          onerror="this.style.background='#141414';this.style.display='block'">
     <div class="stage-num-bg">04</div>
     <div class="stage-timer">бессрочно</div>
     <div class="stage-badge">
-      <div class="sb-label">Сопровождение</div>
-      <div class="sb-price">по договорённости</div>
+      <div class="sb-label">Поддержка</div>
+      <div class="sb-price">всегда рядом</div>
     </div>
   </div>
   <div class="stage-body">
@@ -323,7 +718,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
   </div>
 </section>
 
-<!-- ФОРМА -->
+<!-- ─── ФОРМА ─── -->
 <section class="form-section" id="s5">
   <div class="form-left">
     <div class="flp-label reveal">НАЧАТЬ ПРОЕКТ</div>
@@ -332,15 +727,15 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
     <div class="contact-row reveal d3">
       <a href="tel:+74996477680" class="c-item">
         <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.2 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg></div>
-        <div class="c-val">+7 499 647 76 80</div>
+        <div>+7 499 647 76 80</div>
       </a>
       <a href="mailto:mail@arch314.ru" class="c-item">
         <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <div class="c-val">mail@arch314.ru</div>
+        <div>mail@arch314.ru</div>
       </a>
       <div class="c-item">
         <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <div class="c-val" style="color:var(--text2)">Москва, Artplay · Пн–Пт 10–19</div>
+        <div style="color:var(--text2)">Москва, Artplay · Пн–Пт 10–19</div>
       </div>
     </div>
   </div>
@@ -384,7 +779,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
   </div>
 </section>
 
-<!-- НИЖНЯЯ СТРОКА -->
+<!-- ─── НИЖНЯЯ СТРОКА ─── -->
 <div class="bottom-bar">
   <div class="bottom-bar-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
   <div class="bottom-bar-links">
@@ -399,37 +794,51 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
 <script>
 (function(){
   // Cursor
-  var dot=document.getElementById('curDot'),ring=document.getElementById('curRing');
-  var mx=0,my=0,rx=0,ry=0;
-  if(!window.matchMedia('(hover:none)').matches){
-    document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
-    (function anim(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
-    document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,.ss-item,.dot'))document.body.classList.add('hovering');});
-    document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,.ss-item,.dot'))document.body.classList.remove('hovering');});
+  var dot = document.getElementById('curDot');
+  var ring = document.getElementById('curRing');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+  if (!window.matchMedia('(hover:none)').matches) {
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    (function anim() {
+      rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(anim);
+    })();
+    document.addEventListener('mouseover', function(e) {
+      if (e.target.closest('a,button,.ss-item,.dot')) document.body.classList.add('hovering');
+    });
+    document.addEventListener('mouseout', function(e) {
+      if (e.target.closest('a,button,.ss-item,.dot')) document.body.classList.remove('hovering');
+    });
   }
 
-  // Reveal
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-  },{threshold:.1});
-  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  // Reveal on scroll
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
 
   // Прогресс
-  var sections=['s0','s1','s2','s3','s4','s5'];
-  var dots=document.querySelectorAll('.dot');
-  var io2=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        var idx=sections.indexOf(e.target.id);
-        dots.forEach(function(d,i){d.classList.toggle('active',i===idx);});
+  var sections = ['s0','s1','s2','s3','s4','s5'];
+  var dots = document.querySelectorAll('.dot');
+  var io2 = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var idx = sections.indexOf(e.target.id);
+        dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
       }
     });
-  },{threshold:.5});
-  sections.forEach(function(id){var el=document.getElementById(id);if(el)io2.observe(el);});
+  }, { threshold: 0.5 });
+  sections.forEach(function(id) { var el = document.getElementById(id); if (el) io2.observe(el); });
 
-  window.goTo=function(i){
-    var el=document.getElementById(sections[i]);
-    if(el)el.scrollIntoView({behavior:'smooth'});
+  window.goTo = function(i) {
+    var el = document.getElementById(sections[i]);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 })();
 </script>
