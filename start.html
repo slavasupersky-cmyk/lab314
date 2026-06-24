@@ -438,94 +438,56 @@ body { cursor: none; }
 .cursor { position: fixed; width: 8px; height: 8px; background: #c9a96e; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s, width 0.3s, height 0.3s; }
 .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(201,169,110,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease-out; }
 @media(max-width:900px){ .cursor, .cursor-ring { display: none !important; } * { cursor: auto !important; } }
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;height:80px;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(8,8,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid #1e1e1e;}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:18px;letter-spacing:4px;color:#f5f0e8;line-height:1;}
+.nav-logo span{display:block;font-family:'Jost',sans-serif;font-weight:300;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#4a4238;margin-top:4px;}
+.nav-links{display:flex;align-items:center;gap:40px;}
+.nav-links a{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#9a8e80;position:relative;transition:color .3s;text-decoration:none;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:#c9a96e;transition:width .3s;}
+.nav-links a:hover,.nav-links a.active{color:#c9a96e;}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-cta{background:#c9a96e;color:#080808!important;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:500;padding:12px 26px;transition:background .3s!important;}
+.nav-cta::after{display:none!important;}
+.nav-cta:hover{background:#e8c880!important;}
+@media(max-width:768px){nav{padding:0 24px;}.nav-links a:not(.nav-cta){display:none;}}
+
+/* CURSOR */
+.cur-dot,.cur-ring{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cur-dot{width:8px;height:8px;background:#c9a96e;border-radius:50%;transition:transform .2s;}
+.cur-ring{width:36px;height:36px;border:1px solid rgba(201,169,110,.5);border-radius:50%;transition:width .3s,height .3s,border-color .3s;}
+body.hovering .cur-dot{transform:translate(-50%,-50%) scale(2);}
+body.hovering .cur-ring{width:56px;height:56px;border-color:#c9a96e;}
+@media(hover:none){.cur-dot,.cur-ring{display:none;}body{cursor:auto;}}
+
+/* НИЖНЯЯ СТРОКА */
+.bottom-bar{padding:24px 48px;border-top:1px solid #1e1e1e;background:#0f0f0f;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;position:relative;z-index:10;}
+.bottom-bar-copy{font-size:14px;color:#4a4238;flex:1;}
+.bottom-bar-links{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;flex:1;}
+.bottom-bar-links a{font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:#9a8e80;transition:color .3s;text-decoration:none;}
+.bottom-bar-links a:hover{color:#c9a96e;}
+.bottom-bar-policy{font-size:14px;color:#4a4238;flex:1;text-align:right;transition:color .3s;text-decoration:none;}
+.bottom-bar-policy:hover{color:#9a8e80;}
+@media(max-width:768px){.bottom-bar{padding:24px;flex-direction:column;align-items:flex-start;}}
+
 </style>
 
-<style id="ux-fixes">
-/* === UX FIXES === */
-/* 1. Кнопки одного размера */
-.btn-primary, .btn-ghost {
-  min-height: 56px;
-  justify-content: center;
-  box-sizing: border-box;
-}
-/* 3. Убрать синий цвет подчёркнутых/посещённых ссылок */
-a, a:link, a:visited, a:hover, a:active { color: inherit; }
-u, .underline { text-decoration-color: var(--accent); }
-/* Подчёркивания в тексте — золотым, не синим */
-a[href] { -webkit-tap-highlight-color: transparent; }
 
-@media (max-width: 768px) {
-  /* 2. Прячем кастомный курсор на мобильных */
-  .cursor, .cursor-ring { display: none !important; }
-  * { cursor: auto !important; }
-  /* Кнопки на всю ширину и по центру */
-  .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
-  .hero-btns, .cta-btns, .hero-buttons, .cta-buttons,
-  .hero-cta, .concept-cta, .price-cta, [class*="-buttons"], [class*="-btns"] {
-    flex-direction: column !important; gap: 12px !important; width: 100%;
-  }
-  /* Заголовки не вылезают за экран */
-  h1, h2, .hero-title, .section-title { word-break: break-word; overflow-wrap: break-word; }
-  /* Меньше горизонтального скролла */
-  body { overflow-x: hidden; }
-}
-a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
-
-/* === ЧИТАЕМОСТЬ МЕЛКИХ ПОДПИСЕЙ (мягко) === */
-/* Золотые эйбрау/лейблы — ярче и чуть плотнее */
-.section-label, .eyebrow, .hero-eyebrow, .desc-eyebrow, .h-eyebrow,
-.hero-tag, .stage-badge, .flp-label, .pvc-label, .sb-label,
-.price-pill-label, .entry-price-label, .dna-fact-label {
-  color: var(--accent) !important;
-  font-weight: 500 !important;
-  letter-spacing: 3px;
-}
-/* Серые подписи под цифрами и в карточках — заметно светлее */
-.stat-label, .spec-label, .spec-row-label, .row-label, .row-sub,
-.card-meta, .card-tag, .portfolio-tag, .pni-tag, .s-tag, .ex-label,
-.ex-render-tag, .ex-img-caption, .price-pill-sub, .step-meta,
-.process-visual-caption, .dot-label, .hero-badge-label, .f-sub,
-.subtitle, .stage-timer, .path-hint-text {
-  color: #c9bca8 !important;
-  font-weight: 400 !important;
-}
-/* Чипы/теги-кнопки (2-3 встречи, АР·КР и т.п.) — рамка и текст ярче */
-.s-tag, .chip, [class*="-tag"]:not(.card-tag):not(.hero-tag) {
-  color: #d8ccb8 !important;
-  border-color: var(--accent-dim) !important;
-}
-/* Подписи-юниты под крупными цифрами (м², год) — светлее */
-.spec-label, .pni-tag { opacity: 1 !important; }
-/* Метки в карточках портфолио крупнее на 1px для читаемости */
-.card-meta { font-size: 11px !important; }
-.card-tag { font-size: 10px !important; letter-spacing: 2px; }
-/* Табы планировок (1 этаж / 2 этаж / разрез) — активный ярче, неактивные читаемее */
-.flp-tab, .plan-tab { color: #b0a48f !important; }
-.flp-tab.active, .plan-tab.active { color: var(--accent) !important; border-color: var(--accent) !important; }
-/* "Следующий проект" блок */
-.next-proj-label, .pni-dir { color: #b0a48f !important; }
-</style>
 </head>
 <body>
-<nav id="navbar">
-  <a href="index.html" class="nav-logo">ARCH 3.14<span>АРХИТЕКТУРНОЕ БЮРО</span></a>
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+<nav id="nav">
+  <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
   <div class="nav-links">
-    <div class="nav-dropdown">
-      <a href="#">Направления</a>
-      <div class="nav-dropdown-menu">
-        <a href="index.html">ARCH 3.14 — Частная архитектура</a>
-        <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
-        <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
-      </div>
-    </div>
-    <a href="portfolio.html" data-page="portfolio">Портфолио</a>
-    <a href="prices.html" data-page="prices">Услуги</a>
-    <a href="start.html" data-page="start">Как мы работаем</a>
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html" class="active">Как мы работаем</a>
     <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+
 <!-- NAV -->
 <!-- PROGRESS -->
 <div class="progress" id="progress">
@@ -844,6 +806,33 @@ sections.forEach(id => { const el = document.getElementById(id); if (el) so.obse
       ring.style.transform='translate(-50%,-50%) scale(1)';
     }
   });
+})();
+</script>
+
+<!-- НИЖНЯЯ СТРОКА -->
+<div class="bottom-bar">
+  <div class="bottom-bar-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
+  <div class="bottom-bar-links">
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="concept.html">Начать проект</a>
+  </div>
+  <a href="#" class="bottom-bar-policy">Политика конфиденциальности</a>
+</div>
+
+<script>
+(function(){
+  var dot=document.getElementById('curDot');
+  var ring=document.getElementById('curRing');
+  if(!dot||window.matchMedia('(hover:none)').matches)return;
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+  (function anim(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+  document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,.ss-item'))document.body.classList.add('hovering');});
+  document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,.ss-item'))document.body.classList.remove('hovering');});
+  var nav=document.getElementById('nav');
+  if(nav)window.addEventListener('scroll',function(){nav.classList.toggle('solid',window.scrollY>60);},{passive:true});
 })();
 </script>
 </body>
