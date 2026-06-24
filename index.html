@@ -584,16 +584,20 @@ footer {
   .ch-group { gap: 6px !important; }
   .ch-btns { gap: 4px !important; }
   .ch-btn { padding: 6px 12px !important; font-size: 12px !important; }
-  .cta-fi { padding: 10px 12px !important; font-size: 14px !important; }
-  .cta-fta { min-height: 52px !important; padding: 10px 12px !important; font-size: 14px !important; }
+  .cta-fi { padding: 10px 12px !important; font-size: 16px !important; max-width: 100% !important; box-sizing: border-box !important; }
+  .cta-fta { min-height: 52px !important; padding: 10px 12px !important; font-size: 16px !important; max-width: 100% !important; box-sizing: border-box !important; }
   .cta-cb { font-size: 12px !important; }
   .cta-btn { padding: 14px !important; font-size: 12px !important; }
   .new-cta-form { gap: 8px !important; }
   .ch-label { font-size: 11px !important; }
   .cta-fl { font-size: 11px !important; }
-  /* Hero tighter */
-  .hero { padding: 0 20px 32px !important; }
-  .hero-actions { gap: 8px !important; }
+  /* Hero tighter - fit everything in viewport */
+  .hero { padding: 0 20px 24px !important; min-height: 100svh; }
+  .hero-actions { gap: 8px !important; flex-direction: column; align-items: flex-start; }
+  .h1 { font-size: clamp(36px, 9vw, 56px) !important; line-height: 1 !important; }
+  .hero-title { margin-bottom: 20px !important; }
+  .hero-tag { margin-bottom: 16px !important; }
+  .btn-primary, .btn-ghost { padding: 13px 20px !important; font-size: 12px !important; }
 
   /* Контрастнее тексты */
   .body-text, .step-desc, .footer-about { color: #c4b8a8; }
@@ -689,11 +693,16 @@ footer {
   display: flex; flex-direction: column;
   justify-content: center;
   padding: 80px 32px 40px;
+  padding-top: 100px;
   transform: translateX(-100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .mobile-menu.open { transform: translateX(0); }
-.mobile-menu-logo { margin-bottom: 32px; }
+.mobile-menu-logo {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 80px; display: flex; align-items: center;
+  padding: 0 24px; border-bottom: 1px solid var(--border);
+}
 .mobile-menu-close {
   position: absolute; top: 24px; right: 24px;
   background: none; border: none; cursor: pointer;
