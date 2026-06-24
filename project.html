@@ -230,6 +230,69 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
 @media (max-width: 1024px) { .new-cta-inner { grid-template-columns: 1fr; gap: 48px; } }
 @media (max-width: 768px) { .new-cta { padding: 80px 24px; } }
 
+
+/* ── BURGER MENU ── */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px; height: 32px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+  z-index: 600;
+}
+.burger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--white); transition: all 0.3s;
+}
+.burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 550;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 100px 40px 60px;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 8vw, 52px);
+  font-weight: 300; color: var(--white);
+  text-decoration: none; line-height: 1.2;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: var(--gold); }
+.mobile-menu a.mobile-cta {
+  font-family: 'Jost', sans-serif;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--bg); background: var(--gold);
+  padding: 18px 28px; border: none;
+  margin-top: 32px; text-align: center;
+  transition: background 0.3s;
+}
+.mobile-menu a.mobile-cta:hover { background: var(--gold2); }
+.mobile-menu-contacts {
+  margin-top: 40px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.mobile-menu-contacts a {
+  font-family: 'Jost', sans-serif;
+  font-size: 14px; font-weight: 300;
+  color: var(--text2); border: none; padding: 4px 0;
+}
+
+@media (max-width: 768px) {
+  .burger { display: flex; }
+  .nav-links { display: none !important; }
+}
+
 </style>
 </head>
 <body>
@@ -239,6 +302,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
 
 <nav>
   <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
+  <button class="burger" id="burgerBtn" aria-label="Меню"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="index.html#about">О нас</a>
     <a href="portfolio.html">Портфолио</a>
@@ -550,6 +614,26 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
       this.classList.add('active');
       var input = form.querySelector('.contact-field');
       if(input) input.placeholder = this.dataset.ph;
+    });
+  });
+})();
+</script>
+<script>
+// Burger menu
+(function(){
+  var btn = document.getElementById('burgerBtn');
+  var menu = document.getElementById('mobileMenu');
+  if(!btn || !menu) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+      document.body.style.overflow = '';
     });
   });
 })();
