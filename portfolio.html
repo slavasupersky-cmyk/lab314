@@ -53,7 +53,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 .reveal.in { opacity: 1; transform: none; }
 
 /* HERO */
-.hero { padding: calc(var(--nav-h) + 80px) 48px 80px; border-bottom: 1px solid var(--border); }
+.hero { padding: calc(var(--nav-h) + 48px) 48px 64px; border-bottom: 1px solid var(--border); }
 .hero-inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; }
 .hero-desc { max-width: 400px; font-size: 16px; line-height: 1.85; color: var(--text2); }
 
@@ -112,6 +112,32 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
   .bottom-nav { flex-direction: column; gap: 24px; padding: 32px 24px; text-align: center; }
   .bottom-nav-links { flex-wrap: wrap; justify-content: center; }
 }
+
+/* CTA БЛОК */
+.portfolio-cta { position: relative; padding: 140px 48px; border-top: 1px solid var(--border); text-align: center; overflow: hidden; }
+.deco-314 { position: absolute; font-family: 'Cormorant Garamond', serif; font-size: 380px; font-weight: 300; color: rgba(201,169,110,0.04); pointer-events: none; user-select: none; line-height: 1; top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; }
+.portfolio-cta-inner { position: relative; z-index: 1; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(36px, 4vw, 64px); line-height: 1.05; color: var(--white); margin-bottom: 20px; }
+.cta-title em { font-style: italic; color: var(--gold); }
+.cta-desc { font-size: 16px; line-height: 1.85; color: var(--text2); max-width: 520px; margin: 0 auto 40px; }
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 16px 28px; transition: background 0.3s, transform 0.2s; }
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+
+/* НИЖНЯЯ СТРОКА */
+.bottom-bar { padding: 24px 48px; border-top: 1px solid var(--border); background: var(--bg2); display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+.bottom-bar-links { display: flex; gap: 28px; flex-wrap: wrap; }
+.bottom-bar-links a { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text2); transition: color 0.3s; }
+.bottom-bar-links a:hover { color: var(--gold); }
+.bottom-bar-right { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.bottom-bar-right a { font-size: 13px; color: var(--text3); transition: color 0.3s; }
+.bottom-bar-right a:hover { color: var(--text2); }
+.bottom-bar-right span { font-size: 13px; color: var(--text3); }
+@media (max-width: 768px) {
+  .portfolio-cta { padding: 80px 24px; }
+  .deco-314 { font-size: 180px; }
+  .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
@@ -133,8 +159,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 <section class="hero">
   <div class="hero-inner reveal">
     <div>
-      <div class="label" style="margin-bottom:16px">ARCH 3.14 · Портфолио</div>
-      <h1 class="h1">200+ объектов.<br>Каждый — <em>единственный.</em></h1>
+      <h1 class="h1" style="margin-top:0">200+ объектов.<br>Каждый — <em>единственный.</em></h1>
     </div>
     <p class="hero-desc">Параметрика, бионика, криволинейные формы. Частные дома, общественные пространства, интерьеры. 15 лет — и ни одного повторения.</p>
   </div>
@@ -170,15 +195,32 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
   </div>
 </div>
 
-<!-- НИЖНЕЕ МЕНЮ -->
-<div class="bottom-nav">
-  <div class="bottom-nav-links">
+<!-- CTA -->
+<section class="portfolio-cta">
+  <div class="deco-314">3.14</div>
+  <div class="portfolio-cta-inner">
+    <div class="label reveal" style="margin-bottom:16px">ПОНРАВИЛСЯ ПРОЕКТ?</div>
+    <h2 class="cta-title reveal">Разработаем похожий<br><em>именно для вас</em></h2>
+    <p class="cta-desc reveal">Каждый проект — уникален. Берём понравившуюся концепцию за отправную точку и создаём дом под ваш участок, образ жизни и бюджет.</p>
+    <div class="cta-btns reveal">
+      <a href="concept.html" class="btn-primary">Начать с концепции →</a>
+      <a href="start.html" class="btn-ghost">Как мы работаем</a>
+    </div>
+  </div>
+</section>
+
+<!-- НИЖНЯЯ СТРОКА -->
+<div class="bottom-bar">
+  <div class="bottom-bar-links">
     <a href="index.html#about">О нас</a>
     <a href="portfolio.html">Портфолио</a>
     <a href="start.html">Как мы работаем</a>
+    <a href="concept.html">Начать проект</a>
   </div>
-  <a href="concept.html" class="btn-ghost">Начать проект →</a>
-  <div class="bottom-nav-copy">© 2024–2026 ARCH 3.14</div>
+  <div class="bottom-bar-right">
+    <a href="#">Политика конфиденциальности</a>
+    <span>© 2024–2026 ARCH 3.14 · Все права защищены</span>
+  </div>
 </div>
 
 <script>
