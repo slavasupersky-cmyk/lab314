@@ -79,8 +79,8 @@ body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-w
 .plan-tab{padding:10px 20px;font-size:10px;letter-spacing:3px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .3s;}
 .plan-tab.active{background:rgba(201,169,110,.08);border-color:var(--accent-dim);color:var(--accent);}
 .plan-tab:hover{color:var(--text2);}
-.plan-display{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
-.plan-img{width:100%;display:none;}
+.plan-display{background:var(--surface);border:1px solid var(--border);overflow:hidden;max-width:70%;margin:0 auto;}
+.plan-img{width:100%;max-height:60vh;object-fit:contain;display:none;}
 .plan-img.active{display:block;}
 .plan-placeholder{padding:120px 48px;text-align:center;}
 .plan-ph-text{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);}
@@ -403,10 +403,9 @@ function render(m) {
   document.getElementById('optionsText').textContent = m.options || '';
 
   // Project nav
-  const prev = currentIdx > 0 ? allModels[currentIdx-1] : null;
-  const next = currentIdx < allModels.length-1 ? allModels[currentIdx+1] : null;
+  const prev = allModels[(currentIdx - 1 + allModels.length) % allModels.length];
+  const next = allModels[(currentIdx + 1) % allModels.length];
   document.getElementById('projNav').innerHTML = `
-    ${prev ? `
     <a href="project.html?id=${prev.id}" class="proj-nav-item">
       <span class="pni-arrow">←</span>
       <img class="pni-thumb" src="assets/images/models/${prev.folder}/cover.jpeg" alt="${prev.name}"
@@ -416,8 +415,7 @@ function render(m) {
         <div class="pni-title">${prev.name}</div>
         <div class="pni-tag">${prev.area}</div>
       </div>
-    </a>` : '<div></div>'}
-    ${next ? `
+    </a>
     <a href="project.html?id=${next.id}" class="proj-nav-item next">
       <div>
         <div class="pni-dir">Следующий проект</div>
@@ -427,7 +425,7 @@ function render(m) {
       <img class="pni-thumb" src="assets/images/models/${next.folder}/cover.jpeg" alt="${next.name}"
            onerror="this.style.display='none'">
       <span class="pni-arrow">→</span>
-    </a>` : '<div></div>'}
+    </a>
   `;
 }
 
