@@ -77,34 +77,55 @@ nav {
 
 /* ── HERO ── */
 .hero {
-  min-height: 100vh;
-  padding: calc(var(--nav-h) + 100px) 48px 80px;
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  padding-top: var(--nav-h);
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--border);
+  text-align: center;
+  overflow: hidden;
 }
-.hero-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
 .hero-h1 {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300;
   font-size: clamp(56px, 7vw, 108px);
   line-height: 0.95;
   color: var(--white);
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 .hero-h1 em { font-style: italic; color: var(--gold); }
-.hero-sub { font-size: 17px; line-height: 1.85; color: var(--text2); max-width: 540px; margin-bottom: 64px; }
+.hero-sub { font-size: 17px; line-height: 1.85; color: var(--text2); max-width: 480px; }
 
-/* Полоска 4 этапа */
-.steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+/* Полоска 4 этапа — прибита к низу */
+.steps-row {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  z-index: 2;
+}
 .sr-item {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 24px 20px; display: flex; gap: 16px; align-items: flex-start;
-  transition: border-color 0.3s, background 0.3s;
+  background: rgba(8,8,8,0.85);
+  border-right: 1px solid var(--border);
+  padding: 20px 24px; display: flex; gap: 16px; align-items: center;
+  transition: background 0.3s;
   text-decoration: none;
 }
-.sr-item:hover { border-color: var(--text3); background: var(--border); }
+.sr-item:last-child { border-right: none; }
+.sr-item:hover { background: var(--surface); }
 .sr-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--gold); line-height: 1; flex-shrink: 0; }
 .sr-name { font-size: 15px; color: var(--white); font-weight: 400; margin-bottom: 4px; }
 .sr-time { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
@@ -298,10 +319,12 @@ nav {
 <!-- HERO -->
 <section id="s0">
   <div class="hero">
-    <div class="hero-label reveal">ARCH 3.14 · Как мы работаем</div>
-    <h1 class="hero-h1 reveal d1">От разговора<br>до <em>ключей.</em><br>И <em>дальше.</em></h1>
-    <p class="hero-sub reveal d2">Четыре этапа с фиксированной стоимостью и понятными сроками. Прокрутите, чтобы пройти этот путь.</p>
-    <div class="steps-row reveal d3">
+    <div class="hero-inner">
+      <div class="hero-label reveal">ARCH 3.14 · Как мы работаем</div>
+      <h1 class="hero-h1 reveal d1">От разговора<br>до <em>ключей.</em><br>И <em>дальше.</em></h1>
+      <p class="hero-sub reveal d2">Четыре этапа с фиксированной стоимостью и понятными сроками. Прокрутите, чтобы пройти этот путь.</p>
+    </div>
+    <div class="steps-row">
       <a href="#s1" class="sr-item">
         <div class="sr-num">01</div>
         <div><div class="sr-name">Концепция и эскизы</div><div class="sr-time">6–8 недель</div></div>
