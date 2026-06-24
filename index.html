@@ -2,33 +2,31 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARCH 3.14 — Архитектурное бюро</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Unbounded:wght@200;300;400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+
+/* ─── ПЕРЕМЕННЫЕ ─── */
 :root {
-  --bg: #080808;
-  --bg2: #0f0f0f;
-  --surface: #151515;
-  --border: #1e1e1e;
+  --bg:      #080808;
+  --bg2:     #0f0f0f;
+  --surface: #141414;
+  --border:  #1e1e1e;
   --border2: #2a2a2a;
-  --accent: #c9a96e;
-  --accent2: #e8c880;
-  --accent-dim: #9c7d4a;
-  --text: #ede8df;
-  --text2: #c4b8a4;
-  --text3: #8a8072;
-  --white: #f5f0e8;
+  --gold:    #c9a96e;
+  --gold2:   #e8c880;
+  --text:    #ede8df;
+  --text2:   #9a8e80;
+  --text3:   #4a4238;
+  --white:   #f5f0e8;
+  --nav-h:   80px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ─── RESET ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text);
@@ -37,130 +35,180 @@ body {
   overflow-x: hidden;
   cursor: none;
 }
+a { color: inherit; text-decoration: none; }
+img { display: block; }
 
-/* Custom cursor */
-.cursor {
+/* ─── CURSOR ─── */
+.cur-dot, .cur-ring {
   position: fixed;
-  width: 8px; height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+  transition: transform 0.2s, opacity 0.3s;
 }
-.cursor-ring {
-  position: fixed;
-  width: 32px; height: 32px;
-  border: 1px solid rgba(201,169,110,0.4);
+.cur-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
 }
-
-/* Noise overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0.6;
+.cur-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201,169,110,0.5);
+  border-radius: 50%;
+  transition: transform 0.12s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
 }
+body.hovering .cur-dot { transform: translate(-50%,-50%) scale(2); }
+body.hovering .cur-ring { width: 56px; height: 56px; border-color: var(--gold); }
+@media (hover: none) { .cur-dot, .cur-ring { display: none; } }
 
-/* ── NAV ── */
+/* ─── PAGE FADE IN ─── */
+body { animation: pageFade 0.5s ease both; }
+@keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ─── NAV ─── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 100;
+  height: var(--nav-h);
+  z-index: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 48px;
-  background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
-  transition: background 0.4s;
+  padding: 0 48px;
+  transition: background 0.4s, backdrop-filter 0.4s;
 }
-nav.scrolled { background: rgba(8,8,8,0.97); border-bottom: 1px solid var(--border); }
-
+nav.solid {
+  background: rgba(8,8,8,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
 .nav-logo {
   font-family: 'Unbounded', sans-serif;
   font-weight: 200;
   font-size: 15px;
   letter-spacing: 4px;
-  color: var(--accent);
-  text-decoration: none;
+  color: var(--gold);
+  line-height: 1;
 }
-.nav-logo span{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:4px;color:#8a8072;display:block;margin-top:3px;text-transform:uppercase;}
-
-.nav-links { display: flex; gap: 36px; align-items: center; }
+.nav-logo span {
+  display: block;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 4px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
 .nav-links a {
-  font-size: 12px;
-  letter-spacing: 2px;
+  font-size: 11px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--text2);
-  text-decoration: none;
-  transition: color 0.3s;
   position: relative;
+  transition: color 0.3s;
 }
 .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: -4px; left: 0;
+  bottom: -3px; left: 0;
   width: 0; height: 1px;
-  background: var(--accent);
+  background: var(--gold);
   transition: width 0.3s;
 }
-.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover { color: var(--gold); }
 .nav-links a:hover::after { width: 100%; }
-
-.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
-.nav-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-6px);
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  min-width: 280px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 200;
-}
-.nav-dropdown-menu.open {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(-50%) translateY(0);
-}
-.nav-dropdown-menu a {
-  display: block;
-  padding: 12px 20px;
-  font-size: 12px;
-  letter-spacing: 1px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text2);
-}
-.nav-dropdown-menu a:last-child { border-bottom: none; }
-.nav-dropdown-menu a::after { display: none; }
-.nav-dropdown-menu a:hover { background: var(--border); color: var(--accent); }
-
 .nav-cta {
+  background: var(--gold);
+  color: var(--bg) !important;
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--bg) !important;
-  background: var(--accent);
-  padding: 10px 20px;
-  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 22px;
   transition: background 0.3s !important;
 }
 .nav-cta::after { display: none !important; }
-.nav-cta:hover { background: var(--accent2) !important; color: var(--bg) !important; }
+.nav-cta:hover { background: var(--gold2) !important; }
 
-/* ── HERO ── */
+/* ─── ТИПОГРАФИКА ─── */
+.h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(52px, 7vw, 108px);
+  line-height: 0.95;
+  color: var(--white);
+}
+.h1 em { font-style: italic; color: var(--gold); }
+.h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 60px);
+  line-height: 1.05;
+  color: var(--white);
+}
+.h2 em { font-style: italic; color: var(--gold); }
+.label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.body-text {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--text2);
+  font-weight: 300;
+}
+
+/* ─── КНОПКИ ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 16px 28px;
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 16px 28px;
+  transition: border-color 0.3s, color 0.3s;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.d1 { transition-delay: 0.1s; }
+.reveal.d2 { transition-delay: 0.2s; }
+.reveal.d3 { transition-delay: 0.3s; }
+.reveal.d4 { transition-delay: 0.4s; }
+
+/* ─── HERO ─── */
 .hero {
   position: relative;
   height: 100vh;
@@ -171,201 +219,143 @@ nav.scrolled { background: rgba(8,8,8,0.97); border-bottom: 1px solid var(--bord
   padding: 0 48px 80px;
   overflow: hidden;
 }
-
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-color: #0a0a0a;
-  background-size: cover;
-  background-position: center;
-  /* Путь к фоновому изображению hero */
-  background-image: url('assets/images/hero-bg.jpg');
-  opacity: 0;
-  transition: opacity 1.2s ease;
+  background: url('assets/images/hero-bg.jpg') center/cover no-repeat;
+  will-change: transform;
+  transform: scale(1.1);
 }
-.hero-bg.loaded { opacity: 1; }
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.4) 60%, rgba(8,8,8,0.2) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(8,8,8,0.88) 0%,
+    rgba(8,8,8,0.5) 55%,
+    rgba(8,8,8,0.15) 100%
+  );
 }
-
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
 .hero-tag {
-  font-size: 11px;
+  display: inline-block;
+  font-size: 10px;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--text3);
   margin-bottom: 24px;
   opacity: 0;
-  animation: fadeUp 0.8s 0.3s forwards;
+  animation: slideUp 0.8s 0.3s forwards;
 }
-
 .hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(52px, 7vw, 110px);
-  font-weight: 300;
-  line-height: 0.95;
-  color: var(--white);
-  margin-bottom: 48px;
   opacity: 0;
-  animation: fadeUp 0.8s 0.5s forwards;
+  animation: slideUp 0.9s 0.5s forwards;
+  margin-bottom: 40px;
 }
-.hero-title em { font-style: italic; color: var(--accent); }
-
-.hero-bottom {
+.hero-actions {
   display: flex;
-  gap: 48px;
-  align-items: flex-end;
+  gap: 16px;
+  align-items: center;
   opacity: 0;
-  animation: fadeUp 0.8s 0.7s forwards;
+  animation: slideUp 0.8s 0.8s forwards;
 }
-
-.hero-desc {
-  max-width: 420px;
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--text2);
-  font-weight: 300;
-}
-
-.hero-actions { display: flex; gap: 16px; align-items: center; }
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--accent);
-  color: var(--bg);
-  font-family: 'Jost', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 16px 28px;
-  text-decoration: none;
-  transition: background 0.3s, transform 0.2s;
-}
-.btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-.btn-primary .arrow { transition: transform 0.3s; }
-.btn-primary:hover .arrow { transform: translateX(4px); }
-
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid var(--border2);
-  color: var(--text2);
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 16px 28px;
-  text-decoration: none;
-  transition: border-color 0.3s, color 0.3s;
-}
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
 .hero-stats {
   position: absolute;
   right: 48px;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 80px;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
+  text-align: right;
   opacity: 0;
-  animation: fadeLeft 0.8s 1s forwards;
+  animation: slideLeft 0.8s 1s forwards;
 }
-.stat { text-align: right; }
 .stat-num {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 42px;
+  font-size: 40px;
   font-weight: 300;
-  color: var(--accent);
+  color: var(--gold);
   line-height: 1;
 }
 .stat-label {
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text3);
   margin-top: 4px;
 }
 
-/* ── SECTIONS ── */
-section { position: relative; }
-
-.section-label {
-  font-size: 11px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 16px;
-}
-
-.section-title {
+/* ─── ДЕКОР 3.14 ─── */
+.deco-314 {
+  position: absolute;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 4vw, 60px);
+  font-size: 380px;
   font-weight: 300;
-  line-height: 1.1;
-  color: var(--white);
+  color: rgba(201,169,110,0.04);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
 }
-.section-title em { font-style: italic; color: var(--accent); }
 
-/* ── DNA ── */
-.dna {
+/* ─── SECTION BASE ─── */
+section { position: relative; }
+.section-inner {
   padding: 120px 48px;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+}
+
+/* ─── ABOUT (ДНК) ─── */
+.about {
+  border-top: 1px solid var(--border);
+}
+.about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   align-items: center;
-  border-top: 1px solid var(--border);
 }
-.dna-text p {
-  font-size: 15px;
-  line-height: 1.9;
-  color: var(--text2);
-  margin-top: 28px;
-  max-width: 480px;
-}
-.dna-facts {
+.about-facts {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2px;
 }
-.dna-fact {
+.fact {
   background: var(--surface);
-  padding: 36px 28px;
   border: 1px solid var(--border);
-  transition: border-color 0.3s, background 0.3s;
+  padding: 32px 28px;
+  transition: border-color 0.3s;
 }
-.dna-fact:hover { border-color: var(--accent-dim); background: #1a1a1a; }
-.dna-fact-num {
+.fact:hover { border-color: var(--text3); }
+.fact-num {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 300;
-  color: var(--accent);
+  color: var(--gold);
   line-height: 1;
+  margin-bottom: 8px;
 }
-.dna-fact-label {
-  font-size: 12px;
+.fact-label {
+  font-size: 11px;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text3);
-  margin-top: 8px;
   line-height: 1.5;
 }
 
-/* ── PROCESS ── */
+/* ─── PROCESS ─── */
 .process {
-  padding: 120px 48px;
   border-top: 1px solid var(--border);
   background: var(--bg2);
-}
-.process-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 72px;
 }
 .process-steps {
   display: grid;
@@ -375,290 +365,146 @@ section { position: relative; }
 .step {
   background: var(--surface);
   border: 1px solid var(--border);
-  padding: 40px 32px;
+  padding: 36px 28px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.4s, background 0.4s;
+  transition: border-color 0.4s;
 }
-.step::before {
+.step::after {
   content: '';
   position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 2px;
-  background: var(--accent);
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s;
 }
-.step:hover { border-color: var(--accent-dim); background: #1a1a1a; }
-.step:hover::before { transform: scaleX(1); }
+.step:hover { border-color: var(--text3); }
+.step:hover::after { transform: scaleX(1); }
 .step-num {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 64px;
+  font-size: 60px;
   font-weight: 300;
   color: var(--border2);
   line-height: 1;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   transition: color 0.4s;
 }
-.step:hover .step-num { color: var(--accent-dim); }
+.step:hover .step-num { color: var(--text3); }
 .step-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  font-weight: 400;
-  color: var(--white);
-  margin-bottom: 16px;
-}
-.step-desc {
-  font-size: 13px;
-  line-height: 1.8;
-  color: var(--text2);
-  margin-bottom: 24px;
-}
-.step-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-.step-price { font-size: 15px; color: var(--accent); font-weight: 500; letter-spacing: 0.02em; }
-.step-time { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); }
-
-/* ── PORTFOLIO ── */
-.portfolio {
-  padding: 120px 48px;
-  border-top: 1px solid var(--border);
-}
-.portfolio-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 56px;
-}
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 400px 300px;
-  gap: 3px;
-}
-.portfolio-item {
-  position: relative;
-  overflow: hidden;
-  background: var(--surface);
-  cursor: pointer;
-}
-.portfolio-item:first-child { grid-column: 1 / 3; }
-.portfolio-item:nth-child(4) { grid-column: 2 / 4; }
-
-.portfolio-img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-  display: block;
-}
-.portfolio-item:hover .portfolio-img { transform: scale(1.05); }
-
-/* Заглушка если картинки нет */
-.portfolio-item-placeholder {
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, var(--surface) 0%, var(--border2) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text3);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.portfolio-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, transparent 60%);
-  opacity: 0.7;
-  transition: opacity 0.4s;
-}
-.portfolio-item:hover .portfolio-overlay { opacity: 1; }
-
-.portfolio-info {
-  position: absolute;
-  bottom: 28px; left: 28px;
-  z-index: 2;
-}
-.portfolio-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  font-weight: 300;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.portfolio-tag {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-/* ── WHY ── */
-.why {
-  padding: 120px 48px;
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-}
-.why .section-label { margin-bottom: 16px; }
-.why .section-title { margin-bottom: 64px; }
-.why-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-}
-.why-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 40px;
-  display: flex;
-  gap: 28px;
-  transition: border-color 0.3s;
-}
-.why-item:hover { border-color: var(--accent-dim); }
-.why-icon {
-  width: 48px; height: 48px;
-  flex-shrink: 0;
-  border: 1px solid var(--border2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  font-size: 22px;
-}
-.why-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
   font-weight: 400;
   color: var(--white);
   margin-bottom: 12px;
 }
-.why-desc { font-size: 13px; line-height: 1.8; color: var(--text2); }
+.step-desc { font-size: 13px; line-height: 1.8; color: var(--text2); margin-bottom: 20px; }
+.step-price { font-size: 13px; color: var(--gold); }
+.step-time { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); margin-top: 4px; }
 
-/* ── ENTRY ── */
-.entry {
-  padding: 120px 48px;
-  border-top: 1px solid var(--border);
+/* ─── PORTFOLIO ─── */
+.portfolio { border-top: 1px solid var(--border); }
+.portfolio-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
 }
-.entry-visual {
+.p-card {
   position: relative;
-  height: 500px;
-  background: var(--surface);
   overflow: hidden;
+  background: var(--surface);
+  aspect-ratio: 4/3;
+  cursor: pointer;
 }
-.entry-visual img {
+.p-card.wide { grid-column: span 2; aspect-ratio: auto; height: 480px; }
+.p-card img {
   width: 100%; height: 100%;
   object-fit: cover;
-  display: block;
+  filter: brightness(0.75) saturate(0.85);
+  transition: transform 0.8s ease, filter 0.5s;
+  will-change: transform;
 }
-.entry-visual-placeholder {
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, var(--surface) 0%, var(--border2) 100%);
+.p-card:hover img { transform: scale(1.05); filter: brightness(0.9) saturate(1); }
+.p-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 60%);
+  opacity: 0.7;
+  transition: opacity 0.4s;
 }
-.entry-visual-badge {
+.p-card:hover .p-card-overlay { opacity: 1; }
+.p-card-info {
   position: absolute;
-  bottom: 32px; left: 32px;
-  background: var(--accent);
-  color: var(--bg);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  padding: 12px 20px;
+  bottom: 24px; left: 24px;
+  z-index: 2;
+  transform: translateY(6px);
+  transition: transform 0.4s;
 }
-.entry-text .section-title { margin-bottom: 28px; }
-.entry-text p {
-  font-size: 15px;
-  line-height: 1.9;
-  color: var(--text2);
-  margin-bottom: 20px;
-}
-.entry-price-block {
-  margin: 36px 0;
-  padding: 28px 32px;
-  border: 1px solid var(--accent-dim);
-  background: rgba(201,169,110,0.04);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.entry-price-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
-.entry-price-value {
+.p-card:hover .p-card-info { transform: translateY(0); }
+.p-card-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 300;
-  color: var(--accent);
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.p-card-tag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+.p-card-area { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.p-card-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, var(--surface), var(--border2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3);
 }
 
-/* ── CTA ── */
-.cta {
-  padding: 160px 48px;
+/* ─── CTA СЕКЦИЯ ─── */
+.cta-section {
   border-top: 1px solid var(--border);
   text-align: center;
-  position: relative;
   overflow: hidden;
 }
-.cta::before {
-  content: '3.14';
-  position: absolute;
+.cta-section .deco-314 {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 400px;
-  font-weight: 300;
-  color: rgba(201,169,110,0.03);
-  white-space: nowrap;
-  pointer-events: none;
-  line-height: 1;
 }
-.cta .section-label { display: inline-block; }
-.cta .section-title { margin: 16px 0 40px; }
-.cta p {
-  font-size: 15px;
-  color: var(--text2);
-  max-width: 520px;
-  margin: 0 auto 48px;
-  line-height: 1.8;
-}
-.cta-buttons { display: flex; gap: 16px; justify-content: center; align-items: center; }
 
-/* ── FOOTER ── */
+/* ─── FOOTER ─── */
 footer {
-  padding: 64px 48px 40px;
   border-top: 1px solid var(--border);
   background: var(--bg2);
+  padding: 72px 48px 40px;
+}
+.footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 48px;
+  margin-bottom: 48px;
 }
 .footer-logo {
   font-family: 'Unbounded', sans-serif;
   font-weight: 200;
   font-size: 14px;
   letter-spacing: 4px;
-  color: var(--accent);
+  color: var(--gold);
   margin-bottom: 16px;
 }
 .footer-about {
   font-size: 12px;
   line-height: 1.8;
   color: var(--text3);
-  max-width: 280px;
   margin-bottom: 24px;
+  max-width: 300px;
 }
-.footer-contact { font-size: 13px; color: var(--text2); line-height: 2; }
-.footer-contact a { color: var(--accent); text-decoration: none; }
+.footer-contacts a {
+  display: block;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 6px;
+  transition: color 0.3s;
+}
+.footer-contacts a:hover { color: var(--gold); }
 .footer-col h4 {
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--text3);
@@ -668,213 +514,175 @@ footer {
   display: block;
   font-size: 13px;
   color: var(--text2);
-  text-decoration: none;
-  padding: 5px 0;
-  transition: color 0.3s;
+  padding: 6px 0;
   border-bottom: 1px solid var(--border);
+  transition: color 0.3s;
 }
-.footer-col a:hover { color: var(--accent); }
+.footer-col a:hover { color: var(--gold); }
 .footer-bottom {
-  padding: 24px 48px;
+  padding-top: 24px;
   border-top: 1px solid var(--border);
-  background: var(--bg2);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.footer-copy { font-size: 12px; letter-spacing: 1px; color: var(--text3); }
+.footer-copy { font-size: 11px; letter-spacing: 1px; color: var(--text3); }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
+/* ─── АНИМАЦИИ ─── */
+@keyframes slideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes fadeLeft {
-  from { opacity: 0; transform: translateY(-50%) translateX(20px); }
-  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
-}
-50% { opacity: 1; }
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+/* ─── АДАПТИВ ─── */
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-/* ── BUTTONS fix ── */
-.btn-primary, .btn-ghost { min-height: 56px; justify-content: center; box-sizing: border-box; }
-a, a:link, a:visited, a:hover, a:active { color: inherit; }
-a[href] { -webkit-tap-highlight-color: transparent; }
-
-/* ── MOBILE ── */
-@media (max-width: 900px) {
-  nav { padding: 20px 24px; }
-  .nav-links { display: none; }
+@media (max-width: 768px) {
+  nav { padding: 0 24px; }
+  .nav-links a:not(.nav-cta) { display: none; }
   .hero { padding: 0 24px 60px; }
   .hero-stats { display: none; }
-  .hero-bottom { flex-direction: column; gap: 32px; align-items: flex-start; }
-  .dna, .entry { grid-template-columns: 1fr; padding: 80px 24px; }
-  .process { padding: 80px 24px; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .section-inner { padding: 80px 24px; }
+  .section-header { flex-direction: column; gap: 24px; align-items: flex-start; }
   .process-steps { grid-template-columns: 1fr; }
-  .portfolio { padding: 80px 24px; }
-  .portfolio-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .portfolio-item:first-child, .portfolio-item:nth-child(4) { grid-column: 1; }
-  .portfolio-item { height: 280px; }
-  .why { padding: 80px 24px; }
-  .why-grid { grid-template-columns: 1fr; }
-  .cta { padding: 100px 24px; }
-  .cta::before { font-size: 180px; }
-  .cta-buttons { flex-direction: column; }
-  footer { grid-template-columns: 1fr; padding: 48px 24px 32px; }
-  .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; }
-  .cursor, .cursor-ring { display: none !important; }
-  * { cursor: auto !important; }
-  .btn-primary, .btn-ghost { width: 100%; max-width: 100%; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .p-card.wide { grid-column: span 1; height: 280px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
 
-<nav id="navbar">
-  <a href="index.html" class="nav-logo">ARCH 3.14<span>АРХИТЕКТУРНОЕ БЮРО</span></a>
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    ARCH 3.14
+    <span>Архитектурное бюро</span>
+  </a>
   <div class="nav-links">
-    <div class="nav-dropdown">
-      <a href="#">Направления</a>
-      <div class="nav-dropdown-menu">
-        <a href="index.html">ARCH 3.14 — Частная архитектура</a>
-        <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
-        <a href="construct.html">CONSTRUCT 3.14 — Бионические конструкции</a>
-      </div>
-    </div>
-    <a href="portfolio.html" data-page="portfolio">Портфолио</a>
-    <a href="prices.html" data-page="prices">Услуги</a>
-    <a href="start.html" data-page="start">Как мы работаем</a>
+    <a href="#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
     <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="home">
+<section class="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
 
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">200+</div>
-      <div class="stat-label">реализованных<br>объектов</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">15</div>
-      <div class="stat-label">лет экспертизы<br>в параметрике</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">π</div>
-      <div class="stat-label">бесконечность<br>форм</div>
-    </div>
-  </div>
-
-  <div style="position:relative;z-index:2;">
-    <div class="hero-tag">ARCH 3.14 · Архитектурное бюро · Москва</div>
-    <h1 class="hero-title">
+  <div class="hero-content">
+    <div class="hero-tag">ARCH 3.14 · Москва · Параметрическая архитектура</div>
+    <h1 class="h1 hero-title">
       Параметрическая<br>
       архитектура —<br>
       <em>живая форма.</em>
     </h1>
-    <div class="hero-bottom">
-      <p class="hero-desc">
-        Бюро полного цикла. Специализация — бионические и криволинейные формы.
-        От первого скетча до жизни в доме — один коллектив, единая ответственность.
-      </p>
-      <div class="hero-actions">
-        <a href="concept.html" class="btn-primary">
-          Начать с концепции <span class="arrow">→</span>
-        </a>
-        <a href="portfolio.html" class="btn-ghost">Портфолио</a>
-      </div>
+    <div class="hero-actions">
+      <a href="portfolio.html" class="btn-primary">Смотреть проекты →</a>
+      <a href="concept.html" class="btn-ghost">Начать с концепции</a>
     </div>
-  </div></section>
-
-<!-- DNA -->
-<section class="dna" id="dna">
-  <div class="dna-text reveal">
-    <div class="section-label">ДНК БЮРО</div>
-    <h2 class="section-title">Криволинейное —<br>в нашей <em>природе</em></h2>
-    <p>
-      Мы не добавляем параметрику как тренд — это наша специализация с 2009 года.
-      Пока другие бюро открывают для себя бионические формы, мы реализовали
-      более 200 объектов со сложной криволинейной архитектурой.
-    </p>
   </div>
-  <div class="dna-facts reveal reveal-delay-2">
-    <div class="dna-fact">
-      <div class="dna-fact-num">200+</div>
-      <div class="dna-fact-label">Реализованных объектов с параметрической архитектурой</div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">200+</div>
+      <div class="stat-label">реализованных<br>объектов</div>
     </div>
-    <div class="dna-fact">
-      <div class="dna-fact-num">15</div>
-      <div class="dna-fact-label">Лет экспертизы в бионических и криволинейных формах</div>
+    <div>
+      <div class="stat-num">15</div>
+      <div class="stat-label">лет в<br>параметрике</div>
     </div>
-    <div class="dna-fact">
-      <div class="dna-fact-num">100%</div>
-      <div class="dna-fact-label">Разделов проектирования выполняется внутри бюро</div>
-    </div>
-    <div class="dna-fact">
-      <div class="dna-fact-num">4</div>
-      <div class="dna-fact-label">Этапа — от первого разговора до жизни в доме</div>
+    <div>
+      <div class="stat-num">π</div>
+      <div class="stat-label">бесконечность<br>форм</div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="process" id="process">
-  <div class="process-header reveal">
-    <div>
-      <div class="section-label">КАК МЫ РАБОТАЕМ</div>
-      <h2 class="section-title">Четыре этапа.<br><em>Один путь.</em></h2>
-    </div>
-    <a href="concept.html" class="btn-ghost">Начать с концепции →</a>
-  </div>
-  <div class="process-steps">
-    <div class="step reveal">
-      <div class="step-num">01</div>
-      <div class="step-title">Концепция и эскизы</div>
-      <div class="step-desc">Начинаем с разговора, а не с чертежей. Несколько встреч, три-четыре варианта концепции, скетчи и планировки. Один выбранный вариант доводим до фотореалистичной визуализации.</div>
-      <div class="step-meta">
-        <div class="step-price">200 000 ₽ эскизы + 100 000 ₽ визуализация</div>
-        <div class="step-time">6–8 недель</div>
+<!-- О НАС / ДНК -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="label" style="margin-bottom:16px">ДНК БЮРО</div>
+        <h2 class="h2" style="margin-bottom:24px">Криволинейное —<br>в нашей <em>природе</em></h2>
+        <p class="body-text">
+          Мы не добавляем параметрику как тренд — это наша специализация с 2009 года.
+          Пока другие бюро открывают для себя бионические формы, мы реализовали
+          более 200 объектов со сложной криволинейной архитектурой.
+        </p>
+      </div>
+      <div class="about-facts reveal d2">
+        <div class="fact">
+          <div class="fact-num">200+</div>
+          <div class="fact-label">Реализованных объектов</div>
+        </div>
+        <div class="fact">
+          <div class="fact-num">15</div>
+          <div class="fact-label">Лет в параметрике</div>
+        </div>
+        <div class="fact">
+          <div class="fact-num">100%</div>
+          <div class="fact-label">Разделов внутри бюро</div>
+        </div>
+        <div class="fact">
+          <div class="fact-num">4</div>
+          <div class="fact-label">Этапа — от скетча до ключей</div>
+        </div>
       </div>
     </div>
-    <div class="step reveal reveal-delay-1">
-      <div class="step-num">02</div>
-      <div class="step-title">Полный проект</div>
-      <div class="step-desc">Все разделы — внутри бюро. Архитектура, конструктив, инженерные сети, дизайн интерьера, световой и ландшафтный дизайн. Единая команда, единая ответственность.</div>
-      <div class="step-meta">
+  </div>
+</section>
+
+<!-- КАК МЫ РАБОТАЕМ -->
+<section class="process">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="label" style="margin-bottom:12px">КАК МЫ РАБОТАЕМ</div>
+        <h2 class="h2">Четыре этапа.<br><em>Один путь.</em></h2>
+      </div>
+      <a href="start.html" class="btn-ghost">Подробнее →</a>
+    </div>
+    <div class="process-steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Концепция и эскизы</div>
+        <div class="step-desc">Несколько вариантов вашего дома — скетчи, планировки, фотореалистичная визуализация.</div>
+        <div class="step-price">200 000 ₽ + 100 000 ₽ визуализация</div>
+        <div class="step-time">6–8 недель</div>
+      </div>
+      <div class="step reveal d1">
+        <div class="step-num">02</div>
+        <div class="step-title">Полный проект</div>
+        <div class="step-desc">Все разделы внутри бюро: архитектура, конструктив, инженерия, интерьер, ландшафт.</div>
         <div class="step-price">от 7 000 ₽/м²</div>
         <div class="step-time">6–12 месяцев</div>
       </div>
-    </div>
-    <div class="step reveal reveal-delay-2">
-      <div class="step-num">03</div>
-      <div class="step-title">Реализация</div>
-      <div class="step-desc">Работаем как Технический заказчик — юридически на вашей стороне. Прозрачные сметы, лучшие подрядчики, наши скидки — вам. Контроль качества и сроков на каждом этапе.</div>
-      <div class="step-meta">
+      <div class="step reveal d2">
+        <div class="step-num">03</div>
+        <div class="step-title">Реализация</div>
+        <div class="step-desc">Технический заказчик на вашей стороне. Прозрачные сметы, контроль качества.</div>
         <div class="step-price">15–20% от стройбюджета</div>
         <div class="step-time">18–24 месяца</div>
       </div>
-    </div>
-    <div class="step reveal reveal-delay-3">
-      <div class="step-num">04</div>
-      <div class="step-title">Жизнь в доме</div>
-      <div class="step-desc">Сдача объекта — это начало отношений. Настраиваем системы, помогаем освоиться, остаёмся рядом. Архитектор, который знает ваш дом с первого скетча — навсегда.</div>
-      <div class="step-meta">
+      <div class="step reveal d3">
+        <div class="step-num">04</div>
+        <div class="step-title">Жизнь в доме</div>
+        <div class="step-desc">После сдачи остаёмся рядом. Архитектор, который знает ваш дом с первого скетча.</div>
         <div class="step-price">по договорённости</div>
         <div class="step-time">бессрочно</div>
       </div>
@@ -882,216 +690,191 @@ a[href] { -webkit-tap-highlight-color: transparent; }
   </div>
 </section>
 
-<!-- PORTFOLIO -->
-<section class="portfolio" id="portfolio">
-  <div class="portfolio-header reveal">
-    <div>
-      <div class="section-label">ПОРТФОЛИО</div>
-      <h2 class="section-title">200+ объектов.<br><em>Каждый — единственный.</em></h2>
-    </div>
-    <a href="portfolio.html" class="btn-ghost">Смотреть все →</a>
-  </div>
-  <div class="portfolio-grid reveal" id="indexPortfolioGrid"></div>
-</section>
-
-<!-- WHY -->
-<section class="why" id="why">
-  <div class="reveal">
-    <div class="section-label">ПОЧЕМУ МЫ</div>
-    <h2 class="section-title">Архитектура — это<br><em>долгосрочное решение.</em></h2>
-  </div>
-  <div class="why-grid">
-    <div class="why-item reveal">
-      <div class="why-icon">◈</div>
+<!-- ПОРТФОЛИО -->
+<section class="portfolio">
+  <div class="section-inner">
+    <div class="section-header reveal">
       <div>
-        <div class="why-title">15 лет в параметрике</div>
-        <div class="why-desc">Пока конкуренты открывают для себя бионические формы, мы реализовали 200+ объектов со сложной криволинейной архитектурой. Это не тренд — это наша специализация.</div>
+        <div class="label" style="margin-bottom:12px">ПОРТФОЛИО</div>
+        <h2 class="h2">200+ объектов.<br><em>Каждый — единственный.</em></h2>
       </div>
+      <a href="portfolio.html" class="btn-ghost">Все проекты →</a>
     </div>
-    <div class="why-item reveal reveal-delay-1">
-      <div class="why-icon">◉</div>
-      <div>
-        <div class="why-title">Все разделы внутри</div>
-        <div class="why-desc">Архитектура, конструктив, инженерия, интерьер, свет, ландшафт — один коллектив, одна ответственность. Никаких субподрядчиков на проектировании.</div>
-      </div>
+    <div class="portfolio-grid" id="portfolioGrid">
+      <!-- JS -->
     </div>
-    <div class="why-item reveal">
-      <div class="why-icon">◎</div>
-      <div>
-        <div class="why-title">Технический заказчик</div>
-        <div class="why-desc">При реализации мы работаем юридически на вашей стороне — контролируем подрядчиков, проверяем сметы, передаём скидки клиенту. Наш интерес совпадает с вашим.</div>
-      </div>
-    </div>
-    <div class="why-item reveal reveal-delay-1">
-      <div class="why-icon">○</div>
-      <div>
-        <div class="why-title">Отношения на всю жизнь</div>
-        <div class="why-desc">После сдачи мы остаёмся рядом — настраиваем системы, помогаем с изменениями, знаем ваш дом насквозь. Дом меняется с жизнью, и мы идём рядом.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ENTRY -->
-<section class="entry" id="entry">
-  <div class="entry-visual reveal">
-    <img src="assets/images/entry-visual.jpg" alt="Концепция" loading="lazy"
-         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-    <div class="entry-visual-placeholder" style="display:none"></div>
-    <div class="entry-visual-badge">ПОРОГ ВХОДА</div>
-  </div>
-  <div class="entry-text reveal reveal-delay-2">
-    <div class="section-label">С ЧЕГО НАЧАТЬ</div>
-    <h2 class="section-title">Концепция —<br>без <em>риска.</em></h2>
-    <p>Первый шаг — концепция. Три-четыре варианта вашего дома, планировки, скетчи. Фиксированная стоимость, фиксированный срок. Если не понравится — ничего не теряете.</p>
-    <p>Стоимость концепции засчитывается в стоимость полного проекта.</p>
-    <div class="entry-price-block">
-      <div>
-        <div class="entry-price-label">Стоимость концепции</div>
-        <div style="font-size:11px;letter-spacing:2px;color:var(--text3);margin-top:4px;">эскизы — фикс · визуализация — отдельно</div>
-      </div>
-      <div class="entry-price-value">200 000 ₽ эскизы + 100 000 ₽ визуализация</div>
-    </div>
-    <a href="start.html" class="btn-primary">Записаться на встречу <span class="arrow">→</span></a>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="cta" id="cta">
-  <div class="section-label reveal">НАЧАТЬ ПРОЕКТ</div>
-  <h2 class="section-title reveal">Обсудим<br>ваш <em>будущий дом?</em></h2>
-  <p class="reveal">Первая встреча — бесплатно. Расскажите нам о том, как вы хотите жить, и мы покажем, каким может быть ваш дом.</p>
-  <div class="cta-buttons reveal">
-    <a href="tel:+74996477680" class="btn-primary">+7 499 647 76 80 <span class="arrow">→</span></a>
-    <a href="mailto:mail@arch314.ru" class="btn-ghost">Написать нам</a>
+<section class="cta-section">
+  <div class="section-inner" style="position:relative;">
+    <div class="deco-314">3.14</div>
+    <div class="label reveal" style="margin-bottom:16px">НАЧАТЬ ПРОЕКТ</div>
+    <h2 class="h2 reveal d1" style="margin-bottom:20px">Обсудим<br>ваш <em>будущий дом?</em></h2>
+    <p class="body-text reveal d2" style="max-width:480px;margin:0 auto 40px">
+      Первая встреча бесплатно. Расскажите как хотите жить — покажем каким может быть ваш дом.
+    </p>
+    <div class="reveal d3" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="tel:+74996477680" class="btn-primary">+7 499 647 76 80 →</a>
+      <a href="concept.html" class="btn-ghost">Начать с концепции</a>
+    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div>
-    <div class="footer-logo">ARCH 3.14</div>
-    <div class="footer-about">Архитектурное бюро полного цикла. Специализация — параметрическая и бионическая архитектура. 15 лет экспертизы, 200+ реализованных объектов.</div>
-    <div class="footer-contact">
-      <a href="tel:+74996477680">+7 499 647 76 80</a><br>
-      mail@arch314.ru<br>Москва, Artplay<br>Пн–Пт, 10:00–19:00
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">ARCH 3.14</div>
+      <p class="footer-about">Архитектурное бюро полного цикла. Специализация — параметрическая и бионическая архитектура. 15 лет экспертизы.</p>
+      <div class="footer-contacts">
+        <a href="tel:+74996477680">+7 499 647 76 80</a>
+        <a href="mailto:mail@arch314.ru">mail@arch314.ru</a>
+        <a>Москва, Artplay · Пн–Пт 10:00–19:00</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Направления</h4>
+      <a href="index.html">Arch — Частная архитектура</a>
+      <a href="lab.html">Lab — Бизнес архитектура</a>
+      <a href="construct.html">Construct — Бионические конструкции</a>
+    </div>
+    <div class="footer-col">
+      <h4>Услуги</h4>
+      <a href="concept.html">Концепция и эскизы</a>
+      <a href="prices.html">Стоимость</a>
+      <a href="prices.html#configurator">Конфигуратор цены</a>
+    </div>
+    <div class="footer-col">
+      <h4>О нас</h4>
+      <a href="portfolio.html">Портфолио</a>
+      <a href="start.html">Как мы работаем</a>
+      <a href="#about">О бюро</a>
+      <a href="mailto:mail@arch314.ru">Контакты</a>
     </div>
   </div>
-  <div class="footer-col">
-    <h4>Направления</h4>
-    <a href="index.html">ARCH 3.14 — Частные дома</a>
-    <a href="lab.html">LAB 3.14 — Бизнес архитектура</a>
-    <a href="construct.html">CONSTRUCT 3.14 — Конструкции</a>
-  </div>
-  <div class="footer-col">
-    <h4>Услуги</h4>
-    <a href="concept.html">Концепция и эскизы</a>
-    <a href="#">Полный проект</a>
-    <a href="#">Реализация</a>
-  </div>
-  <div class="footer-col">
-    <h4>О бюро</h4>
-    <a href="portfolio.html">Портфолио</a>
-    <a href="start.html">Как мы работаем</a>
-    <a href="#">Команда</a>
-    <a href="#">Контакты</a>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
+    <div class="footer-copy">Политика конфиденциальности</div>
   </div>
 </footer>
-<div class="footer-bottom">
-  <div class="footer-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
-  <div class="footer-copy">Политика конфиденциальности</div>
-</div>
 
 <script>
-// Cursor
-const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-if (isTouch && cursor) { cursor.style.display='none'; if(ring) ring.style.display='none'; }
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-function animCursor() {
-  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  requestAnimationFrame(animCursor);
-}
-if (!isTouch) { animCursor(); }
-if (!isTouch) {
+// ─── CURSOR ───
+(function() {
+  var dot = document.getElementById('curDot');
+  var ring = document.getElementById('curRing');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+  var raf;
+
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.1;
+    ry += (my - ry) * 0.1;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    raf = requestAnimationFrame(animRing);
+  }
+  animRing();
+
   document.addEventListener('mouseover', function(e) {
-    if(e.target.closest('a, button, .card, .portfolio-item')) {
-      cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
-      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    if (e.target.closest('a, button, .p-card, .step, .fact')) {
+      document.body.classList.add('hovering');
     }
   });
   document.addEventListener('mouseout', function(e) {
-    if(e.target.closest('a, button, .card, .portfolio-item')) {
-      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    if (e.target.closest('a, button, .p-card, .step, .fact')) {
+      document.body.classList.remove('hovering');
     }
   });
-}
+})();
 
-// Navbar scroll
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
-});
+// ─── NAV SOLID ON SCROLL ───
+(function() {
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('solid', window.scrollY > 60);
+  }, { passive: true });
+})();
 
-// Hero bg
-setTimeout(() => { document.getElementById('heroBg').classList.add('loaded'); }, 100);
+// ─── PARALLAX HERO ───
+(function() {
+  var bg = document.getElementById('heroBg');
+  if (!bg) return;
 
-// Reveal on scroll
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Отключаем на слабых устройствах
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var slowConn = conn && (conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g');
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-// Dropdown на click
-var dropBtn = document.querySelector('.nav-dropdown > a');
-var dropMenu = document.querySelector('.nav-dropdown-menu');
-if(dropBtn && dropMenu) {
-  dropBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    dropMenu.classList.toggle('open');
-  });
-  document.addEventListener('click', function(e) {
-    if(!e.target.closest('.nav-dropdown')) dropMenu.classList.remove('open');
-  });
-}
+  if (slowConn || reducedMotion || isMobile) return;
 
-// Портфолио на главной
-fetch('models.json?v=' + Date.now())
-  .then(r => r.json())
-  .then(function(models) {
-    var grid = document.getElementById('indexPortfolioGrid');
-    if(!grid) return;
-    grid.innerHTML = models.slice(0,6).map(function(m) {
-      return '<div class="portfolio-item" onclick="location.href=\'project.html?id=' + m.id + '\'" style="cursor:pointer">' +
-        '<img class="portfolio-img" src="assets/images/models/' + m.folder + '/cover.jpeg" alt="' + m.name + '" loading="lazy"' +
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    bg.style.transform = 'scale(1.1) translateY(' + (y * 0.3) + 'px)';
+  }, { passive: true });
+})();
+
+// ─── REVEAL ON SCROLL ───
+(function() {
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el) { io.observe(el); });
+})();
+
+// ─── PORTFOLIO GRID ───
+(function() {
+  var grid = document.getElementById('portfolioGrid');
+  if (!grid) return;
+
+  function render(models) {
+    // Показываем 6 — первые 2 широкие, остальные стандартные
+    var preview = models.slice(0, 6);
+    grid.innerHTML = preview.map(function(m, i) {
+      var wide = (i === 0 || i === 3);
+      var src = 'assets/images/models/' + m.folder + '/cover.jpeg';
+      return '<div class="p-card' + (wide ? ' wide' : '') + '" onclick="location.href=\'project.html?id=' + m.id + '\'">' +
+        '<img src="' + src + '" alt="' + m.name + '" loading="' + (i < 2 ? 'eager' : 'lazy') + '"' +
         ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
-        '<div class="portfolio-item-placeholder" style="display:none">' + m.name + '</div>' +
-        '<div class="portfolio-overlay"></div>' +
-        '<div class="portfolio-info"><div class="portfolio-name">' + m.name + '</div>' +
-        '<div class="portfolio-tag">' + m.type + '</div></div></div>';
+        '<div class="p-card-placeholder" style="display:none">' + m.name + '</div>' +
+        '<div class="p-card-overlay"></div>' +
+        '<div class="p-card-info">' +
+          '<div class="p-card-name">' + m.name + '</div>' +
+          '<div class="p-card-tag">' + (m.type || '') + '</div>' +
+          '<div class="p-card-area">' + (m.area || '') + '</div>' +
+        '</div>' +
+      '</div>';
     }).join('');
-  });
+  }
 
-// Dropdown
-var dropBtn = document.querySelector('.nav-dropdown > a');
-var dropMenu = document.querySelector('.nav-dropdown-menu');
-if(dropBtn && dropMenu){
-  dropBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); dropMenu.classList.toggle('open'); });
-  document.addEventListener('click', function(e){ if(!e.target.closest('.nav-dropdown')) dropMenu.classList.remove('open'); });
-}
-
-// Dropdown
-var dropBtn = document.querySelector('.nav-dropdown > a');
-var dropMenu = document.querySelector('.nav-dropdown-menu');
-if(dropBtn && dropMenu){
-  dropBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); dropMenu.classList.toggle('open'); });
-  document.addEventListener('click', function(e){ if(!e.target.closest('.nav-dropdown')) dropMenu.classList.remove('open'); });
-}
+  fetch('models.json?v=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(render)
+    .catch(function() {
+      // Fallback
+      render([
+        {id:'riba',folder:'Riba',name:'Riba House',type:'Органическая форма',area:'330 м²'},
+        {id:'high',folder:'High',name:'High house',type:'3 уровня · скала',area:'295 м²'},
+        {id:'slope',folder:'Slope',name:'Slope',type:'Частный дом',area:'218 м²'},
+        {id:'skyframe',folder:'Skyframe',name:'Skyframe',type:'3 этажа',area:'380 м²'},
+        {id:'stream',folder:'Stream',name:'Stream',type:'1 этаж',area:'310 м²'},
+        {id:'zigzag',folder:'Zigzag',name:'Zigzag',type:'Рельеф',area:'190 м²'},
+      ]);
+    });
+})();
 </script>
 </body>
 </html>
