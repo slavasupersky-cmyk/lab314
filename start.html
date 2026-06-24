@@ -202,12 +202,12 @@ nav {
 
 /* ── ФОРМА ── */
 .form-wrap {
-  padding: 120px 48px;
+  padding: 80px 48px;
   border-top: 1px solid var(--border);
   background: var(--bg2);
   display: flex; flex-direction: column; align-items: center;
 }
-.form-top { text-align: center; margin-bottom: 56px; }
+.form-top { text-align: center; margin-bottom: 40px; }
 .form-top-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
 .form-top-title {
   font-family: 'Cormorant Garamond', serif; font-weight: 300;
@@ -216,11 +216,11 @@ nav {
 }
 .form-top-title em { font-style: italic; color: var(--gold); }
 .form-top-desc { font-size: 17px; line-height: 1.8; color: var(--text2); }
-.form-contacts { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 48px; }
+.form-contacts { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 32px; }
 .form-phone {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(44px, 5.5vw, 72px); font-weight: 300; line-height: 1;
-  color: var(--white); text-decoration: none; transition: color 0.3s; letter-spacing: -1px;
+  font-family: 'Jost', sans-serif;
+  font-size: clamp(32px, 4vw, 52px); font-weight: 300; line-height: 1;
+  color: var(--white); text-decoration: none; transition: color 0.3s; letter-spacing: 2px;
 }
 .form-phone:hover { color: var(--gold); }
 .form-email {
@@ -230,15 +230,11 @@ nav {
 .form-email:hover { color: var(--gold); }
 .form-divider {
   display: flex; align-items: center; gap: 20px;
-  width: 100%; max-width: 560px; margin-bottom: 40px;
+  width: 100%; max-width: 560px; margin-bottom: 28px;
   color: var(--text3); font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
 }
 .form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 .form-body { width: 100%; max-width: 560px; }
-.form-ask {
-  font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300;
-  color: var(--white); margin-bottom: 24px; text-align: center;
-}
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 .fg { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
 .frow .fg { margin-bottom: 0; }
@@ -493,7 +489,7 @@ nav {
 <section class="form-wrap" id="s5">
   <div class="form-top reveal">
     <div class="form-top-label">НАЧАТЬ ПРОЕКТ</div>
-    <h2 class="form-top-title">Первая встреча —<br><em>бесплатно</em></h2>
+    <h2 class="form-top-title">Давайте<br><em>познакомимся</em></h2>
     <p class="form-top-desc">Расскажите о своём участке и о том, как хотите жить.<br>Мы приедем, посмотрим, зададим правильные вопросы. Без обязательств.</p>
   </div>
   <div class="form-contacts reveal d1">
@@ -502,10 +498,9 @@ nav {
   </div>
   <div class="form-divider reveal d2">или оставьте заявку</div>
   <div class="form-body reveal d2">
-    <div class="form-ask">Как к вам обращаться?</div>
-    <div class="fg"><input class="fi" type="text" placeholder="Ваше имя" id="fName"></div>
+    <div class="fg"><label class="fl-lbl">Как к вам обращаться?</label><input class="fi" type="text" placeholder="Имя или как вам удобно" id="fName"></div>
     <div class="frow">
-      <div class="fg"><label class="fl-lbl">Телефон / Telegram / WhatsApp</label><input class="fi" type="text" placeholder="+7 или @username" id="fContact"></div>
+      <div class="fg"><label class="fl-lbl">Телефон / Telegram / WhatsApp</label><input class="fi" type="text" placeholder="Телефон, Telegram или WhatsApp" id="fContact"></div>
       <div class="fg"><label class="fl-lbl">Email</label><input class="fi" type="email" placeholder="mail@example.com" id="fEmail"></div>
     </div>
     <div class="fg"><label class="fl-lbl">Чем можем помочь</label><textarea class="fta" placeholder="Расскажите об участке, идеях, сроках — или просто напишите «хочу поговорить»"></textarea></div>
