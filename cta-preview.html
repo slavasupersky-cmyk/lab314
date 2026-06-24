@@ -42,17 +42,19 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
   color: rgba(201,169,110,0.035); pointer-events: none; line-height: 1;
   user-select: none; z-index: 0;
 }
+.cta-header { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto 56px; }
 .cta-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
-.cta-left { display: flex; flex-direction: column; justify-content: center; }
+.cta-left { display: flex; flex-direction: column; justify-content: flex-start; }
 .cta-page-tag { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 16px; }
-.cta-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
-.cta-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(36px, 4vw, 60px); color: var(--white); line-height: 1.05; margin-bottom: 20px; }
+.cta-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.cta-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(44px, 5.5vw, 80px); color: var(--white); line-height: 0.95; margin-bottom: 0; }
 .cta-h2 em { font-style: italic; color: var(--gold); }
-.cta-desc { font-size: 17px; line-height: 1.85; color: var(--text2); margin-bottom: 36px; max-width: 420px; }
+.cta-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 48px; }
+.cta-desc { font-size: 17px; line-height: 1.85; color: var(--text2); margin-bottom: 32px; }
 .cta-contacts { display: flex; flex-direction: column; gap: 8px; }
 .cta-phone { font-family: 'Jost', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 300; letter-spacing: 1px; color: var(--white); text-decoration: none; transition: color 0.3s; }
 .cta-phone:hover { color: var(--green); }
-.cta-email { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 1px; color: var(--text2); text-decoration: none; transition: color 0.3s; }
+.cta-email { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 1px; color: var(--text2); text-decoration: none; transition: color 0.3s; margin-top: 4px; }
 .cta-email:hover { color: var(--gold); }
 
 /* FORM */
@@ -112,11 +114,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 
 <section class="cta-block">
   <div class="cta-deco">3.14</div>
+  <div class="cta-header">
+    <div class="cta-page-tag">index.html · CTA</div>
+    <div class="cta-label">НАЧАТЬ ПРОЕКТ</div>
+    <h2 class="cta-h2">Обсудим<br>ваш <em>будущий дом?</em></h2>
+  </div>
+  <div class="cta-divider"></div>
   <div class="cta-inner">
     <div class="cta-left">
-      <div class="cta-page-tag">index.html · CTA</div>
-      <div class="cta-label">НАЧАТЬ ПРОЕКТ</div>
-      <h2 class="cta-h2">Обсудим<br>ваш <em>будущий дом?</em></h2>
       <p class="cta-desc">Первая встреча бесплатно. Расскажите как хотите жить — покажем каким может быть ваш дом.</p>
       <div class="cta-contacts">
         <a href="tel:+74996477680" class="cta-phone">+7 499 647 76 80</a>
@@ -127,13 +132,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
       <div class="fg">
         <div class="channel-label">Как вам удобнее связаться?</div>
         <div class="channel-btns">
-          <button type="button" class="ch-btn active" data-form="form1" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn active" data-form="form1" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Телефон</button>
+          <button type="button" class="ch-btn" data-form="form1" data-ch="tg" data-label="Telegram" data-ph="@username или номер">Telegram</button>
           <button type="button" class="ch-btn" data-form="form1" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
-          <button type="button" class="ch-btn" data-form="form1" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
-          <button type="button" class="ch-btn" data-form="form1" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
-          <button type="button" class="ch-btn" data-form="form1" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
         </div>
         <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
+        <input class="fi" type="email" placeholder="Email (необязательно)" style="margin-top:8px;">
       </div>
       <div class="fg">
         <label class="fl">Чем можем помочь?</label>
@@ -164,11 +168,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 
 <section class="cta-block bg2">
   <div class="cta-deco">3.14</div>
+  <div class="cta-header">
+    <div class="cta-page-tag">portfolio.html · CTA</div>
+    <div class="cta-label">ПОНРАВИЛСЯ ПРОЕКТ?</div>
+    <h2 class="cta-h2">Создадим ваш<br><em>индивидуальный проект?</em></h2>
+  </div>
+  <div class="cta-divider"></div>
   <div class="cta-inner">
     <div class="cta-left">
-      <div class="cta-page-tag">portfolio.html · CTA</div>
-      <div class="cta-label">ПОНРАВИЛСЯ ПРОЕКТ?</div>
-      <h2 class="cta-h2">Создадим ваш<br><em>индивидуальный проект?</em></h2>
       <p class="cta-desc">Каждый проект — единственный. Берём понравившуюся концепцию за отправную точку и создаём дом именно под вас — участок, образ жизни, характер.</p>
       <div class="cta-contacts">
         <a href="tel:+74996477680" class="cta-phone">+7 499 647 76 80</a>
@@ -179,13 +186,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
       <div class="fg">
         <div class="channel-label">Как вам удобнее связаться?</div>
         <div class="channel-btns">
-          <button type="button" class="ch-btn active" data-form="form2" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn active" data-form="form2" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Телефон</button>
+          <button type="button" class="ch-btn" data-form="form2" data-ch="tg" data-label="Telegram" data-ph="@username или номер">Telegram</button>
           <button type="button" class="ch-btn" data-form="form2" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
-          <button type="button" class="ch-btn" data-form="form2" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
-          <button type="button" class="ch-btn" data-form="form2" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
-          <button type="button" class="ch-btn" data-form="form2" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
         </div>
         <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
+        <input class="fi" type="email" placeholder="Email (необязательно)" style="margin-top:8px;">
       </div>
       <div class="fg">
         <label class="fl">Чем можем помочь?</label>
@@ -216,11 +222,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 
 <section class="cta-block">
   <div class="cta-deco">3.14</div>
+  <div class="cta-header">
+    <div class="cta-page-tag">start.html · CTA</div>
+    <div class="cta-label">ПЕРВЫЙ ШАГ</div>
+    <h2 class="cta-h2">Первый шаг —<br><em>бесплатно.</em></h2>
+  </div>
+  <div class="cta-divider"></div>
   <div class="cta-inner">
     <div class="cta-left">
-      <div class="cta-page-tag">start.html · CTA</div>
-      <div class="cta-label">ПЕРВЫЙ ШАГ</div>
-      <h2 class="cta-h2">Первый шаг —<br><em>бесплатно.</em></h2>
       <p class="cta-desc">Первая встреча ни к чему не обязывает. Просто разговор о том, каким может быть ваш дом.</p>
       <div class="cta-contacts">
         <a href="tel:+74996477680" class="cta-phone">+7 499 647 76 80</a>
@@ -231,13 +240,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
       <div class="fg">
         <div class="channel-label">Как вам удобнее связаться?</div>
         <div class="channel-btns">
-          <button type="button" class="ch-btn active" data-form="form3" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn active" data-form="form3" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Телефон</button>
+          <button type="button" class="ch-btn" data-form="form3" data-ch="tg" data-label="Telegram" data-ph="@username или номер">Telegram</button>
           <button type="button" class="ch-btn" data-form="form3" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
-          <button type="button" class="ch-btn" data-form="form3" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
-          <button type="button" class="ch-btn" data-form="form3" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
-          <button type="button" class="ch-btn" data-form="form3" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
         </div>
         <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
+        <input class="fi" type="email" placeholder="Email (необязательно)" style="margin-top:8px;">
       </div>
       <div class="fg">
         <label class="fl">Чем можем помочь?</label>
@@ -268,11 +276,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 
 <section class="cta-block bg2">
   <div class="cta-deco">3.14</div>
+  <div class="cta-header">
+    <div class="cta-page-tag">concept.html · CTA</div>
+    <div class="cta-label">ЗАПИСАТЬСЯ</div>
+    <h2 class="cta-h2">Запишитесь<br>на <em>первую встречу</em></h2>
+  </div>
+  <div class="cta-divider"></div>
   <div class="cta-inner">
     <div class="cta-left">
-      <div class="cta-page-tag">concept.html · CTA</div>
-      <div class="cta-label">ЗАПИСАТЬСЯ</div>
-      <h2 class="cta-h2">Запишитесь<br>на <em>первую встречу</em></h2>
       <p class="cta-desc">Бесплатно. Без обязательств. Просто разговор о том, каким может быть ваш дом.</p>
       <div class="cta-contacts">
         <a href="tel:+74996477680" class="cta-phone">+7 499 647 76 80</a>
@@ -283,13 +294,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
       <div class="fg">
         <div class="channel-label">Как вам удобнее связаться?</div>
         <div class="channel-btns">
-          <button type="button" class="ch-btn active" data-form="form4" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Позвонить</button>
+          <button type="button" class="ch-btn active" data-form="form4" data-ch="phone" data-label="Телефон" data-ph="Ваш номер телефона">Телефон</button>
+          <button type="button" class="ch-btn" data-form="form4" data-ch="tg" data-label="Telegram" data-ph="@username или номер">Telegram</button>
           <button type="button" class="ch-btn" data-form="form4" data-ch="wa" data-label="WhatsApp" data-ph="Номер для WhatsApp">WhatsApp</button>
-          <button type="button" class="ch-btn" data-form="form4" data-ch="tg" data-label="Telegram" data-ph="Номер или @username">Telegram</button>
-          <button type="button" class="ch-btn" data-form="form4" data-ch="viber" data-label="Viber" data-ph="Номер для Viber">Viber</button>
-          <button type="button" class="ch-btn" data-form="form4" data-ch="email" data-label="Email" data-ph="mail@example.com">Email</button>
         </div>
         <input class="fi contact-input" type="text" placeholder="Ваш номер телефона">
+        <input class="fi" type="email" placeholder="Email (необязательно)" style="margin-top:8px;">
       </div>
       <div class="fg">
         <label class="fl">Чем можем помочь?</label>
