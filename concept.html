@@ -58,15 +58,8 @@ nav {
   position: relative;
   overflow: hidden;
 }
-.hero-left {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 64px 80px 48px;
-  position: relative; z-index: 2;
-}
-.hero-right {
-  position: relative; overflow: hidden;
-  background: var(--surface);
-}
+.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 0 64px 0 48px; padding-top: 80px; overflow: hidden; }
+.hero-right { position: relative; overflow: hidden; height: 100%; background: #111; }
 .hero-right img {
   width: 100%; height: 100%; object-fit: cover;
   filter: brightness(0.55) saturate(0.7);
