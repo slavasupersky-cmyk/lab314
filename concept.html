@@ -51,10 +51,9 @@ J0px;
 .hero-right img {
   width: 100%; height: 100%; object-fit: cover;
   filter: brightness(0.55) saturate(0.7);
-  transition: transform 8s ease;
-  transform: scale(1.05);
+  transition: none;
 }
-.hero-right img.loaded { transform: scale(1); }
+
 
 .hero-right-overlay {
   position: absolute; inset: 0;
@@ -665,10 +664,7 @@ const ro = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
 // Hero img load
-setTimeout(() => {
-  const img = document.getElementById('heroImg');
-  if (img) img.classList.add('loaded');
-}, 100);
+
 
 
 (function(){
