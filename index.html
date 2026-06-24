@@ -591,13 +591,14 @@ footer {
   .new-cta-form { gap: 8px !important; }
   .ch-label { font-size: 11px !important; }
   .cta-fl { font-size: 11px !important; }
-  /* Hero tighter - fit everything in viewport */
-  .hero { padding: 0 20px 24px !important; min-height: 100svh; }
+  /* Hero - fit in viewport */
+  .hero { padding: 0 20px 20px !important; height: 100svh; min-height: auto !important; }
   .hero-actions { gap: 8px !important; flex-direction: column; align-items: flex-start; }
-  .h1 { font-size: clamp(36px, 9vw, 56px) !important; line-height: 1 !important; }
-  .hero-title { margin-bottom: 20px !important; }
-  .hero-tag { margin-bottom: 16px !important; }
-  .btn-primary, .btn-ghost { padding: 13px 20px !important; font-size: 12px !important; }
+  .h1 { font-size: clamp(32px, 8vw, 48px) !important; line-height: 0.95 !important; margin-bottom: 20px !important; }
+  .hero-title { margin-bottom: 16px !important; }
+  .hero-tag { margin-bottom: 12px !important; font-size: 11px !important; }
+  .btn-primary { padding: 13px 20px !important; font-size: 12px !important; }
+  .btn-ghost { padding: 13px 20px !important; font-size: 12px !important; }
 
   /* Контрастнее тексты */
   .body-text, .step-desc, .footer-about { color: #c4b8a8; }
@@ -709,16 +710,16 @@ footer {
   font-size: 28px; color: var(--text2); line-height: 1;
   padding: 8px;
 }
-.mobile-menu a {
+.mobile-menu-links a {
   font-family: 'Jost', sans-serif;
   font-size: 18px; font-weight: 300;
   letter-spacing: 1px;
   color: var(--white);
   text-decoration: none; line-height: 1.2;
   padding: 14px 0; border-bottom: 1px solid var(--border);
-  transition: color 0.3s;
+  transition: color 0.3s; display: block;
 }
-.mobile-menu a:hover { color: var(--gold); }
+.mobile-menu-links a:hover { color: var(--gold); }
 .mobile-menu a.mobile-cta {
   font-family: 'Jost', sans-serif;
   font-size: 13px; font-weight: 500;
@@ -748,19 +749,23 @@ footer {
 </head>
 <body>
 <div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-menu-close" id="menuClose">✕</button>
-  <div class="mobile-menu-logo">
-    <div style="font-family:'Unbounded',sans-serif;font-weight:200;font-size:16px;letter-spacing:4px;color:var(--white);">ARCH 3.14</div>
-    <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--text3);margin-top:3px;">Архитектурное бюро</div>
+  <div class="mobile-menu-header">
+    <div class="mobile-menu-logo-wrap">
+      <div style="font-family:'Unbounded',sans-serif;font-weight:200;font-size:16px;letter-spacing:4px;color:var(--white);">ARCH 3.14</div>
+      <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--text3);margin-top:3px;">Архитектурное бюро</div>
+    </div>
+    <button class="mobile-menu-close" id="menuClose">✕</button>
   </div>
-  <a href="index.html#about">О нас</a>
-  <a href="portfolio.html">Портфолио</a>
-  <a href="start.html">Как мы работаем</a>
-  <a href="prices.html">Услуги</a>
-  <a href="concept.html" class="mobile-cta">Начать проект →</a>
-  <div class="mobile-menu-contacts">
-    <a href="tel:+74996477680">+7 499 647 76 80</a>
-    <a href="mailto:mail@arch314.ru">mail@arch314.ru</a>
+  <div class="mobile-menu-links">
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="prices.html">Услуги</a>
+    <a href="concept.html" class="mobile-cta">Начать проект →</a>
+    <div class="mobile-menu-contacts">
+      <a href="tel:+74996477680">+7 499 647 76 80</a>
+      <a href="mailto:mail@arch314.ru">mail@arch314.ru</a>
+    </div>
   </div>
 </div>
 
