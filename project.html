@@ -164,6 +164,12 @@ nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid #1e1e1e;}
 .nav-cta::after{display:none!important;}
 .nav-cta:hover{background:#e8c880!important;}
 @media(max-width:900px){nav{padding:20px 24px;}.nav-links a:not(.nav-cta){display:none;}}
+
+/* Cursor */
+body { cursor: none; }
+.cursor { position: fixed; width: 8px; height: 8px; background: #c9a96e; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s, width 0.3s, height 0.3s; }
+.cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(201,169,110,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease-out; }
+@media(max-width:900px){ .cursor, .cursor-ring { display: none !important; } * { cursor: auto !important; } }
 </style>
 </head>
 <body>
@@ -184,6 +190,8 @@ nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid #1e1e1e;}
     <a href="concept.html" class="nav-cta">Начать проект →</a>
   </div>
 </nav>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 <section class="hero">
   <img class="hero-img" id="heroImg" src="" alt="">
   <div class="hero-overlay"></div>
@@ -451,6 +459,35 @@ document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
   var page=window.location.pathname.split('/').pop().replace('.html','');
   document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
     if(a.dataset.page===page)a.classList.add('nav-active');
+  });
+})();
+
+// Cursor
+(function(){
+  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  var cursor = document.getElementById('cursor');
+  var ring = document.getElementById('cursorRing');
+  if(!cursor || isTouch) return;
+  var mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; });
+  function anim(){
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(anim);
+  }
+  anim();
+  document.addEventListener('mouseover', function(e){
+    if(e.target.closest('a,button,.card,.portfolio-item,.gimg')){
+      cursor.style.transform='translate(-50%,-50%) scale(2.5)';
+      ring.style.transform='translate(-50%,-50%) scale(1.5)';
+    }
+  });
+  document.addEventListener('mouseout', function(e){
+    if(e.target.closest('a,button,.card,.portfolio-item,.gimg')){
+      cursor.style.transform='translate(-50%,-50%) scale(1)';
+      ring.style.transform='translate(-50%,-50%) scale(1)';
+    }
   });
 })();
 </script>
