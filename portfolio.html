@@ -138,6 +138,49 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
   .deco-314 { font-size: 180px; }
   .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
 }
+
+/* ── CTA SHARED ── */
+.new-cta { padding: 120px 48px; position: relative; overflow: hidden; border-top: 1px solid var(--border); }
+.new-cta.bg2 { background: var(--bg2); }
+.new-cta-deco { position: absolute; bottom: -40px; right: -20px; font-family: 'Cormorant Garamond', serif; font-size: 280px; font-weight: 300; color: rgba(201,169,110,0.035); pointer-events: none; line-height: 1; user-select: none; z-index: 0; }
+.new-cta-header { position: relative; z-index: 1; margin-bottom: 48px; }
+.new-cta-label { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.new-cta-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(40px, 5vw, 72px); color: var(--white); line-height: 0.95; }
+.new-cta-h2 em { font-style: italic; color: var(--gold); }
+.new-cta-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; position: relative; z-index: 1; }
+.new-cta-left { display: flex; flex-direction: column; justify-content: flex-start; }
+.new-cta-desc { font-size: 17px; line-height: 1.85; color: var(--text2); margin-bottom: 32px; }
+.new-cta-contacts { display: flex; flex-direction: column; gap: 8px; }
+.new-cta-phone { font-family: 'Jost', sans-serif; font-size: clamp(22px, 2.5vw, 32px); font-weight: 300; letter-spacing: 1px; color: var(--white); text-decoration: none; transition: color 0.3s; }
+.new-cta-phone:hover { color: #a8d8b0; }
+.new-cta-email { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 1px; color: var(--text2); text-decoration: none; transition: color 0.3s; margin-top: 4px; }
+.new-cta-email:hover { color: var(--gold); }
+.new-cta-form { display: flex; flex-direction: column; gap: 14px; }
+.ch-group { display: flex; flex-direction: column; gap: 8px; }
+.ch-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
+.ch-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.ch-btn { padding: 8px 16px; border: 1px solid var(--border2); background: none; font-family: 'Jost', sans-serif; font-size: 13px; color: var(--text2); cursor: pointer; transition: all 0.25s; }
+.ch-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.06); }
+.ch-btn:hover:not(.active) { border-color: var(--text2); color: var(--text); }
+.cta-fi { background: var(--surface); border: 1px solid var(--border2); color: var(--text); font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; padding: 14px 16px; outline: none; transition: border-color 0.3s; width: 100%; }
+.cta-fi:focus { border-color: var(--gold); }
+.cta-fi::placeholder { color: var(--text3); }
+.cta-fta { background: var(--surface); border: 1px solid var(--border2); color: var(--text); font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; padding: 14px 16px; outline: none; transition: border-color 0.3s; width: 100%; resize: vertical; min-height: 80px; }
+.cta-fta:focus { border-color: var(--gold); }
+.cta-fta::placeholder { color: var(--text3); }
+.cta-fl { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; display: block; }
+.cta-fg { display: flex; flex-direction: column; }
+.cta-cb { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; line-height: 1.5; color: var(--text2); cursor: pointer; }
+.cta-cb input[type="checkbox"] { display: none; }
+.cta-cbx { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; border: 1px solid var(--border2); background: var(--surface); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s; }
+.cta-cb input:checked + .cta-cbx { border-color: var(--gold); }
+.cta-cb input:checked + .cta-cbx::after { content: '✓'; font-size: 11px; color: var(--gold); }
+.cta-cb a { color: var(--gold); }
+.cta-btn { width: 100%; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 18px; border: none; cursor: pointer; transition: background 0.3s; }
+.cta-btn:hover { background: var(--gold2); }
+@media (max-width: 1024px) { .new-cta-inner { grid-template-columns: 1fr; gap: 48px; } }
+@media (max-width: 768px) { .new-cta { padding: 80px 24px; } }
+
 </style>
 </head>
 <body>
@@ -196,15 +239,46 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 </div>
 
 <!-- CTA -->
-<section class="portfolio-cta">
-  <div class="deco-314">3.14</div>
-  <div class="portfolio-cta-inner">
-    <div class="label reveal" style="margin-bottom:16px">ПОНРАВИЛСЯ ПРОЕКТ?</div>
-    <h2 class="cta-title reveal">Разработаем похожий<br><em>именно для вас</em></h2>
-    <p class="cta-desc reveal">Каждый проект — уникален. Берём понравившуюся концепцию за отправную точку и создаём дом под ваш участок, образ жизни и бюджет.</p>
-    <div class="cta-btns reveal">
-      <a href="concept.html" class="btn-primary">Начать с концепции →</a>
-      <a href="start.html" class="btn-ghost">Как мы работаем</a>
+<section class="new-cta bg2">
+  <div class="new-cta-deco">3.14</div>
+  <div class="new-cta-header reveal">
+    <div class="new-cta-label">ПОНРАВИЛСЯ ПРОЕКТ?</div>
+    <h2 class="new-cta-h2">Впечатляет. Но хотите <em>своё?</em></h2>
+  </div>
+  <div class="new-cta-inner">
+    <div class="new-cta-left reveal d1">
+      <p class="new-cta-desc">За каждым проектом — отдельная история. Ваша ещё не написана.</p>
+      <div class="new-cta-contacts">
+        <a href="tel:+74996477680" class="new-cta-phone">+7 499 647 76 80</a>
+        <a href="mailto:mail@arch314.ru" class="new-cta-email">mail@arch314.ru</a>
+      </div>
+    </div>
+    <div class="new-cta-form reveal d2" id="ctaPortfolio">
+      <div class="ch-group">
+        <span class="ch-label">Как Вам удобнее?</span>
+        <div class="ch-btns">
+          <button type="button" class="ch-btn active" data-form="ctaPortfolio" data-ph="Ваш номер">Телефон</button>
+          <button type="button" class="ch-btn" data-form="ctaPortfolio" data-ph="Ваш @username">Telegram</button>
+          <button type="button" class="ch-btn" data-form="ctaPortfolio" data-ph="Ваш номер в WhatsApp">WhatsApp</button>
+        </div>
+        <input class="cta-fi contact-field" type="text" placeholder="Ваш номер">
+        <input class="cta-fi" type="email" placeholder="не обязательно — но если укажете, сразу пришлём презентацию" style="margin-top:8px;">
+      </div>
+      <div class="cta-fg">
+        <span class="cta-fl">Чем можем помочь?</span>
+        <textarea class="cta-fta" placeholder="Какой проект понравился? Или опишите что Вас интересует"></textarea>
+      </div>
+      <label class="cta-cb">
+        <input type="checkbox">
+        <span class="cta-cbx"></span>
+        <span>Согласен на обработку <a href="#">персональных данных</a></span>
+      </label>
+      <label class="cta-cb">
+        <input type="checkbox">
+        <span class="cta-cbx"></span>
+        <span>Согласен получать новости и материалы от ARCH 3.14</span>
+      </label>
+      <button class="cta-btn">Обсудить мой проект →</button>
     </div>
   </div>
 </section>
@@ -310,6 +384,21 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
     });
 })();
 </script>
+<script>
+(function(){
+  document.querySelectorAll('.ch-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var formId = this.dataset.form;
+      var form = document.getElementById(formId);
+      form.querySelectorAll('.ch-btn').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      var input = form.querySelector('.contact-field');
+      if(input) input.placeholder = this.dataset.ph;
+    });
+  });
+})();
+</script>
 </body>
 </html>
+
 
