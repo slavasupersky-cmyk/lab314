@@ -320,6 +320,26 @@ nav {
   }
   .st-body { padding: 48px 24px; } .form-wrap { padding: 60px 24px; } .frow { grid-template-columns: 1fr; }
   .frow { grid-template-columns: 1fr; }
+
+  /* Ticket on mobile - timer top-left, price below it, hide label */
+  .st-badge-label { display: none; }
+  .st-timer {
+    top: 20px; left: 20px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  .st-badge {
+    bottom: auto;
+    top: 52px;
+    left: 20px;
+    border-left: 2px solid var(--gold);
+    padding: 6px 12px;
+    background: rgba(8,8,8,0.75);
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+  }
+  .st-badge-val { font-size: 16px; }
   .progress { display: none; }
   .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
 }
