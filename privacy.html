@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Политика конфиденциальности — ARCH 3.14</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080808; --bg2:#0f0f0f; --surface:#141414;
+  --border:#1e1e1e; --border2:#2a2a2a;
+  --gold:#c9a96e; --gold2:#e8c880;
+  --text:#ede8df; --text2:#9a8e80; --text3:#4a4238;
+  --white:#f5f0e8; --nav-h:80px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:18px;letter-spacing:4px;color:var(--white);line-height:1;}
+.nav-logo span{display:block;font-family:'Jost',sans-serif;font-weight:300;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--text3);margin-top:4px;}
+.nav-links{display:flex;align-items:center;gap:40px;}
+.nav-links a{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);position:relative;transition:color 0.3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--bg)!important;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:500;padding:12px 26px;transition:background 0.3s!important;}
+.nav-cta:hover{background:var(--gold2)!important;}
+@media(max-width:768px){nav{padding:0 24px;}.nav-links a:not(.nav-cta){display:none;}}
+
+.page{padding:calc(var(--nav-h) + 64px) 48px 80px;max-width:800px;margin:0 auto;}
+.page-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.page-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5vw,64px);color:var(--white);line-height:1;margin-bottom:16px;}
+.page-date{font-size:14px;color:var(--text3);margin-bottom:56px;}
+.section{margin-bottom:40px;}
+.section h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:var(--white);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.section p{font-size:16px;line-height:1.85;color:var(--text2);margin-bottom:12px;}
+.section ul{padding-left:20px;margin-bottom:12px;}
+.section ul li{font-size:16px;line-height:1.85;color:var(--text2);margin-bottom:6px;}
+.section a{color:var(--gold);text-decoration:underline;}
+
+.bottom-bar{padding:24px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
+.bb-copy{font-size:14px;letter-spacing:1px;color:var(--text3);}
+.bb-links{display:flex;gap:28px;flex-wrap:wrap;}
+.bb-links a{font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);transition:color 0.3s;}
+.bb-links a:hover{color:var(--gold);}
+.bb-policy{font-size:14px;color:var(--text3);}
+
+@media(max-width:768px){
+  .page{padding:calc(var(--nav-h)+40px) 24px 60px;}
+  .bottom-bar{padding:24px;flex-direction:column;align-items:center;text-align:center;gap:16px;}
+  .bb-links{justify-content:center;gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
+  <div class="nav-links">
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="concept.html" class="nav-cta">Начать проект →</a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-label">Юридическая информация</div>
+  <h1 class="page-title">Политика конфиденциальности</h1>
+  <div class="page-date">Актуально с 1 января 2024 года</div>
+
+  <div class="section">
+    <h2>1. Общие положения</h2>
+    <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных физических лиц, передаваемых при использовании сайта <strong>314lab.ru</strong>.</p>
+    <p>Оператором персональных данных является ООО «Новая Архитектура» (далее — «Компания», «мы»).</p>
+    <p>Использование сайта означает безоговорочное согласие с настоящей Политикой и условиями обработки персональных данных.</p>
+  </div>
+
+  <div class="section">
+    <h2>2. Какие данные мы собираем</h2>
+    <p>При заполнении форм на сайте мы можем получать следующие данные:</p>
+    <ul>
+      <li>Имя или предпочтительное обращение</li>
+      <li>Номер телефона</li>
+      <li>Адрес электронной почты</li>
+      <li>Сообщение, переданное через форму обратной связи</li>
+    </ul>
+    <p>Мы также автоматически получаем технические данные: IP-адрес, тип браузера, страницы посещений — в целях аналитики и улучшения работы сайта.</p>
+  </div>
+
+  <div class="section">
+    <h2>3. Цели обработки данных</h2>
+    <p>Персональные данные обрабатываются исключительно в следующих целях:</p>
+    <ul>
+      <li>Ответ на запрос, оставленный через форму обратной связи</li>
+      <li>Организация консультации или встречи</li>
+      <li>Отправка презентации и информационных материалов (при наличии согласия)</li>
+      <li>Направление новостей о проектах и материалов ARCH 3.14 (при наличии согласия)</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>4. Хранение и защита данных</h2>
+    <p>Мы принимаем необходимые технические и организационные меры для защиты персональных данных от несанкционированного доступа, изменения, раскрытия или уничтожения.</p>
+    <p>Данные хранятся в течение срока, необходимого для достижения целей обработки, но не более 3 лет с момента последнего взаимодействия.</p>
+    <p>Мы не передаём персональные данные третьим лицам без согласия пользователя, за исключением случаев, предусмотренных законодательством РФ.</p>
+  </div>
+
+  <div class="section">
+    <h2>5. Права пользователя</h2>
+    <p>В соответствии с Федеральным законом № 152-ФЗ «О персональных данных» вы вправе:</p>
+    <ul>
+      <li>Получить информацию об обработке ваших данных</li>
+      <li>Потребовать уточнения, блокирования или уничтожения данных</li>
+      <li>Отозвать согласие на обработку данных в любой момент</li>
+      <li>Обжаловать действия оператора в Роскомнадзоре</li>
+    </ul>
+    <p>Для реализации прав обращайтесь по адресу: <a href="mailto:mail@arch314.ru">mail@arch314.ru</a></p>
+  </div>
+
+  <div class="section">
+    <h2>6. Cookies</h2>
+    <p>Сайт использует файлы cookies для корректной работы и аналитики. Продолжая использование сайта, вы соглашаетесь с использованием cookies. Вы можете отключить cookies в настройках браузера, однако это может повлиять на работу сайта.</p>
+  </div>
+
+  <div class="section">
+    <h2>7. Контактная информация</h2>
+    <p>ООО «Новая Архитектура»</p>
+    <p>Сайт: <a href="https://314lab.ru">314lab.ru</a></p>
+    <p>Email: <a href="mailto:mail@arch314.ru">mail@arch314.ru</a></p>
+    <p>Телефон: <a href="tel:+74996477680">+7 499 647 76 80</a></p>
+    <p>Адрес: Москва, Artplay</p>
+  </div>
+
+  <div class="section">
+    <h2>8. Изменения политики</h2>
+    <p>Компания оставляет за собой право вносить изменения в настоящую Политику. Новая редакция вступает в силу с момента её публикации на сайте. Актуальная версия всегда доступна по адресу <a href="privacy.html">314lab.ru/privacy.html</a>.</p>
+  </div>
+</div>
+
+<div class="bottom-bar">
+  <div class="bb-links">
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="concept.html">Начать проект</a>
+  </div>
+  <div class="bb-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
+  <a href="privacy.html" class="bb-policy">Политика конфиденциальности</a>
+</div>
+
+</body>
+</html>
