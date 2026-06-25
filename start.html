@@ -477,6 +477,17 @@ nav {
 /* brighter labels */
 .label, .section-label, .cta-label, .new-cta-label { color: var(--gold) !important; }
 .footer-col h4 { color: var(--text2) !important; }
+
+/* Brighter form fields */
+.cta-fi, .cta-fta {
+  color: var(--text) !important;
+  border-color: var(--border2) !important;
+}
+.cta-fi::placeholder, .cta-fta::placeholder { color: var(--text2) !important; }
+.cta-fl, .ch-label { color: var(--text2) !important; }
+.ch-btn { color: var(--text) !important; border-color: var(--border2) !important; }
+.cta-cb { color: var(--text2) !important; }
+
 </style>
 @media (max-width: 768px) {
   .burger { display: flex; }
@@ -695,7 +706,7 @@ nav {
     </div>
     <div class="new-cta-form reveal d2" id="ctaStart">
       <div class="ch-group">
-        <span class="ch-label">Как Вам удобнее?</span>
+        <span class="ch-label">Как с Вами связаться?</span>
         <div class="ch-btns">
           <button type="button" class="ch-btn active" data-form="ctaStart" data-ph="Ваш номер">Телефон</button>
           <button type="button" class="ch-btn" data-form="ctaStart" data-ph="Ваш @username">Telegram</button>
@@ -703,7 +714,7 @@ nav {
         </div>
         <input class="cta-fi contact-field" type="text" placeholder="Ваш номер">
         <span class="cta-fl" style="margin-top:12px;">Email</span>
-        <input class="cta-fi" type="email" placeholder="не обязательно — но если укажете, сразу пришлём презентацию">
+        <input class="cta-fi" type="email" placeholder="Email — по желанию">
       </div>
       <div class="cta-fg">
         <span class="cta-fl">Чем можем помочь?</span>
@@ -712,7 +723,7 @@ nav {
       <label class="cta-cb">
         <input type="checkbox">
         <span class="cta-cbx"></span>
-        <span>Согласен на обработку <a href="#">персональных данных</a></span>
+        <span>Согласен на обработку <a href="privacy.html">персональных данных</a></span>
       </label>
       <label class="cta-cb">
         <input type="checkbox">
@@ -733,7 +744,7 @@ nav {
     <a href="start.html">Как мы работаем</a>
     <a href="concept.html">Начать проект</a>
   </div>
-  <a href="#" class="bb-policy">Политика конфиденциальности</a>
+  <a href="privacy.html" class="bb-policy">Политика конфиденциальности</a>
 </div>
 
 <script>
