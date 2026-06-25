@@ -601,18 +601,19 @@ footer {
   .hero-actions { gap: 8px !important; flex-direction: column; align-items: flex-start; }
   .h1 { font-size: clamp(32px, 8vw, 48px) !important; line-height: 0.95 !important; margin-bottom: 20px !important; }
 
-  /* Nav on mobile - dark bg always for readability */
-  nav { background: rgba(8,8,8,0.82) !important; backdrop-filter: blur(12px) !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; }
-  .nav-logo { color: #ffffff !important; text-shadow: none; }
-  .nav-logo span { color: var(--text2) !important; text-shadow: none; }
+  /* Nav on mobile - transparent */
+  nav { background: transparent !important; border-bottom: none !important; }
+  .nav-logo { color: #ffffff !important; }
+  .nav-logo span { color: rgba(255,255,255,0.75) !important; }
   .burger span { background: var(--white) !important; }
   /* Hero mobile - gradient for text readability */
   .hero-overlay {
     background: linear-gradient(
       to bottom,
-      rgba(8,8,8,0.3) 0%,
-      rgba(8,8,8,0.2) 40%,
-      rgba(8,8,8,0.75) 70%,
+      rgba(8,8,8,0.72) 0%,
+      rgba(8,8,8,0.35) 25%,
+      rgba(8,8,8,0.15) 50%,
+      rgba(8,8,8,0.75) 75%,
       rgba(8,8,8,0.92) 100%
     ) !important;
   }
