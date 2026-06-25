@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контакты — ARCH 3.14</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Unbounded:wght@200&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080808; --bg2:#0f0f0f; --surface:#141414;
+  --border:#1e1e1e; --border2:#2a2a2a;
+  --gold:#c9a96e; --gold2:#e8c880;
+  --text:#ede8df; --text2:#9a8e80; --text3:#4a4238;
+  --white:#f5f0e8; --nav-h:80px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+a{color:inherit;text-decoration:none;}
+img{display:block;}
+
+.cur-dot,.cur-ring{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cur-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;transition:transform 0.2s;}
+.cur-ring{width:36px;height:36px;border:1px solid rgba(201,169,110,0.5);border-radius:50%;transition:width 0.3s,height 0.3s,border-color 0.3s;}
+body.hovering .cur-dot{transform:translate(-50%,-50%) scale(2);}
+body.hovering .cur-ring{width:56px;height:56px;border-color:var(--gold);}
+@media(hover:none){.cur-dot,.cur-ring{display:none;}body{cursor:auto;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:200;font-size:18px;letter-spacing:4px;color:var(--white);line-height:1;}
+.nav-logo span{display:block;font-family:'Jost',sans-serif;font-weight:300;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--text3);margin-top:4px;}
+.nav-links{display:flex;align-items:center;gap:40px;}
+.nav-links a{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);position:relative;transition:color 0.3s;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-cta{background:var(--gold);color:var(--bg)!important;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:500;padding:12px 26px;transition:background 0.3s!important;}
+.nav-cta::after{display:none!important;}
+.nav-cta:hover{background:var(--gold2)!important;}
+
+/* BURGER */
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;cursor:pointer;background:none;border:none;padding:4px;z-index:600;}
+.burger span{display:block;width:22px;height:1.5px;background:var(--white);transition:all 0.3s;}
+.burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.mobile-menu{position:fixed;inset:0;z-index:550;background:var(--bg);display:flex;flex-direction:column;justify-content:flex-start;padding:0 32px 40px;transform:translateX(-100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-header{display:flex;align-items:center;justify-content:space-between;height:80px;border-bottom:1px solid var(--border);flex-shrink:0;margin:0 -32px;padding:0 32px;}
+.mobile-menu-logo-wrap{display:flex;flex-direction:column;}
+.mobile-menu-close{background:none;border:none;cursor:pointer;font-size:24px;color:var(--text2);line-height:1;padding:8px;flex-shrink:0;}
+.mobile-menu-links{display:flex;flex-direction:column;padding-top:40px;flex:1;}
+.mobile-menu-links a{font-family:'Jost',sans-serif;font-size:18px;font-weight:300;letter-spacing:1px;color:var(--white);text-decoration:none;line-height:1.2;padding:14px 0;border-bottom:1px solid var(--border);transition:color 0.3s;display:block;}
+.mobile-menu-links a:hover{color:var(--gold);}
+.mobile-menu a.mobile-cta{font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:16px 24px;border:none;margin-top:24px;text-align:center;transition:background 0.3s;}
+.mobile-menu a.mobile-cta:hover{background:var(--gold2);}
+.mobile-menu-contacts{margin-top:24px;display:flex;flex-direction:column;gap:4px;}
+.mobile-menu-contacts a{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:var(--text2);border:none;padding:3px 0;}
+@media(max-width:768px){.burger{display:flex;}.nav-links{display:none!important;}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:0.1s;}.d2{transition-delay:0.2s;}.d3{transition-delay:0.3s;}
+
+/* HERO */
+.hero{height:70vh;min-height:500px;position:relative;display:flex;align-items:flex-end;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:url('assets/images/contacts/office.jpg') center/cover no-repeat;filter:brightness(0.4) saturate(0.7);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.9) 0%,rgba(8,8,8,0.2) 60%,transparent 100%);}
+.hero-content{position:relative;z-index:2;padding:0 48px 56px;width:100%;}
+.hero-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:0;animation:fadeUp 0.8s 0.3s forwards;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(48px,6vw,84px);line-height:0.95;color:var(--white);opacity:0;animation:fadeUp 0.9s 0.5s forwards;}
+.hero-h1 em{font-style:italic;color:var(--gold);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ОФИС + КОНТАКТЫ */
+.office-section{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
+.office-photo{overflow:hidden;min-height:500px;}
+.office-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(0.85) saturate(0.8);transition:transform 0.8s;}
+.office-photo:hover img{transform:scale(1.03);}
+.office-info{padding:64px 56px;display:flex;flex-direction:column;justify-content:center;background:var(--bg2);}
+.office-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.office-phone{font-family:'Jost',sans-serif;font-size:clamp(28px,3vw,40px);font-weight:300;letter-spacing:1px;color:var(--white);text-decoration:none;transition:color 0.3s;display:block;margin-bottom:8px;}
+.office-phone:hover{color:#a8d8b0;}
+.office-email{font-size:16px;color:var(--text2);text-decoration:none;transition:color 0.3s;display:block;margin-bottom:32px;}
+.office-email:hover{color:var(--gold);}
+.office-address{font-size:15px;line-height:1.8;color:var(--text2);margin-bottom:32px;padding-top:24px;border-top:1px solid var(--border);}
+.office-address strong{color:var(--text);font-weight:400;display:block;margin-bottom:4px;}
+.office-hours{font-size:14px;color:var(--text3);letter-spacing:1px;margin-bottom:32px;}
+
+/* СОЦСЕТИ */
+.socials{display:flex;gap:12px;flex-wrap:wrap;}
+.social-link{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border2);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);transition:all 0.3s;}
+.social-link:hover{border-color:var(--gold);color:var(--gold);}
+.social-link svg{width:16px;height:16px;fill:currentColor;flex-shrink:0;}
+
+/* CTA ФОРМА */
+.new-cta{padding:120px 20%;position:relative;overflow:hidden;border-top:1px solid var(--border);}
+.new-cta-deco{position:absolute;bottom:-40px;right:-20px;font-family:'Cormorant Garamond',serif;font-size:280px;font-weight:300;color:rgba(201,169,110,0.035);pointer-events:none;line-height:1;user-select:none;z-index:0;}
+.new-cta-header{position:relative;z-index:1;margin-bottom:48px;}
+.new-cta-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.new-cta-h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5vw,72px);color:var(--white);line-height:0.95;}
+.new-cta-h2 em{font-style:italic;color:var(--gold);}
+.new-cta-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;position:relative;z-index:1;}
+.new-cta-left{display:flex;flex-direction:column;justify-content:flex-start;}
+.new-cta-desc{font-size:17px;line-height:1.85;color:var(--text2);margin-bottom:32px;}
+.new-cta-contacts{display:flex;flex-direction:column;gap:8px;}
+.new-cta-phone{font-family:'Jost',sans-serif;font-size:clamp(22px,2.5vw,32px);font-weight:300;letter-spacing:1px;color:var(--white);text-decoration:none;transition:color 0.3s;}
+.new-cta-phone:hover{color:#a8d8b0;}
+.new-cta-email{font-family:'Jost',sans-serif;font-size:15px;font-weight:300;letter-spacing:1px;color:var(--text2);text-decoration:none;transition:color 0.3s;margin-top:4px;}
+.new-cta-email:hover{color:var(--gold);}
+.new-cta-form{display:flex;flex-direction:column;gap:14px;}
+.ch-group{display:flex;flex-direction:column;gap:8px;}
+.ch-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);}
+.ch-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.ch-btn{padding:8px 16px;border:1px solid var(--border2);background:none;font-family:'Jost',sans-serif;font-size:13px;color:var(--text);cursor:pointer;transition:all 0.25s;}
+.ch-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(201,169,110,0.06);}
+.ch-btn:hover:not(.active){border-color:var(--text2);color:var(--text);}
+.cta-fi{background:var(--surface);border:1px solid var(--border2);color:var(--text);font-family:'Jost',sans-serif;font-size:15px;font-weight:300;padding:14px 16px;outline:none;transition:border-color 0.3s;width:100%;}
+.cta-fi:focus{border-color:var(--gold);}
+.cta-fi::placeholder{color:var(--text2);}
+.cta-fta{background:var(--surface);border:1px solid var(--border2);color:var(--text);font-family:'Jost',sans-serif;font-size:15px;font-weight:300;padding:14px 16px;outline:none;transition:border-color 0.3s;width:100%;resize:vertical;min-height:80px;}
+.cta-fta:focus{border-color:var(--gold);}
+.cta-fta::placeholder{color:var(--text2);}
+.cta-fl{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:8px;display:block;}
+.cta-fg{display:flex;flex-direction:column;}
+.cta-cb{display:flex;align-items:flex-start;gap:12px;font-size:13px;line-height:1.5;color:var(--text2);cursor:pointer;}
+.cta-cb input[type="checkbox"]{display:none;}
+.cta-cbx{width:18px;height:18px;flex-shrink:0;margin-top:1px;border:1px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;transition:border-color 0.3s;}
+.cta-cb input:checked + .cta-cbx{border-color:var(--gold);}
+.cta-cb input:checked + .cta-cbx::after{content:'✓';font-size:11px;color:var(--gold);}
+.cta-cb a{color:var(--gold);}
+.cta-btn{width:100%;background:var(--gold);color:var(--bg);font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:18px;border:none;cursor:pointer;transition:background 0.3s;}
+.cta-btn:hover{background:var(--gold2);}
+
+/* КАРТА */
+.map-section{border-top:1px solid var(--border);}
+.map-inner{display:grid;grid-template-columns:1fr 1.4fr;}
+.map-text{padding:64px 56px;background:var(--bg2);display:flex;flex-direction:column;justify-content:center;}
+.map-label{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.map-h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(28px,3vw,40px);color:var(--white);line-height:1.1;margin-bottom:20px;}
+.map-desc{font-size:15px;line-height:1.85;color:var(--text2);margin-bottom:32px;}
+.map-iframe{width:100%;height:100%;min-height:480px;border:none;filter:grayscale(0.3) brightness(0.85);}
+
+/* BOTTOM BAR */
+.bottom-bar{padding:24px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
+.bb-copy{font-size:14px;letter-spacing:1px;color:var(--text3);flex:1;}
+.bb-links{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;flex:1;}
+.bb-links a{font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);transition:color 0.3s;}
+.bb-links a:hover{color:var(--gold);}
+.bb-policy{font-size:14px;letter-spacing:1px;color:var(--text3);flex:1;text-align:right;transition:color 0.3s;}
+.bb-policy:hover{color:var(--text2);}
+
+@media(max-width:1024px){
+  .office-section{grid-template-columns:1fr;}
+  .office-photo{min-height:320px;}
+  .map-inner{grid-template-columns:1fr;}
+  .map-iframe{min-height:360px;}
+  .new-cta-inner{grid-template-columns:1fr;gap:48px;}
+}
+@media(max-width:768px){
+  nav{padding:0 24px;}
+  .hero{height:60vh;}
+  .hero-content{padding:0 24px 40px;}
+  .office-info{padding:40px 24px;}
+  .map-text{padding:40px 24px;}
+  .new-cta{padding:60px 24px;}
+  .bottom-bar{padding:24px;flex-direction:column;align-items:center;text-align:center;gap:16px;}
+  .bb-copy,.bb-policy{flex:none;text-align:center;}
+  .bb-links{flex:none;justify-content:center;gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <div class="mobile-menu-logo-wrap">
+      <div style="font-family:'Unbounded',sans-serif;font-weight:200;font-size:16px;letter-spacing:4px;color:var(--white);">ARCH 3.14</div>
+      <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--text3);margin-top:3px;">Архитектурное бюро</div>
+    </div>
+    <button class="mobile-menu-close" id="menuClose">✕</button>
+  </div>
+  <div class="mobile-menu-links">
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="prices.html">Услуги</a>
+    <a href="concept.html" class="mobile-cta">Начать проект →</a>
+    <div class="mobile-menu-contacts">
+      <a href="tel:+74996477680">+7 499 647 76 80</a>
+      <a href="mailto:mail@arch314.ru">mail@arch314.ru</a>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">ARCH 3.14<span>Архитектурное бюро</span></a>
+  <button class="burger" id="burgerBtn" aria-label="Меню"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="concept.html" class="nav-cta">Начать проект →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-label">ARCH 3.14 · Контакты</div>
+    <h1 class="hero-h1">Мы в <em>Москве.</em><br>Работаем по всему миру.</h1>
+  </div>
+</section>
+
+<!-- ОФИС + КОНТАКТЫ -->
+<section class="office-section">
+  <div class="office-photo reveal">
+    <img src="assets/images/contacts/office.jpg" alt="Офис ARCH 3.14"
+         onerror="this.parentNode.style.background='var(--surface)'">
+  </div>
+  <div class="office-info">
+    <div class="office-label reveal">Свяжитесь с нами</div>
+    <a href="tel:+74996477680" class="office-phone reveal d1">+7 499 647 76 80</a>
+    <a href="mailto:mail@arch314.ru" class="office-email reveal d1">mail@arch314.ru</a>
+    <div class="office-address reveal d2">
+      <strong>Офис</strong>
+      Москва, ул. Нижняя Сыромятническая, д. 10, с.4<br>
+      Дизайн-центр Artplay
+    </div>
+    <div class="office-hours reveal d2">Пн–Пт · 10:00–19:00</div>
+    <div class="socials reveal d3">
+      <a href="https://t.me/arch314" class="social-link" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.19 13.9l-2.963-.924c-.644-.204-.657-.644.136-.953l11.57-4.461c.537-.194 1.006.131.961.659z"/></svg>
+        Telegram
+      </a>
+      <a href="https://pinterest.com/arch314" class="social-link" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+        Pinterest
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ФОРМА -->
+<section class="new-cta">
+  <div class="new-cta-deco">3.14</div>
+  <div class="new-cta-header reveal">
+    <div class="new-cta-label">НАПИСАТЬ НАМ</div>
+    <h2 class="new-cta-h2">Давайте <em>познакомимся</em></h2>
+  </div>
+  <div class="new-cta-inner">
+    <div class="new-cta-left reveal d1">
+      <p class="new-cta-desc">Один разговор — и Вы уже знаете каким может быть Ваш дом.</p>
+      <div class="new-cta-contacts">
+        <a href="tel:+74996477680" class="new-cta-phone">+7 499 647 76 80</a>
+        <a href="mailto:mail@arch314.ru" class="new-cta-email">mail@arch314.ru</a>
+      </div>
+    </div>
+    <div class="new-cta-form reveal d2" id="ctaContacts">
+      <div class="ch-group">
+        <span class="ch-label">Как с Вами связаться?</span>
+        <div class="ch-btns">
+          <button type="button" class="ch-btn active" data-form="ctaContacts" data-ph="Ваш номер">Телефон</button>
+          <button type="button" class="ch-btn" data-form="ctaContacts" data-ph="Ваш @username">Telegram</button>
+          <button type="button" class="ch-btn" data-form="ctaContacts" data-ph="Ваш номер в WhatsApp">WhatsApp</button>
+        </div>
+        <input class="cta-fi contact-field" type="text" placeholder="Ваш номер">
+        <span class="cta-fl" style="margin-top:12px;">Email</span>
+        <input class="cta-fi" type="email" placeholder="Email — по желанию">
+      </div>
+      <div class="cta-fg">
+        <span class="cta-fl">Чем можем помочь?</span>
+        <textarea class="cta-fta" placeholder="Расскажите о себе и своём проекте"></textarea>
+      </div>
+      <label class="cta-cb">
+        <input type="checkbox">
+        <span class="cta-cbx"></span>
+        <span>Согласен на обработку <a href="privacy.html">персональных данных</a></span>
+      </label>
+      <label class="cta-cb">
+        <input type="checkbox">
+        <span class="cta-cbx"></span>
+        <span>Согласен получать новости и материалы от ARCH 3.14</span>
+      </label>
+      <button class="cta-btn">Отправить →</button>
+    </div>
+  </div>
+</section>
+
+<!-- КАРТА -->
+<section class="map-section">
+  <div class="map-inner">
+    <div class="map-text reveal">
+      <div class="map-label">Как нас найти</div>
+      <h2 class="map-h2">В офис удобно приехать</h2>
+      <p class="map-desc">Наши специалисты встретят Вас в офисе или организуют поездку на строительные объекты. Мы покажем образцы материалов и детали конструкций домов — это наглядно демонстрирует преимущества работы с нами. Вам сразу станет понятнее, почему выбирают ARCH 3.14 и чем довольны наши клиенты.</p>
+      <p style="font-size:14px;color:var(--text3);line-height:1.7;">Москва, ул. Нижняя Сыромятническая, д. 10, с.4<br>Дизайн-центр Artplay · Пн–Пт 10:00–19:00</p>
+    </div>
+    <iframe class="map-iframe"
+      src="https://yandex.ru/map-widget/v1/?ll=37.671580%2C55.748700&z=16&pt=37.671580,55.748700,pm2rdl~&theme=dark"
+      allowfullscreen loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="bb-links">
+    <a href="index.html#about">О нас</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="start.html">Как мы работаем</a>
+    <a href="concept.html">Начать проект</a>
+  </div>
+  <div class="bb-copy">© 2024–2026 ARCH 3.14 · Все права защищены</div>
+  <a href="privacy.html" class="bb-policy">Политика конфиденциальности</a>
+</div>
+
+<script>
+(function(){
+  // Cursor
+  var dot=document.getElementById('curDot'),ring=document.getElementById('curRing');
+  var mx=0,my=0,rx=0,ry=0;
+  if(!window.matchMedia('(hover:none)').matches){
+    document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+    (function tick(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(tick);})();
+    document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))document.body.classList.add('hovering');});
+    document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))document.body.classList.remove('hovering');});
+  }
+  // Reveal
+  var io=new IntersectionObserver(function(ee){ee.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  // Burger
+  var btn=document.getElementById('burgerBtn'),menu=document.getElementById('mobileMenu'),closeBtn=document.getElementById('menuClose');
+  function closeMenu(){btn.classList.remove('open');menu.classList.remove('open');document.body.style.overflow='';}
+  btn.addEventListener('click',function(){btn.classList.toggle('open');menu.classList.toggle('open');document.body.style.overflow=menu.classList.contains('open')?'hidden':'';});
+  if(closeBtn)closeBtn.addEventListener('click',closeMenu);
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
+  // Channel switcher
+  document.querySelectorAll('.ch-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var formId=this.dataset.form,form=document.getElementById(formId);
+      form.querySelectorAll('.ch-btn').forEach(function(x){x.classList.remove('active');});
+      this.classList.add('active');
+      var input=form.querySelector('.contact-field');
+      if(input)input.placeholder=this.dataset.ph;
+    });
+  });
+})();
+</script>
+</body>
+</html>
