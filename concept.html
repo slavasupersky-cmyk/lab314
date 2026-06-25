@@ -358,7 +358,18 @@ nav {
   .ex-render-info { flex-direction: column; gap: 12px; }
   .cta-deco { font-size: 200px; }
   .fg-row { grid-template-columns: 1fr; }
-  .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
+
+  /* Bottom bar mobile - centered, correct order */
+  .bottom-bar { 
+    padding: 24px 20px !important; 
+    flex-direction: column !important; 
+    align-items: center !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+  .bb-copy { flex: none !important; text-align: center !important; order: 1; }
+  .bb-links { flex: none !important; justify-content: center !important; order: 2; gap: 16px !important; }
+  .bb-policy { flex: none !important; text-align: center !important; order: 3; }
 }
 
 
