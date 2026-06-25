@@ -306,12 +306,53 @@ nav {
   .st-photo { min-height: 55vw; }
 }
 @media (max-width: 768px) {
-  .hero { padding: calc(var(--nav-h) + 48px) 24px 56px; }
-  .steps-row { grid-template-columns: 1fr 1fr; }
+  .hero { 
+    height: var(--real-vh, 100svh) !important;
+    min-height: auto !important;
+    padding: 0 !important;
+  }
+  .hero-inner {
+    padding: calc(var(--nav-h) + 32px) 24px 280px;
+  }
+  .steps-row { 
+    grid-template-columns: 1fr 1fr;
+    bottom: 90px;
+  }
   .st-body { padding: 48px 24px; } .form-wrap { padding: 60px 24px; } .frow { grid-template-columns: 1fr; }
   .frow { grid-template-columns: 1fr; }
+
+  /* Ticket on mobile - timer top-left, price below it, hide label */
+  .st-badge-label { display: none; }
+  .st-timer {
+    top: 20px; left: 20px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  .st-badge {
+    bottom: auto;
+    top: 52px;
+    left: 20px;
+    border-left: 2px solid var(--gold);
+    padding: 6px 12px;
+    background: rgba(8,8,8,0.75);
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+  }
+  .st-badge-val { font-size: 16px; }
   .progress { display: none; }
-  .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
+
+  /* Bottom bar mobile - centered, correct order */
+  .bottom-bar { 
+    padding: 24px 20px !important; 
+    flex-direction: column !important; 
+    align-items: center !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+  .bb-copy { flex: none !important; text-align: center !important; order: 2; }
+  .bb-links { flex: none !important; justify-content: center !important; order: 1; gap: 16px !important; }
+  .bb-policy { flex: none !important; text-align: center !important; order: 3; }
 }
 
 
@@ -533,14 +574,15 @@ nav {
     <h2 class="st-title reveal d1">Концепция<br>и <em>эскизы</em></h2>
     <div class="st-text reveal d2">
       <p>Всё начинается с разговора. Не с технического задания — с разговора о том, как вы хотите жить. Что важно утром, когда просыпаетесь. Как вы принимаете гостей. Нужна ли вам тишина или хочется открытости.</p>
-      <p>Три-четыре концептуальных варианта — разные характеры, разные идеи, разные способы жить на вашем участке. Выбранный вариант прорабатываем до фотореалистичной визуализации.</p>
+      <p>Три концептуальных варианта — разные характеры, разные идеи, разные способы жить на вашем участке. Выбранный вариант прорабатываем до фотореалистичной визуализации.</p>
     </div>
     <div class="st-divider reveal d3"></div>
     <div class="st-tags reveal d3">
-      <span class="st-tag">2–3 встречи</span>
-      <span class="st-tag">3–4 варианта концепции</span>
+      <span class="st-tag">3 встречи</span>
+      <span class="st-tag">3 концепции</span>
       <span class="st-tag">Скетчи и планировки</span>
       <span class="st-tag">Фотореалистичная визуализация</span>
+      <span class="st-tag">Ориентировочный бюджет проекта</span>
     </div>
     <div class="st-hint reveal d3">следующий этап</div>
   </div>
@@ -588,7 +630,7 @@ nav {
   </div>
   <div class="st-body">
     <div class="st-step reveal">ЭТАП 03</div>
-    <h2 class="st-title reveal d1">Реали-<br><em>зация</em></h2>
+    <h2 class="st-title reveal d1"><em>Реализация</em></h2>
     <div class="st-text reveal d2">
       <p>Авторский надзор — не формальность. Мы приезжаем на ключевые этапы, проверяем соответствие проекту, решаем вопросы, которые всегда возникают на стройке.</p>
       <p>Работаем с проверенными подрядчиками или помогаем выбрать новых. Контролируем качество, а не только сроки.</p>
@@ -771,8 +813,20 @@ nav {
   });
 })();
 </script>
+<script>
+(function(){
+  function setVH(){
+    var h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    document.documentElement.style.setProperty('--real-vh', h + 'px');
+  }
+  setVH();
+  window.addEventListener('resize', setVH);
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', setVH);
+})();
+</script>
 </body>
 </html>
+
 
 
 

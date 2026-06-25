@@ -136,7 +136,18 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
 @media (max-width: 768px) {
   .portfolio-cta { padding: 80px 24px; }
   .deco-314 { font-size: 180px; }
-  .bottom-bar { padding: 24px; flex-direction: column; align-items: flex-start; }
+
+  /* Bottom bar mobile - centered, correct order */
+  .bottom-bar { 
+    padding: 24px 20px !important; 
+    flex-direction: column !important; 
+    align-items: center !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+  .bb-copy { flex: none !important; text-align: center !important; order: 2; }
+  .bb-links { flex: none !important; justify-content: center !important; order: 1; gap: 16px !important; }
+  .bb-policy { flex: none !important; text-align: center !important; order: 3; }
 }
 
 /* ── CTA SHARED ── */

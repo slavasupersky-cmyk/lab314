@@ -595,6 +595,29 @@ footer {
   .hero { padding: 0 20px 20px !important; height: 100svh; min-height: auto !important; }
   .hero-actions { gap: 8px !important; flex-direction: column; align-items: flex-start; }
   .h1 { font-size: clamp(32px, 8vw, 48px) !important; line-height: 0.95 !important; margin-bottom: 20px !important; }
+
+  /* Nav on mobile - transparent over hero */
+  nav { background: transparent !important; border-bottom: none !important; }
+  .nav-logo { color: var(--white) !important; text-shadow: 0 1px 8px rgba(0,0,0,0.9); }
+  .nav-logo span { color: rgba(255,255,255,0.6) !important; text-shadow: 0 1px 6px rgba(0,0,0,0.9); }
+  .burger span { background: var(--white) !important; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8)); }
+  /* Hero mobile - gradient for text readability */
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(8,8,8,0.3) 0%,
+      rgba(8,8,8,0.2) 40%,
+      rgba(8,8,8,0.75) 70%,
+      rgba(8,8,8,0.92) 100%
+    ) !important;
+  }
+  .hero-tag {
+    color: rgba(255,255,255,0.7) !important;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.8) !important;
+  }
+  .hero-title {
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6) !important;
+  }
   .hero-title { margin-bottom: 16px !important; }
   .hero-tag { margin-bottom: 12px !important; font-size: 11px !important; }
   .btn-primary { padding: 13px 20px !important; font-size: 12px !important; }
@@ -1157,6 +1180,7 @@ footer {
 </script>
 </body>
 </html>
+
 
 
 
