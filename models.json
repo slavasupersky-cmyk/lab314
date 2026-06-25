@@ -22,7 +22,8 @@
     "year": "2024",
     "location": "Подмосковье",
     "style": "Органическая параметрика",
-    "duration": "24 мес"
+    "duration": "24 мес",
+    "filterTag": "smooth"
   },
   {
     "id": "high",
@@ -47,7 +48,8 @@
     "year": "2019",
     "location": "Подмосковье",
     "style": "Современный минимализм",
-    "duration": "20 мес"
+    "duration": "20 мес",
+    "filterTag": "smooth"
   },
   {
     "id": "slope",
@@ -72,7 +74,8 @@
     "year": "2018",
     "location": "Подмосковье",
     "style": "Современный скандинавский",
-    "duration": "21 мес"
+    "duration": "21 мес",
+    "filterTag": "sharp"
   },
   {
     "id": "skyframe",
@@ -97,7 +100,8 @@
     "year": "2023",
     "location": "Краснодарский край",
     "style": "Современный минимализм",
-    "duration": "24 мес"
+    "duration": "24 мес",
+    "filterTag": "sharp"
   },
   {
     "id": "square",
@@ -122,7 +126,8 @@
     "year": "2025",
     "location": "Карелия",
     "style": "Технологический минимализм",
-    "duration": "12 мес"
+    "duration": "12 мес",
+    "filterTag": "sharp"
   },
   {
     "id": "stream",
@@ -147,7 +152,8 @@
     "year": "2026",
     "location": "Подмосковье",
     "style": "Нео-футуризм",
-    "duration": "24 мес"
+    "duration": "24 мес",
+    "filterTag": "smooth"
   },
   {
     "id": "zigzag",
@@ -172,7 +178,8 @@
     "year": "2020",
     "location": "Карелия",
     "style": "Экологическая архитектура",
-    "duration": "15 мес"
+    "duration": "15 мес",
+    "filterTag": "sharp"
   },
   {
     "id": "wing",
@@ -197,7 +204,8 @@
     "year": "2017",
     "location": "Байкал",
     "style": "Технологический минимализм",
-    "duration": "20 мес"
+    "duration": "20 мес",
+    "filterTag": "smooth"
   },
   {
     "id": "villag",
@@ -222,6 +230,7 @@
     "year": "2017",
     "location": "Грузия",
     "style": "Современный скандинавский",
-    "duration": "16 мес"
+    "duration": "16 мес",
+    "filterTag": "sharp"
   }
 ]
