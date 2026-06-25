@@ -468,8 +468,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
   var allModels = [];
 
   function getTag(m) {
-    var param = ['riba','stream','skyframe','zigzag','wing'];
-    return param.indexOf(m.id) >= 0 ? 'parametric' : 'house';
+    return m.filterTag || 'smooth';
   }
 
   function renderGrid(models) {
