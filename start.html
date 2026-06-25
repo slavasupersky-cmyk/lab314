@@ -307,7 +307,7 @@ nav {
 }
 @media (max-width: 768px) {
   .hero { 
-    height: 100svh !important; 
+    height: var(--real-vh, 100svh) !important; 
     min-height: auto !important;
     padding: 0 !important; 
   }
@@ -784,6 +784,19 @@ nav {
     a.addEventListener('click', closeMenu);
   });
 })();
+</script>
+
+<script>
+// Real viewport height for mobile browsers (Arc, Chrome, Safari)
+function setRealVH() {
+  var vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  document.documentElement.style.setProperty('--real-vh', vh + 'px');
+}
+setRealVH();
+window.addEventListener('resize', setRealVH);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', setRealVH);
+}
 </script>
 </body>
 </html>
