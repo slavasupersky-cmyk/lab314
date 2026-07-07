@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $BOT_TOKEN = '8932052372:AAF7Op4JREkOsUcD4ywSozsnNHBMkhwhTbQ';
-$CHAT_ID = '-5546644786';
+$CHAT_ID = '-1005546644786';
 
 $input = json_decode(file_get_contents('php://input'), true);
 
