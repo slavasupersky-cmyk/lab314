@@ -228,6 +228,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:
 .cta-cb input:checked + .cta-cbx::after { content: '✓'; font-size: 11px; color: var(--gold); }
 .cta-cb a { color: var(--gold); }
 .cta-btn { width: 100%; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 18px; border: none; cursor: pointer; transition: background 0.3s; }
+.cta-btn:disabled { background: var(--border2); color: var(--text3); cursor: not-allowed; opacity: 0.6; }
 .cta-btn:hover { background: var(--gold2); }
 @media (max-width: 1024px) { .new-cta-inner { grid-template-columns: 1fr; gap: 48px; } }
 @media (max-width: 768px) { .new-cta { padding: 80px 24px; } }
