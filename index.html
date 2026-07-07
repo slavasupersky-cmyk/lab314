@@ -1139,7 +1139,7 @@ footer {
     // Показываем 6 — первые 2 широкие, остальные стандартные
     var preview = models.slice(0, 6);
     grid.innerHTML = preview.map(function(m, i) {
-      var wide = (i === 0 || i === 3);
+      var wide = (i === 0 || m.id === 'stream');
       var src = 'assets/images/models/' + m.folder + '/cover.jpeg';
       return '<div class="p-card' + (wide ? ' wide' : '') + '" onclick="location.href=\'project.html?id=' + m.id + '\'">' +
         '<img src="' + src + '" alt="' + m.name + '" loading="' + (i < 2 ? 'eager' : 'lazy') + '"' +

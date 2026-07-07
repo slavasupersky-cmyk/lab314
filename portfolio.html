@@ -476,7 +476,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index:
   function renderGrid(models) {
     var grid = document.getElementById('grid');
     grid.innerHTML = models.map(function(m, i) {
-      var wide = (i === 0 || i === 5);
+      var wide = (i === 0 || m.id === 'stream');
       var src = 'assets/images/models/' + m.folder + '/cover.jpeg';
       var num = ('0' + (i + 1)).slice(-2);
       return '<div class="card' + (wide ? ' wide' : '') + '" data-type="' + (m.filterTag || 'smooth') + '" onclick="location.href=\'project.html?id=' + m.id + '\'">' +
