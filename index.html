@@ -988,29 +988,30 @@ footer {
       <div class="ch-group">
         <span class="ch-label">Как с Вами связаться?</span>
         <div class="ch-btns">
-          <button type="button" class="ch-btn active" data-form="ctaIndex" data-ph="Ваш номер">Телефон</button>
-          <button type="button" class="ch-btn" data-form="ctaIndex" data-ph="Ваш @username">Telegram</button>
-          <button type="button" class="ch-btn" data-form="ctaIndex" data-ph="Ваш номер в WhatsApp">WhatsApp</button>
+          <button type="button" class="ch-btn active" data-form="ctaIndex" data-ph="Ваш номер" data-channel="Телефон">Телефон</button>
+          <button type="button" class="ch-btn" data-form="ctaIndex" data-ph="Ваш @username" data-channel="Telegram">Telegram</button>
+          <button type="button" class="ch-btn" data-form="ctaIndex" data-ph="Ваш номер в WhatsApp" data-channel="WhatsApp">WhatsApp</button>
         </div>
-        <input class="cta-fi contact-field" type="text" placeholder="Ваш номер">
+        <input class="cta-fi contact-field" type="text" placeholder="Ваш номер" id="idx-contact">
         <span class="cta-fl" style="margin-top:12px;">Email</span>
-        <input class="cta-fi" type="email" placeholder="Email — по желанию">
+        <input class="cta-fi" type="email" placeholder="Email — по желанию" id="idx-email">
       </div>
       <div class="cta-fg">
         <span class="cta-fl">Чем можем помочь?</span>
-        <textarea class="cta-fta" placeholder="Об участке, идеях, сроках — или просто напишите что хотите"></textarea>
+        <textarea class="cta-fta" placeholder="Об участке, идеях, сроках — или просто напишите что хотите" id="idx-message"></textarea>
       </div>
       <label class="cta-cb">
-        <input type="checkbox">
+        <input type="checkbox" id="idx-consent-privacy">
         <span class="cta-cbx"></span>
         <span>Согласен на обработку <a href="privacy.html">персональных данных</a></span>
       </label>
       <label class="cta-cb">
-        <input type="checkbox">
+        <input type="checkbox" id="idx-consent-news">
         <span class="cta-cbx"></span>
         <span>Согласен получать новости и материалы от ARCH 3.14</span>
       </label>
-      <button class="cta-btn">Перезвоните мне →</button>
+      <button class="cta-btn" id="idx-submit" onclick="submitLead('idx', this)">Перезвоните мне →</button>
+      <div class="cta-status" id="idx-status" style="font-size:13px;margin-top:8px;display:none;"></div>
     </div>
   </div>
 </section>
@@ -1205,6 +1206,73 @@ footer {
   });
 })();
 </script>
+
+<script>
+function submitLead(prefix, btn) {
+  var contact = document.getElementById(prefix + '-contact').value.trim();
+  var email = document.getElementById(prefix + '-email').value.trim();
+  var message = document.getElementById(prefix + '-message').value.trim();
+  var consentPrivacy = document.getElementById(prefix + '-consent-privacy').checked;
+  var consentNews = document.getElementById(prefix + '-consent-news').checked;
+  var statusEl = document.getElementById(prefix + '-status');
+  var activeChannelBtn = document.querySelector('[data-form="cta' + prefix.charAt(0).toUpperCase() + prefix.slice(1) + '"].active, [data-form="ctaIndex"].active');
+  var channel = 'Телефон';
+  document.querySelectorAll('.ch-btn.active').forEach(function(b) {
+    if (b.dataset.channel) channel = b.dataset.channel;
+  });
+
+  if (!contact) {
+    statusEl.style.display = 'block';
+    statusEl.style.color = '#e08080';
+    statusEl.textContent = 'Укажите контакт для связи';
+    return;
+  }
+  if (!consentPrivacy) {
+    statusEl.style.display = 'block';
+    statusEl.style.color = '#e08080';
+    statusEl.textContent = 'Подтвердите согласие на обработку персональных данных';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Отправляем...';
+
+  fetch('/send-form.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      channel: channel,
+      contact: contact,
+      email: email,
+      message: message,
+      consentNews: consentNews,
+      page: window.location.pathname
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      statusEl.style.display = 'block';
+      statusEl.style.color = '#a8d8b0';
+      statusEl.textContent = 'Спасибо! Мы скоро свяжемся с вами.';
+      btn.textContent = 'Отправлено ✓';
+      document.getElementById(prefix + '-contact').value = '';
+      document.getElementById(prefix + '-email').value = '';
+      document.getElementById(prefix + '-message').value = '';
+    } else {
+      throw new Error(data.error || 'Unknown error');
+    }
+  })
+  .catch(function(err) {
+    statusEl.style.display = 'block';
+    statusEl.style.color = '#e08080';
+    statusEl.textContent = 'Ошибка отправки. Попробуйте позвонить: +7 499 647 76 80';
+    btn.disabled = false;
+    btn.textContent = 'Перезвоните мне →';
+  });
+}
+</script>
+
 </body>
 </html>
 
