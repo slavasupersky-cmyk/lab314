@@ -53,19 +53,28 @@ $amoError = null;
 if (defined('AMO_TOKEN') && defined('AMO_SUBDOMAIN')) {
     $contactFields = [];
 
-    // Кладём контакт либо в телефон, либо в email, в зависимости от того, что похоже на что.
-    if (preg_match('/^[+\d][\d\s\-\(\)]{4,}$/', $contact)) {
-        $contactFields[] = [
-            'field_code' => 'PHONE',
-            'values' => [['value' => $contact, 'enum_code' => 'WORK']],
-        ];
-    } else {
+    // Канал связи определяет, куда класть контакт и с каким enum-ом,
+    // чтобы Телефон/WhatsApp/Telegram не сваливались в одно и то же поле.
+    $isEmailLike = (bool) preg_match('/^[^\s@]+@[^\s@]+\.[^\s@]+$/', $contact);
+
+    if ($isEmailLike) {
         $contactFields[] = [
             'field_code' => 'EMAIL',
             'values' => [['value' => $contact, 'enum_code' => 'WORK']],
         ];
+    } else {
+        $phoneEnum = 'WORK';
+        if ($channel === 'WhatsApp') {
+            $phoneEnum = 'MOB';
+        } elseif ($channel === 'Telegram') {
+            $phoneEnum = 'OTHER';
+        }
+        $contactFields[] = [
+            'field_code' => 'PHONE',
+            'values' => [['value' => $contact, 'enum_code' => $phoneEnum]],
+        ];
     }
-    if (!empty($email)) {
+    if (!empty($email) && $email !== $contact) {
         $contactFields[] = [
             'field_code' => 'EMAIL',
             'values' => [['value' => $email, 'enum_code' => 'WORK']],
