@@ -38,16 +38,15 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 
 /* ─── CURSOR ─── */
-.cur-dot,.cur-ring{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .2s,opacity .3s}
-.cur-dot{width:8px;height:8px;background:var(--gold);border-radius:50%}
-.cur-ring{width:36px;height:36px;border:1px solid rgba(182,147,90,.5);border-radius:50%;transition:transform .12s ease-out,width .3s,height .3s,border-color .3s}
-body.hovering .cur-dot{transform:translate(-50%,-50%) scale(2)}
-body.hovering .cur-ring{width:56px;height:56px;border-color:var(--gold)}
+.cur-dot,.cur-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;will-change:transform}
+.cur-dot{width:8px;height:8px;margin:-4px 0 0 -4px;background:var(--gold);border-radius:50%}
+.cur-ring{width:36px;height:36px;margin:-18px 0 0 -18px;border:1px solid rgba(182,147,90,.5);border-radius:50%;transition:width .3s,height .3s,margin .3s,border-color .3s}
+body.hovering .cur-ring{width:56px;height:56px;margin:-28px 0 0 -28px;border-color:var(--gold)}
 @media (hover: none){.cur-dot,.cur-ring{display:none}}
 
 /* ─── NAV (структура основного сайта, светлая адаптация) ─── */
 nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 48px;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-nav.solid{background:rgba(250,248,244,.94);backdrop-filter:blur(12px);border-bottom-color:var(--border)}
+nav.solid{background:rgba(250,248,244,.98);border-bottom-color:var(--border)}
 .nav-logo{font-family:'Unbounded',sans-serif;font-weight:300;font-size:18px;letter-spacing:3px;color:var(--ink);line-height:1}
 .nav-logo span{display:block;font-family:'Jost',sans-serif;font-weight:300;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .nav-links{display:flex;align-items:center;gap:40px}
@@ -80,8 +79,8 @@ nav.solid{background:rgba(250,248,244,.94);backdrop-filter:blur(12px);border-bot
 .wrap{max-width:1180px;margin:0 auto;padding:0 48px}
 .eyebrow{font-family:'Unbounded',sans-serif;font-weight:300;font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}
 h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.08;color:var(--rose)}
-.rv{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
-.rv.on{opacity:1;transform:none}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease;will-change:opacity,transform}
+.rv.on{opacity:1;transform:none;will-change:auto}
 @media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none;transition:none}}
 
 /* ─── HERO ─── */
@@ -126,7 +125,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.08
 .spread .ph{position:relative;overflow:hidden;background:var(--bg2)}
 .spread .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
 .spread .ph:hover img{transform:scale(1.03)}
-.spread .ph .tag{position:absolute;left:22px;bottom:18px;font-family:'Unbounded',sans-serif;font-weight:300;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#fff;background:rgba(43,38,32,.55);padding:8px 14px;backdrop-filter:blur(4px)}
+.spread .ph .tag{position:absolute;left:22px;bottom:18px;font-family:'Unbounded',sans-serif;font-weight:300;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#fff;background:rgba(43,38,32,.62);padding:8px 14px}
 .spread .house-ph{aspect-ratio:16/10}
 .spread .house-col{display:flex;flex-direction:column;justify-content:center;padding:24px 0 24px 64px}
 .spread .look-no{font-family:'Unbounded',sans-serif;font-weight:300;font-size:11px;letter-spacing:.35em;color:var(--gold)}
@@ -325,7 +324,7 @@ a.footer-copy:hover{color:var(--dtext2)}
     <h1 class="rv" style="transition-delay:.1s">COUTURE <span class="n">3.14</span></h1>
     <p class="sub rv" style="transition-delay:.2s">Дома по мотивам высокой моды. Каждый сезон — новая коллекция форм.</p>
     <div class="thesis rv" style="transition-delay:.3s">
-      Мы строим дома так, как кутюрье шьют платья:<br>
+      Мы создаём дома так, как кутюрье — свои платья:<br>
       <em>от жеста ткани — к жесту формы.</em>
     </div>
   </div>
@@ -354,7 +353,7 @@ a.footer-copy:hover{color:var(--dtext2)}
         </div>
         <div class="muse">
           <div class="m-ph"><img src="img/look_bar.jpg" alt="Образ-вдохновение: жакет со скульптурной баской" loading="lazy"></div>
-          <div class="m-cap"><i>Образ 01</i>Жест подиума, с которого началась форма</div>
+          <div class="m-cap"><i>Образ 01</i>Жест подиума, из которого родилась форма</div>
         </div>
       </div>
     </div>
@@ -372,7 +371,7 @@ a.footer-copy:hover{color:var(--dtext2)}
         </div>
         <div class="muse">
           <div class="m-ph"><img src="img/look_plumage.jpg" alt="Образ-вдохновение: корсет из синих перьев" loading="lazy"></div>
-          <div class="m-cap"><i>Образ 02</i>Жест подиума, с которого началась форма</div>
+          <div class="m-cap"><i>Образ 02</i>Жест подиума, из которого родилась форма</div>
         </div>
       </div>
     </div>
@@ -390,7 +389,7 @@ a.footer-copy:hover{color:var(--dtext2)}
         </div>
         <div class="muse">
           <div class="m-ph"><img src="img/look_feather.jpg" alt="Образ-вдохновение: белое пальто с алым каскадом" loading="lazy"></div>
-          <div class="m-cap"><i>Образ 03</i>Жест подиума, с которого началась форма</div>
+          <div class="m-cap"><i>Образ 03</i>Жест подиума, из которого родилась форма</div>
         </div>
       </div>
     </div>
@@ -428,7 +427,7 @@ a.footer-copy:hover{color:var(--dtext2)}
       <div class="p-label">I · Силуэт</div>
       <div>
         <h3>Форма вне времени</h3>
-        <p>У каждого дома этой линии есть то, что у человека называется фигурой: несущая бионическая форма, пластика объёма, осанка. <b>Кривая не выходит из моды, потому что она не мода — она природа.</b> Силуэт проектируется один раз и на всю жизнь дома.</p>
+        <p>У каждого дома этой линии есть то, что у человека называется фигурой: несущая бионическая форма, пластика объёма, осанка. <b>Кривая не выходит из моды, потому что она не мода — она природа.</b> Силуэт создаётся однажды — и на всю жизнь дома.</p>
       </div>
     </div>
 
@@ -436,7 +435,7 @@ a.footer-copy:hover{color:var(--dtext2)}
       <div class="p-label">II · Гардероб</div>
       <div>
         <h3>Фасады как платья</h3>
-        <p>Всё, чего касается взгляд, — сменные слои: фасадные панели на скрытом крепеже, фактуры, цвет, свет, ландшафт. <b>Дом переодевается, не перестраиваясь.</b> Через семь лет вы не делаете реконструкцию — вы заказываете новый образ из актуальной коллекции. Ночная подсветка — его вечернее платье.</p>
+        <p>Всё, чего касается взгляд, — сменные слои: фасадные панели на скрытом крепеже, фактуры, цвет, свет, ландшафт. <b>Дом переодевается, не перестраиваясь.</b> Через семь лет вам не понадобится реконструкция — лишь новый образ из актуальной коллекции. Ночная подсветка — его вечернее платье.</p>
       </div>
     </div>
 
@@ -460,17 +459,17 @@ a.footer-copy:hover{color:var(--dtext2)}
       <div class="step rv">
         <div class="s-k">Показ</div>
         <h4>Отбор образов</h4>
-        <p>Не платье целиком — а его главный жест: складка, раскрытие, каскад, натяжение. Один образ — один жест.</p>
+        <p>Не платье целиком — его главный жест: складка, раскрытие, каскад, натяжение. Один образ — один жест.</p>
       </div>
       <div class="step rv" style="transition-delay:.12s">
         <div class="s-k">Жест</div>
         <h4>Перевод в геометрию</h4>
-        <p>Жест ткани становится параметрической кривой. Там, где кутюрье работает шёлком и пером, мы работаем бетоном, стеклом и светом.</p>
+        <p>Жест ткани обретает вторую жизнь в параметрической кривой. Там, где кутюрье ведёт линию шёлком и пером, мы ведём её бетоном, стеклом и светом.</p>
       </div>
       <div class="step rv" style="transition-delay:.24s">
         <div class="s-k">Дом</div>
         <h4>Экземпляр коллекции</h4>
-        <p>Три–пять концептов за сезон, ограниченная серия каждого. Из коллекции дом адаптируется под участок и семью заказчика.</p>
+        <p>Три–пять силуэтов за сезон, каждый — ограниченной серией. Избранный дом бережно адаптируется под участок и семью заказчика.</p>
       </div>
     </div>
   </div>
@@ -509,7 +508,7 @@ a.footer-copy:hover{color:var(--dtext2)}
   </div>
   <div class="new-cta-inner">
     <div class="new-cta-left rv">
-      <p class="new-cta-desc">Расскажите о себе и участке — покажем коллекцию сезона и подберём дом, который сидит по фигуре.</p>
+      <p class="new-cta-desc">Расскажите о себе и об участке — мы откроем вам коллекцию сезона и подберём силуэт, который сядет безупречно.</p>
       <div class="new-cta-contacts">
         <a href="tel:+74996477680" class="new-cta-phone">+7 499 647 76 80</a>
         <a href="mailto:mail@arch314.ru" class="new-cta-email">mail@arch314.ru</a>
@@ -587,35 +586,37 @@ a.footer-copy:hover{color:var(--dtext2)}
 <script>
 // ─── CURSOR ───
 (function() {
+  if (window.matchMedia('(hover: none)').matches) return;
   var dot = document.getElementById('curDot');
   var ring = document.getElementById('curRing');
-  var mx = 0, my = 0, rx = 0, ry = 0;
-  if (window.matchMedia('(hover: none)').matches) return;
+  var mx = -100, my = -100, rx = -100, ry = -100, raf = null;
+  function frame() {
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    dot.style.transform  = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+    ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)';
+    if (Math.abs(mx - rx) > .3 || Math.abs(my - ry) > .3) raf = requestAnimationFrame(frame);
+    else raf = null;
+  }
   document.addEventListener('mousemove', function(e) {
     mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
-  });
-  (function animRing() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(animRing);
-  })();
+    if (!raf) raf = requestAnimationFrame(frame);
+  }, { passive: true });
   document.addEventListener('mouseover', function(e) {
     if (e.target.closest('a, button, .spread, .step')) document.body.classList.add('hovering');
-  });
+  }, { passive: true });
   document.addEventListener('mouseout', function(e) {
     if (e.target.closest('a, button, .spread, .step')) document.body.classList.remove('hovering');
-  });
+  }, { passive: true });
 })();
 
 // ─── NAV SOLID ───
 (function() {
   var nav = document.getElementById('nav');
+  var solid = false;
   window.addEventListener('scroll', function() {
-    nav.classList.toggle('solid', window.scrollY > 60);
+    var s = window.scrollY > 60;
+    if (s !== solid) { solid = s; nav.classList.toggle('solid', s); }
   }, { passive: true });
 })();
 
