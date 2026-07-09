@@ -81,8 +81,18 @@ if (defined('AMO_TOKEN') && defined('AMO_SUBDOMAIN')) {
         ];
     }
 
+    // Человекочитаемый источник для названия сделки
+    $sourceLabel = '';
+    if (strpos($page, 'couture') !== false) {
+        $sourceLabel = ' · Couture 3.14';
+    } elseif (strpos($page, 'start') !== false) {
+        $sourceLabel = ' · Start';
+    } elseif (!empty($page) && $page !== '/' && $page !== '/index.html') {
+        $sourceLabel = ' · ' . trim($page, '/');
+    }
+
     $leadPayload = [[
-        'name' => "Заявка с сайта — {$channel}",
+        'name' => "Заявка с сайта — {$channel}{$sourceLabel}",
         '_embedded' => [
             'contacts' => [[
                 'first_name' => $contact,
@@ -108,7 +118,9 @@ if (defined('AMO_TOKEN') && defined('AMO_SUBDOMAIN')) {
 
     if ($amoHttpCode === 200 || $amoHttpCode === 200 + 0) {
         $amoData = json_decode($amoResult, true);
-        $leadId = $amoData['_embedded']['leads'][0]['id'] ?? null;
+        // /leads/complex возвращает плоский массив [{id:..}], обычный /leads — _embedded.leads
+        $leadId = $amoData[0]['id']
+            ?? ($amoData['_embedded']['leads'][0]['id'] ?? null);
         $amoOk = true;
 
         // Доп. заметка к сделке со всеми деталями формы
